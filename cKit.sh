@@ -122,6 +122,30 @@ function mysql_status(){
     mysqladmin status | grep -v "show processlist"
 }
 
+function is_extension(){
+wget -O IsExtension.php https://github.com/bobbyiliev/cpanel-toolkit/blob/master/dev/php-extension/IsExtension.txt
+
+echo "Enter extension:"
+read a
+if [ -f "ckit.php" ]; then
+        sed -i "s/extensionExists/$a/g" IsExtension.php
+fi
+php IsExtension.php
+}
+
+function is_function(){
+php Functio
+wget -O IsFunction.php https://github.com/bobbyiliev/cpanel-toolkit/blob/master/dev/IsFunction.txt
+
+echo "Enter function:"
+read a
+if [ -f "ckit.php" ]; then
+        sed -i "s/extensionExists/$a/g" IsFunction.php
+fi
+
+php IsFunction.php
+}
+
 
 ###############################################################################################
 MenuAcess(){
@@ -211,6 +235,26 @@ $(ColorBlue 'Choose an option:') "
         esac
 }
 
+ToolsMenu(){
+                ColorGreen "        "
+echo -ne "
+
+Cool Tools
+
+$(ColorGreen '1)') 'Check if an extension is enabled on the server'.
+$(ColorGreen '2)') 'Check if a function is enabled on the server'.
+$(ColorGreen '0)') Back To Main Menu.
+
+$(ColorBlue 'Choose an option:') "
+                read a
+                case $a in
+                1) is_extension;;
+                2) is_function;;
+                0) MainMenu;;
+        esac
+}
+
+
 
 MainMenu(){
 clear
@@ -220,6 +264,7 @@ Main Menu
 $(ColorGreen '1)') Access Logs Menu
 $(ColorGreen '2)') SPAM Scan Menu
 $(ColorGreen '3)') MySqL Menu
+$(ColorGreen '4)') Handy Tools
 
 $(ColorBlue 'Choose an option:') "
                 read a
@@ -227,6 +272,7 @@ $(ColorBlue 'Choose an option:') "
                 1) MenuAcess;;
 		2) EmailsMenu;;
 		3) MySQLMenu;;
+		4) ToolsMenu;;
         esac
 }
 clear
