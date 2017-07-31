@@ -87,6 +87,10 @@ function showeximsum(){
 EmailsMenu
 }
 
+##
+# Function that lists all of the sleeping MySQL processes
+# In many cases the sleeping processes could be causing high CPU load
+##
 function list_sleeping_mysql() {
     sleepingProc=$(mysqladmin proc | grep Sleep)
     if [ -z "$sleepingProc" ]; then
@@ -99,6 +103,10 @@ function list_sleeping_mysql() {
 MySQLMenu
 }
 
+##
+# Function that kills all of the sleeping MySQL processes
+# In case you need to reduce the CPU load or free up some RAM you could use this function
+##
 function kill_mysql_sleeping_proc() {
     sleepingProc=$(mysqladmin proc | grep Sleep)
         if [ -z "$sleepingProc" ]; then
@@ -111,12 +119,16 @@ function kill_mysql_sleeping_proc() {
     fi
 MySQLMenu
 }
-
+##
+# Function that lists all MySQL proccesses
+##
 function show_full_processlist() {
     mysqladmin processlist status
 MySQLMenu
 }
-
+##
+# Function that shows the MySQL status and uptime
+##
 function mysql_status(){
     service mysql status
     mysqladmin status | grep -v "show processlist"
@@ -150,7 +162,9 @@ ToolsMenu
 }
 
 
-###############################################################################################
+###########################
+###  Qucik Accsess Menu ###
+###########################
 MenuAcess(){
 
             	ColorGreen "        "
@@ -215,6 +229,9 @@ $(ColorBlue 'Choose an option:') "
         esac
 }
 
+##
+# The MySQL Menu
+##
 MySQLMenu(){
                 ColorGreen "        "
 echo -ne "
@@ -257,8 +274,9 @@ $(ColorBlue 'Choose an option:') "
         esac
 }
 
-
-
+##
+# The Main Menu
+##
 MainMenu(){
 clear
                 ColorGreen "        "
