@@ -1,11 +1,11 @@
 #!/bin/bash
 
-wget -O cKit.php https://bobbyiliev.com/cKit.txt
+wget -O Function-Extension.php https://bobbyiliev.com/Function-Extension.txt
 
 echo "Enter function:"
 read a
 if [ -f "ckit.php" ]; then
-	sed -i "s/extensionExists/$a/g" cKit.php
+	sed -i "s/extensionExists/$a/g" Function-Extension.php
 fi
 
-php cKit.php
+php Function-Extension.php
