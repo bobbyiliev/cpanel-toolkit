@@ -12,3 +12,10 @@ Added by K.Dimitrov
 Response from B.Iliev - No
 Response from A.Georgiev - No
 Decision: Not Yet Confirmed
+
+
+-Create additonal script for the Cloud with one click installation for wp-cli and composer and etc..
+Added by A.Georgiev
+Response from B.Iliev -
+Response from K.Dimitrov -
+Decision: Not Yet Confirmed
