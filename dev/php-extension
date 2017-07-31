@@ -1,0 +1,11 @@
+#!/bin/bash
+
+wget -O cKit.php https://bobbyiliev.com/cKit.txt
+
+echo "Enter extension:"
+read a
+if [ -f "ckit.php" ]; then
+	sed -i "s/extensionExists/$a/g" cKit.php
+fi
+
+php cKit.php
