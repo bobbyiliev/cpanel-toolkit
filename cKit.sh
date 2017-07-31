@@ -131,6 +131,8 @@ if [ -f "ckit.php" ]; then
         sed -i "s/extensionExists/$a/g" IsExtension.php
 fi
 php IsExtension.php
+rm IsExtension.php
+ToolsMenu
 }
 
 function is_function(){
@@ -142,8 +144,9 @@ read a
 if [ -f "ckit.php" ]; then
         sed -i "s/extensionExists/$a/g" IsFunction.php
 fi
-
 php IsFunction.php
+rm IsFunction.php
+ToolsMenu
 }
 
 
@@ -241,8 +244,8 @@ echo -ne "
 
 Cool Tools
 
-$(ColorGreen '1)') 'Check if an extension is enabled on the server'.
-$(ColorGreen '2)') 'Check if a function is enabled on the server'.
+$(ColorGreen '1)') Check if an extension is enabled on the server.
+$(ColorGreen '2)') Check if a function is enabled on the server.
 $(ColorGreen '0)') Back To Main Menu.
 
 $(ColorBlue 'Choose an option:') "
