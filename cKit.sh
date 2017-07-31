@@ -142,7 +142,7 @@ wget -O IsFunction.php https://raw.githubusercontent.com/bobbyiliev/cpanel-toolk
 echo "Enter function:"
 read a
 if [ -f "ckit.php" ]; then
-        sed -i "s/extensionExists/$a/g" IsFunction.php
+        sed -i "s/functionExists/$a/g" IsFunction.php
 fi
 php IsFunction.php
 rm IsFunction.php
