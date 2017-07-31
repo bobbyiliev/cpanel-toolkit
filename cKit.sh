@@ -127,7 +127,7 @@ wget -O IsExtension.php https://raw.githubusercontent.com/bobbyiliev/cpanel-tool
 
 echo "Enter extension:"
 read a
-if [ -f "ckit.php" ]; then
+if [ -f "IsExtension.php" ]; then
         sed -i "s/extensionExists/$a/g" IsExtension.php
 fi
 php IsExtension.php
@@ -141,7 +141,7 @@ wget -O IsFunction.php https://raw.githubusercontent.com/bobbyiliev/cpanel-toolk
 
 echo "Enter function:"
 read a
-if [ -f "ckit.php" ]; then
+if [ -f "IsFunction.php" ]; then
         sed -i "s/functionExists/$a/g" IsFunction.php
 fi
 php IsFunction.php
