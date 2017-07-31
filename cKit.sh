@@ -123,7 +123,7 @@ function mysql_status(){
 }
 
 function is_extension(){
-wget -O IsExtension.php https://github.com/bobbyiliev/cpanel-toolkit/blob/master/dev/php-extension/IsExtension.txt
+wget -O IsExtension.php https://raw.githubusercontent.com/bobbyiliev/cpanel-toolkit/master/dev/IsExtension.txt
 
 echo "Enter extension:"
 read a
@@ -137,7 +137,7 @@ ToolsMenu
 
 function is_function(){
 php Functio
-wget -O IsFunction.php https://github.com/bobbyiliev/cpanel-toolkit/blob/master/dev/IsFunction.txt
+wget -O IsFunction.php https://raw.githubusercontent.com/bobbyiliev/cpanel-toolkit/master/dev/IsFunction.txt
 
 echo "Enter function:"
 read a
