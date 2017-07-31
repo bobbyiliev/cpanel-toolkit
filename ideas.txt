@@ -1,2 +1,11 @@
 Add your ideas here!
+<<<<<<< HEAD
 testing git
+=======
+
+- Add server info like RAM/CPU/Centos Version/EA version when the main menu is loaded(at the start of the script or when we go back to the main menu) right under the Output Options. 
+Decision: Not Yet Confirmed
+
+-Add a Menu for SysAdmin and a SupportUser
+Decision: Not Yet Confirmed
+>>>>>>> 3698ff45f5d0327615b6df5432bc373a238e3285
