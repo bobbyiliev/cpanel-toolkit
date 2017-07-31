@@ -1,0 +1,8 @@
+<?php
+
+if(function_exists('functionExists')) {
+    echo "functionExists is enabled";
+}
+else{
+    echo "this doesn't work";
+}

@@ -1,0 +1,8 @@
+<?php
+
+if (extension_loaded('extensionExists')) {
+        echo 'extensionExists works,';
+    }
+else{
+    echo "this doesn't work";
+}
