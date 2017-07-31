@@ -1,1 +1,7 @@
 Add your ideas here!
+
+- Add server info like RAM/CPU/Centos Version/EA version when the main menu is loaded(at the start of the script or when we go back to the main menu) right under the Output Options. 
+Decision: Not Yet Confirmed
+
+-Add a Menu for SysAdmin and a SupportUser
+Decision: Not Yet Confirmed
