@@ -11,7 +11,7 @@ ColorBlue(){
 	echo -ne $blue$1$clear
 }
 
-#######################################/Functions/#######################################
+#######################################/Functions/############################################
 
 function access_and_ip_logs() {
 for i in $(cat '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}'); do
