@@ -136,7 +136,6 @@ ToolsMenu
 }
 
 function is_function(){
-php Functio
 wget -O IsFunction.php https://raw.githubusercontent.com/bobbyiliev/cpanel-toolkit/master/dev/IsFunction.txt
 
 echo "Enter function:"
