@@ -138,6 +138,7 @@ ToolsMenu
 function is_function(){
 wget -O IsFunction.php https://raw.githubusercontent.com/bobbyiliev/cpanel-toolkit/master/dev/IsFunction.txt
 
+
 echo "Enter function:"
 read a
 if [ -f "ckit.php" ]; then
@@ -159,15 +160,15 @@ Choose the information you need regardin Access Logs
 $(ColorGreen '1)') GET/POST Requests + IP addresses for every website on the VPS
 $(ColorGreen '2)') GET/POST Requests for every website on the VPS
 $(ColorGreen '3)') GET/POST Requests for a specific website
-$(ColorGreen '4)') Back to Main Menu
+$(ColorGreen '0)') Back to Main Menu
 
 $(ColorBlue 'Choose an option:') "
                 read a
                 case $a in
                 1) access_and_ip_logs;;
                 2) OnlyAccessLogs;;
-		3) MenuAcessDomain;;		
-		4) MainMenu;;
+		3) MenuAcessDomain;;
+		0) MainMenu;;
         esac
 }
 
@@ -197,7 +198,7 @@ $(ColorGreen '4)') It shows the IPs which are connected to server through port n
 $(ColorGreen '5)') In order to find “nobody” spamming, issue the following command.
 $(ColorGreen '5.1)') The above command is valid only if the spamming is currently in progress.
 $(ColorGreen '6)') The following script will give the summary of mails in the mail queue.
-$(ColorGreen '7)') Back to Main Menu.
+$(ColorGreen '0)') Back to Main Menu.
 
 $(ColorBlue 'Choose an option:') "
                 read a
@@ -210,7 +211,7 @@ $(ColorBlue 'Choose an option:') "
                 5) nobodyspam;;
                 5.1) nobodyspamafter;;
                 6) showeximsum;;
-                7) MainMenu;;
+                0) MainMenu;;
         esac
 }
 
