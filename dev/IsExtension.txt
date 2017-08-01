@@ -4,6 +4,5 @@ if (extension_loaded('extensionExists')) {
         echo "\n\"."extensionExists is enabled on the server";
     }
 else{
-    echo -new  "
-		extensionExists is not enabled on the server";
+    echo -new  "extensionExists is not enabled on the server";
 }
