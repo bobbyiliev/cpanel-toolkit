@@ -1,13 +1,14 @@
 #!/bin/bash
 
-###################        
+###################
 ###  Variables  ###
 ###################
 green='\e[32m'
 blue='\e[34m'
 clear='\e[0m'
+red='\e[31m'
 
-###################        
+###################
 ###  Functions  ###
 ###################
 ColorGreen(){
@@ -212,6 +213,13 @@ rm IsFunction.php
 ToolsMenu
 }
 
+prompt(){
+        echo "Press Enter to go back to Main menu"
+        read a
+        clear
+        MainMenu
+}
+
 
 ###########################
 ###  Quick Access Menu ###
@@ -238,6 +246,7 @@ $(ColorBlue 'Choose an option:') "
                 2) OnlyAccessLogs;;
 		3) MenuAcessDomain;;
 		0) MainMenu;;
+		*) echo -e $red"Wrong command."$clear; MenuAcess;;
         esac
 }
 
@@ -283,6 +292,7 @@ $(ColorBlue 'Choose an option:') "
                 7) nobodyspamafter;;
                 8) showeximsum;;
                 0) MainMenu;;
+		*) echo -e $red"Wrong command."$clear; EmailsMenu;;
         esac
 }
 
@@ -309,6 +319,7 @@ $(ColorBlue 'Choose an option:') "
                 3) show_full_processlist;;
  	        4) mysql_status;;
                 0) MainMenu;;
+		*) echo -e $red"Wrong command."$clear; MySQLMenu;;
         esac
 }
 
@@ -328,6 +339,7 @@ $(ColorBlue 'Choose an option:') "
                 1) is_extension;;
                 2) is_function;;
                 0) MainMenu;;
+		*) echo -e $red"Wrong command."$clear; ToolsMenu;;
         esac
 }
 
@@ -351,6 +363,7 @@ $(ColorBlue 'Choose an option:') "
 		2) EmailsMenu;;
 		3) MySQLMenu;;
 		4) ToolsMenu;;
+		*) echo -e $red"Wrong command."$clear; prompt;;
         esac
 }
 clear
