@@ -1,8 +1,8 @@
 <?php
 
 if (extension_loaded('extensionExists')) {
-        echo "\n\"."extensionExists is enabled on the server";
+        echo "extensionExists is enabled on the server".PHP_EOL;
     }
 else{
-    echo -new  "extensionExists is not enabled on the server";
+    echo PHP_EOL."extensionExists is not enabled on the server". PHP_EOL;
 }
