@@ -155,16 +155,85 @@ MySQLMenu
 ##
 function kill_mysql_sleeping_proc() {
     sleepingProc=$(mysqladmin proc | grep Sleep)
+    allowedsleep=60
         if [ -z "$sleepingProc" ]; then
         echo "No Sleeping MySQL Proccesses ATM";
-    else {
-             for i in $(mysql -e 'show processlist' | grep 'Sleep' | awk '{print $1}'); do
-                        echo Killed proccess: ${i}; mysql -e "kill ${i}";
-                 done
-    }
-    fi
+        else
+            	for i in $(mysql -e 'show processlist' | grep 'Sleep' | awk '{print $1}'); do
+                        #declare -i prockilled=0
+                        sleeptime=$(mysqladmin proc | grep "\<$i\>" | grep -v '\-\-' | grep -v 'Time' | awk -F'|' '{ print $7 }' | sed 's/ //g' | tail -1);
+                        sleeptime=$((sleeptime + 1))
+                        #echo "${i} has been sleeping for ${sleeptime} seconds"
+                        if [ "$sleeptime" -gt "$allowedsleep" ]; then
+                                echo "Killed proccess: ${i} as it has been sleeping for more than ${allowedsleep} seconds"; mysql -e "kill ${i}";
+                                #echo "$i has been sleeping for $sleeptime seconds"
+                                prockilled=$((prockilled+1));
+                        fi
+                done
+                if [ ! -z $prockilled ] && [ $prockilled -lt 1 ]; then
+                        echo "No quries have been running for more than $allowedsleep seconds"
+                elif [ ! -z $prockilled ] && [ $prockilled -eq 1 ]; then
+                        echo "Killed only 1 MySQL query that was sleeping for more than $allowedsleep seconds"
+                elif [ ! -z $prockilled ] && [ $prockilled -gt 1 ]; then
+                        echo "Killed $prockilled MySQL query that was sleeping for more than $allowedsleep seconds"
+                else {
+                      	echo "No quries have been sleeping for more than $allowedsleep seconds"
+                }
+                fi
+        fi
 MySQLMenu
 }
+
+##
+# Function that kills all of the sleeping MySQL processes
+# In case you need to reduce the CPU load or free up some RAM you could use this function
+##
+function kill_mysql_sleeping_proc_user() {
+    echo "Use this if you would like to kill all sleeping MySQL proccesses for 1 MySQL user only"
+    while [ -z $sqluser ]; do
+    echo "Please Enter MySQL user or type exit:"
+    read sqluser
+    done
+    if [ $sqluser = "exit" ]; then
+    MySQLMenu
+    #exit 0;
+    else
+    sleepingProc=$(mysqladmin proc | grep Sleep | grep $sqluser)
+    allowedsleep=10
+        if [ -z "$sleepingProc" ]; then
+        echo "No Sleeping MySQL Proccesses ATM";
+	unset $sqluser
+        else
+            	for i in $(mysql -e 'show processlist' | grep 'Sleep' | awk '{print $1}'); do
+                        #declare -i prockilled=0
+                        sleeptime=$(mysqladmin proc | grep "\<$i\>" | grep -v '\-\-' | grep -v 'Time' | awk -F'|' '{ print $7 }' | sed 's/ //g' | tail -1);
+                        sleeptime=$((sleeptime + 1))
+                        #echo "${i} has been sleeping for ${sleeptime} seconds"
+                        if [ "$sleeptime" -gt "$allowedsleep" ]; then
+                                echo "$sqluser : killed proccess ${i} as it has been sleeping for more than ${allowedsleep} seconds"; mysql -e "kill ${i}";
+                                #echo "$i has been sleeping for $sleeptime seconds"
+                                prockilled=$((prockilled+1));
+                        fi
+                done
+                if [ ! -z $prockilled ] && [ $prockilled -lt 1 ]; then
+                        echo "No quries associated with $sqluser have been running for more than $allowedsleep seconds"
+			unset $sqluser
+                elif [ ! -z $prockilled ] && [ $prockilled -eq 1 ]; then
+                        echo "User: $sqluser .. killed only 1 MySQL query that was sleeping for more than $allowedsleep seconds"
+			unset $sqluser
+                elif [ ! -z $prockilled ] && [ $prockilled -gt 1 ]; then
+                        echo "User: $sqluser .. killed $prockilled MySQL query that was sleeping for more than $allowedsleep seconds"
+			unset $sqluser
+                else {
+                      	echo "User: $sqluser .. No quries have been sleeping for more than $allowedsleep seconds"
+			unset $sqluser
+                }
+                fi
+        fi
+   fi
+MySQLMenu
+}
+
 ##
 # Function that lists all MySQL proccesses
 ##
@@ -176,8 +245,9 @@ MySQLMenu
 # Function that shows the MySQL status and uptime
 ##
 function mysql_status(){
-    service mysql status
+    #service mysql status
     mysqladmin status | grep -v "show processlist"
+MySQLMenu
 }
 
 ##
@@ -321,7 +391,8 @@ Choose the information you need regarding MySQL
 $(ColorGreen '1)') List MySQL sleeping Processes.
 $(ColorGreen '2)') Kill all MySQL sleeping Processes.
 $(ColorGreen '3)') Show full processlist.
-$(ColorGreen '4)') Show MySQL status and Uptime
+$(ColorGreen '4)') Show MySQL status and Uptime.
+$(ColorGreen '5)') Kill all MySQL sleeping Processes "for" a specific user.
 $(ColorGreen '0)') Back To Main Menu.
 
 $(ColorBlue 'Choose an option:') "
@@ -331,6 +402,7 @@ $(ColorBlue 'Choose an option:') "
                 2) kill_mysql_sleeping_proc;;
                 3) show_full_processlist;;
  	        4) mysql_status;;
+		5) kill_mysql_sleeping_proc_user;;
                 0) MainMenu;;
 		*) echo -e $red"Wrong command."$clear; MySQLMenu;;
         esac
