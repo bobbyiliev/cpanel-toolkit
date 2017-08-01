@@ -274,9 +274,9 @@ $(ColorBlue 'Choose an option:') "
         esac
 }
 
-##
-# The Main Menu
-##
+#################
+# The Main Menu #
+#################
 MainMenu(){
 clear
                 ColorGreen "        "
