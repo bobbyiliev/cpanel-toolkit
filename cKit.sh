@@ -213,7 +213,11 @@ rm IsFunction.php
 ToolsMenu
 }
 
-prompt(){
+##
+# Function that is used as a failsafe of giving
+# non-existent commands
+##
+WrongCommand(){
         echo "Press Enter to go back to Main menu"
         read a
         clear
@@ -363,7 +367,7 @@ $(ColorBlue 'Choose an option:') "
 		2) EmailsMenu;;
 		3) MySQLMenu;;
 		4) ToolsMenu;;
-		*) echo -e $red"Wrong command."$clear; prompt;;
+		*) echo -e $red"Wrong command."$clear; WrongCommand;;
         esac
 }
 clear
