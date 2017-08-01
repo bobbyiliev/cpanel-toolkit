@@ -13,7 +13,7 @@ function check_mysql_conn() {
 	elif [[ ${percent} -gt 65 ]] && [[ ${percent} -lt 85 ]] ; then
 		echo "Be careful! You are using ${percent} of the allowed MySQL connections";
 	elif [[ $percent -gt 90 ]]; then
-		echo "Attention! Check with SysOps! The server is using more than ${percent} of the allowed MySQL connections";
+		echo "Attention! Check with your friendly SysOps! The server is using more than ${percent} of the allowed MySQL connections";
 	fi
 }
 
