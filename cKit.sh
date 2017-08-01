@@ -434,7 +434,7 @@ echo -ne "
 Main Menu
 $(ColorGreen '1)') Access Logs Menu
 $(ColorGreen '2)') SPAM Scan Menu
-$(ColorGreen '3)') MySqL Menu
+$(ColorGreen '3)') MySQL Menu
 $(ColorGreen '4)') Handy Tools
 $(ColorGreen '0)') Exit
 
