@@ -1,8 +1,8 @@
 <?php
 
 if(function_exists('functionExists')) {
-    echo "functionExists is enabled";
+    echo PHP_EOL ."functionExists is enabled on the server".PHP_EOL;
 }
 else{
-    echo "this doesn't work";
+    echo PHP_EOL."functionExists is not enabled on the server".PHP_EOL;
 }
