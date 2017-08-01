@@ -480,7 +480,8 @@ $(ColorBlue 'Choose an option:') "
 DDoSMenu(){
                 ColorGreen "        "
 echo -ne "
-Main Menu
+DDoS Menu
+
 $(ColorGreen '1)') Lists the Ips which are connected to server and how many connections exist from each IP
 $(ColorGreen '2)') lists the users which are running the most processes at the moment - the top 5 users
 $(ColorGreen '3)') Function that lists the total process running by the users
@@ -509,6 +510,7 @@ clear
                 ColorGreen "        "
 echo -ne "
 Main Menu
+
 $(ColorGreen '1)') Access Logs Menu
 $(ColorGreen '2)') SPAM Scan Menu
 $(ColorGreen '3)') MySQL Menu
