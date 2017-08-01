@@ -1,5 +1,22 @@
 #!/bin/bash
 
+## STILL IN DEVELOPMENT !!! ###
+
+######################################################################
+# Date: July 25th 2017                                               #
+# Authors:                                                           #
+#  - Bobby I. - MSD Team at Paragon Internet Group - GoDaddy EMEA    #
+#  - Alex G - SysOps Team at Paragon Internet Group - GoDaddy EMEA   #
+#  - Kalin D. - SysOps Team at Paragon Internet Group - GoDaddy EMEA #
+# Emails:                                                            #
+# <bobby@paragon.net.uk>                                             #
+# <alex@paragon.net.uk>                                              #
+# <kalin.dimitrov@paragon.net.uk>                                    #
+# __revision='1.0'                                                   #
+# Simple cPanel Terminal ToolKit that would help you manage and      #
+# troubleshoot issues with your server easily via SSH                #
+######################################################################
+
 ###################
 ###  Variables  ###
 ###################
@@ -59,9 +76,15 @@ MenuAcess
 function SpecificDomainAccessLogs {
 for i in $(grep $responsedomain '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}'); do
                 domains=${i};
-                username="$(grep ${domains} /etc/userdomains | awk -F": " '{print $2 }' | tail -1)";
-                echo "$domains access logs"
-                cat /home/$username/access-logs/$domains* | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head #2>/dev/null
+		if [ -z $domains ] ; then
+			echo "Domain not found on this server! Please check for typos or try another domain."
+		MenuAcessDomain
+		else {
+	                username="$(grep ${domains} /etc/userdomains | awk -F": " '{print $2 }' | tail -1)";
+        	        echo "$domains access logs"
+                	cat /home/$username/access-logs/$domains* | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head #2>/dev/null
+		}
+		fi
         done
 }
 
