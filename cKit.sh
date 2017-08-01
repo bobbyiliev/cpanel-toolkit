@@ -1,18 +1,21 @@
 #!/bin/bash
-#######################################/Color variables/#######################################
+
+###################        
+###  Variables  ###
+###################
 green='\e[32m'
 blue='\e[34m'
 clear='\e[0m'
-###############################################################################################
+
+###################        
+###  Functions  ###
+###################
 ColorGreen(){
 	echo -ne $green$1$clear
 }
 ColorBlue(){
 	echo -ne $blue$1$clear
 }
-
-#######################################/Functions/############################################
-
 
 ##
 # Function that lists access logs for every website separately
@@ -148,6 +151,9 @@ function mysql_status(){
     mysqladmin status | grep -v "show processlist"
 }
 
+##
+# Function that shows if an extension is enabled 
+##
 function is_extension(){
 wget -O IsExtension.php https://raw.githubusercontent.com/bobbyiliev/cpanel-toolkit/master/dev/IsExtension.txt
 
@@ -161,6 +167,9 @@ rm IsExtension.php
 ToolsMenu
 }
 
+##
+# Function that shows if a function is enabled
+##
 function is_function(){
 wget -O IsFunction.php https://raw.githubusercontent.com/bobbyiliev/cpanel-toolkit/master/dev/IsFunction.txt
 
@@ -177,8 +186,12 @@ ToolsMenu
 
 
 ###########################
-###  Qucik Accsess Menu ###
+###  Quick Access Menu ###
 ###########################
+
+##
+# Access Logs Menu
+##
 MenuAcess(){
 
             	ColorGreen "        "
@@ -200,18 +213,20 @@ $(ColorBlue 'Choose an option:') "
         esac
 }
 
+##
+#  Section in the Access Logs Menu that ask for a specific domain 
+##
 MenuAcessDomain(){
 
 	echo -ne "
 Please type the domain (example.com)"
                 read responsedomain
 		SpecificDomainAccessLogs
-#if [[ $responsedomain != '*.*' ]]; then
-#	echo "There is no such domain"
-#	MenuAcessDomain
-#fi
 }
 
+##
+# Email Features Menu
+##
 EmailsMenu(){
 
             	ColorGreen "        "
