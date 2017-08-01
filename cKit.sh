@@ -48,6 +48,7 @@ for i in $(cat '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}'); do
                 echo "$domains access logs" 
                 cat /home/$username/access-logs/$domains* | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head #2>/dev/null
         done
+MenuAcess
 }
 
 ##
