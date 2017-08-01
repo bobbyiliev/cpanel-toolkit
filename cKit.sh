@@ -56,7 +56,7 @@ EmailsMenu
 
 function originate2(){
 	egrep -R "X-PHP-Script"  /var/spool/exim/input/*
-emailsMenu
+EmailsMenu
 }
 
 
