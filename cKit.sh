@@ -224,6 +224,15 @@ WrongCommand(){
         MainMenu
 }
 
+##
+# Function to exit the Main menu
+# Use it to exit the script
+##
+
+Exitmenu(){
+        echo -e $green"Goodbye!"$clear;
+        exit 1
+}
 
 ###########################
 ###  Quick Access Menu ###
@@ -359,6 +368,7 @@ $(ColorGreen '1)') Access Logs Menu
 $(ColorGreen '2)') SPAM Scan Menu
 $(ColorGreen '3)') MySqL Menu
 $(ColorGreen '4)') Handy Tools
+$(ColorGreen '0)') Exit
 
 $(ColorBlue 'Choose an option:') "
                 read a
@@ -367,6 +377,7 @@ $(ColorBlue 'Choose an option:') "
 		2) EmailsMenu;;
 		3) MySQLMenu;;
 		4) ToolsMenu;;
+		0) Exitmenu;;
 		*) echo -e $red"Wrong command."$clear; WrongCommand;;
         esac
 }
