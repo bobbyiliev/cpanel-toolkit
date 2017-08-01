@@ -59,46 +59,74 @@ for i in $(grep $responsedomain '/etc/userdomains' | grep -v '*' | awk -F":" '{p
                 cat /home/$username/access-logs/$domains* | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head #2>/dev/null
         done
 }
+
+##
+# Function that lists all the email senders in the exim mail queue
+# You can use it in order to see which emails accounts have authenticated
+##
 function showexim(){
         exigrep @ /var/log/exim_mainlog | grep _login | sed -n 's/.*_login:\(.*\)S=.*/\1/p' | sort -n | uniq -c | sort -n
 EmailsMenu
 }
 
-
+##
+# Function that lists the directories from which are sent spam emails
+# You can use it in order to see if a directory is being compromised, e.g scan the directories from the result
+##
 function originate(){
         grep "cwd=/home" /var/log/exim_mainlog | awk '{for(i=1;i<=10;i++){print $i}}' | sort | uniq -c | grep cwd | sort -n
 EmailsMenu
 }
 
-
+##
+# Function that lists the exact PHP scripts which were sending emails
+# You can use it to locate malware PHP mail scripts
+##
 function originate2(){
 	egrep -R "X-PHP-Script"  /var/spool/exim/input/*
 EmailsMenu
 }
 
-
+##
+# Function that lists the directories from which are sent spam emails
+# You can use it in order to see if a directory is being compromised, e.g scan the directories from the result
+##
 function whichphpscript(){
         grep 'cwd=/home' /var/log/exim_mainlog | awk '{print $3}' | cut -d / -f 3 | sort -bg | uniq -c | sort -bg
 EmailsMenu
 }
 
+##
+# Function that lists all the IPs which are connected on port 25
+# You can use it in order to see which IPs were using the insecure port to send emails
+##
 function getnetstat(){
         netstat -plan | grep :25 | awk {'print $5'} | cut -d: -f 1 | sort | uniq -c | sort -nk 1
 EmailsMenu
 }
 
-
+##
+# Function that shows if anyone was using the nobody spamming method
+# This is very rare case but you can still check for such SPAM messages
+##
 function nobodyspam(){
        	ps -C exim -fH ewww | awk '{for(i=1;i<=40;i++){print $i}}' | sort | uniq -c | grep PWD | sort -n
 EmailsMenu
 }
 
-
+##
+# Function that shows if anyone was using the nobody spamming method but shows all the historical emails
+# This is very rare case but you can still check for such SPAM messages
+##
 function nobodyspamafter(){
        	grep "cwd=" /var/log/exim_mainlog | awk '{for(i=1;i<=10;i++){print $i}}' | sort | uniq -c | grep cwd | sort -n
 EmailsMenu
 }
 
+##
+# Function that will give the summary of mails in the mail queue.
+# You can use it to see all the emails in the exim mail queue summarized.
+##
 function showeximsum(){
         exim -bpr | exiqsumm -c | head
 EmailsMenu
@@ -234,12 +262,12 @@ echo -ne "
 Choose the information you need regarding Email Logs
 
 $(ColorGreen '1)') Receive a sorted list of all the email senders in the exim mail queue.
-$(ColorGreen '2)') The following script will check the script that will originate spam mails..
-$(ColorGreen '3)') The following script will check for emails sent via php script.
-$(ColorGreen '4)') See which script is being used to send the spam emails. If it is from php then use.
-$(ColorGreen '5)') It shows the IPs which are connected to server through port number 25.
-$(ColorGreen '6)') In order to find “nobody” spamming, issue the following command.
-$(ColorGreen '7)') The above command is valid only if the spamming is currently in progress.
+$(ColorGreen '2)') The following option will display the directories from which the emails are being sent.
+$(ColorGreen '3)') The following option will check for emails sent via php script.
+$(ColorGreen '4)') The following option will display the users which were sending out emails within their directories.
+$(ColorGreen '5)') It shows the IPs which were sending emails via port 25..
+$(ColorGreen '6)') In order to find “nobody” spamming, use this option..
+$(ColorGreen '7)') The above command is valid only if the spamming is currently in progress If not use this otpion..
 $(ColorGreen '8)') The following script will give the summary of mails in the mail queue.
 $(ColorGreen '0)') Back to Main Menu.
 
