@@ -1,8 +1,8 @@
 <?php
 
 if (extension_loaded('extensionExists')) {
-        echo -ne ' 
-		extensionExists is enabled on the server,';
+        echo -ne "
+		extensionExists is enabled on the server";
     }
 else{
     echo -new  "
