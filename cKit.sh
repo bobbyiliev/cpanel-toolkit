@@ -13,6 +13,11 @@ ColorBlue(){
 
 #######################################/Functions/############################################
 
+
+##
+# Function that lists access logs for every website separately
+# including POST/GET requests and IP logs. 
+##
 function access_and_ip_logs() {
 for i in $(cat '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}'); do
                 domains=${i};
@@ -25,6 +30,10 @@ for i in $(cat '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}'); do
 MenuAcess
 }
 
+##
+# Function that lists access logs for every website separately
+# including only POST/GET requests. 
+##
 function OnlyAccessLogs {
 for i in $(cat '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}'); do
                 domains=${i};
@@ -33,6 +42,11 @@ for i in $(cat '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}'); do
                 cat /home/$username/access-logs/$domains* | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head #2>/dev/null
         done
 }
+
+##
+# Function that lists access logs for a specific website 
+# including only POST/GET requests. 
+##
 
 function SpecificDomainAccessLogs {
 for i in $(grep $responsedomain '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}'); do
