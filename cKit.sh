@@ -17,6 +17,9 @@ ColorGreen(){
 ColorBlue(){
 	echo -ne $blue$1$clear
 }
+ColorRed(){
+	echo -ne $red$1$clear
+}
 
 ##
 # Function that lists access logs for every website separately
@@ -134,6 +137,27 @@ EmailsMenu
 }
 
 ##
+# Startup MySQL Info
+##
+function check_mysql_startup_info() {
+	#Get MySQL connections value
+	allowed=$(mysql -e 'show variables like "max_connections"' | grep 'max_conn' | awk '{print $2}')
+	current=$(mysqladmin proc | grep -v Id | grep -v '\-\-\-' | wc | awk '{ print $1}')
+	percent=$(awk "BEGIN { pc=100*${current}/${allowed}; i=int(pc); print (pc-i<0.5)?i:i+1 }")
+	alright=65;
+	echo ""
+	echo "You are using $(ColorGreen $current) of the allowed $(ColorGreen $allowed) MySQL connections"
+	if [ "$percent" -lt "$alright" ]; then
+		echo "It is OK, you are using only $(ColorGreen ${percent})% of the allowed MySQL connections";
+	elif [[ ${percent} -gt 65 ]] && [[ ${percent} -lt 85 ]] ; then
+		echo "Be careful! You are using $(ColorBlue ${percent})% of the allowed MySQL connections";
+	elif [[ $percent -gt 90 ]]; then
+		echo "Attention! Check with your friendly SysOps! The server is using more than $(ColorRed ${percent})% of the allowed MySQL connections";
+	fi
+}
+
+
+##
 # Function that lists all of the sleeping MySQL processes
 # In many cases the sleeping processes could be causing high CPU load
 ##
@@ -234,6 +258,7 @@ MySQLMenu
 # Function that lists all MySQL proccesses
 ##
 function show_full_processlist() {
+    check_mysql_startup_info
     mysqladmin processlist status
 MySQLMenu
 }
@@ -241,6 +266,7 @@ MySQLMenu
 # Function that shows the MySQL status and uptime
 ##
 function mysql_status(){
+    check_mysql_startup_info
     mysqladmin status | grep -v "show processlist"
 MySQLMenu
 }
@@ -432,6 +458,7 @@ $(ColorBlue 'Choose an option:') "
 # The MySQL Menu
 ##
 MySQLMenu(){
+#check_mysql_startup_info
                 ColorGreen "        "
 echo -ne "
 
