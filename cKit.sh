@@ -463,8 +463,8 @@ echo -ne "
 
 Cool Tools
 
-$(ColorGreen '1)') Check if an extension is enabled on the server.
-$(ColorGreen '2)') Check if a function is enabled on the server.
+$(ColorGreen '1)') Check if a PHP extension is enabled on the server.
+$(ColorGreen '2)') Check if a PHP function is enabled on the server.
 $(ColorGreen '0)') Back To Main Menu.
 
 $(ColorBlue 'Choose an option:') "
