@@ -1,4 +1,4 @@
-W#!/bin/bash
+#!/bin/bash
 
 ###################
 ###  Variables  ###
