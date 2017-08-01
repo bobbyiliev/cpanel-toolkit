@@ -55,7 +55,7 @@ EmailsMenu
 
 
 function originate2(){
-        awk '{ if ($0 ~ "cwd" && $0 ~ "home") {print $3} }' /var/log/exim_mainlog | sort | uniq -c | sort -nk 1
+	egrep -R "X-PHP-Script"  /var/spool/exim/input/*
 EmailsMenu
 }
 
@@ -205,13 +205,13 @@ echo -ne "
 Choose the information you need regarding Email Logs
 
 $(ColorGreen '1)') Receive a sorted list of all the email senders in the exim mail queue.
-$(ColorGreen '2)') The following scripts will check the script that will originate spam mails..
-$(ColorGreen '2.1)') The following scripts will check the script that will originate spam mails.
-$(ColorGreen '3)') See which script is being used to send the spam emails. If it is from php then use.
-$(ColorGreen '4)') It shows the IPs which are connected to server through port number 25.
-$(ColorGreen '5)') In order to find “nobody” spamming, issue the following command.
-$(ColorGreen '5.1)') The above command is valid only if the spamming is currently in progress.
-$(ColorGreen '6)') The following script will give the summary of mails in the mail queue.
+$(ColorGreen '2)') The following script will check the script that will originate spam mails..
+$(ColorGreen '3)') The following script will check for emails sent via php script.
+$(ColorGreen '4)') See which script is being used to send the spam emails. If it is from php then use.
+$(ColorGreen '5)') It shows the IPs which are connected to server through port number 25.
+$(ColorGreen '6)') In order to find “nobody” spamming, issue the following command.
+$(ColorGreen '7)') The above command is valid only if the spamming is currently in progress.
+$(ColorGreen '8)') The following script will give the summary of mails in the mail queue.
 $(ColorGreen '0)') Back to Main Menu.
 
 $(ColorBlue 'Choose an option:') "
@@ -219,12 +219,12 @@ $(ColorBlue 'Choose an option:') "
                 case $a in
                 1) showexim ;;
                 2) originate;;
-                2.1) originate2;;
-                3) whichphpscript;;
-                4) getnetstat;;
-                5) nobodyspam;;
-                5.1) nobodyspamafter;;
-                6) showeximsum;;
+                3) originate2;;
+                4) whichphpscript;;
+                5) getnetstat;;
+                6) nobodyspam;;
+                7) nobodyspamafter;;
+                8) showeximsum;;
                 0) MainMenu;;
         esac
 }
