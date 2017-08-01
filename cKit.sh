@@ -241,7 +241,6 @@ MySQLMenu
 # Function that shows the MySQL status and uptime
 ##
 function mysql_status(){
-    #service mysql status
     mysqladmin status | grep -v "show processlist"
 MySQLMenu
 }
