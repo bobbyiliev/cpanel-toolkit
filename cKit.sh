@@ -190,6 +190,7 @@ MySQLMenu
 ##
 function kill_mysql_sleeping_proc_user() {
     echo "Use this if you would like to kill all sleeping MySQL proccesses for 1 MySQL user only"
+    unset sqluser	
     while [ -z $sqluser ]; do
     echo "Please Enter MySQL user or type exit:"
     read sqluser
@@ -202,7 +203,6 @@ function kill_mysql_sleeping_proc_user() {
     allowedsleep=10
         if [ -z "$sleepingProc" ]; then
         echo "No Sleeping MySQL Proccesses ATM";
-	unset $sqluser
         else
             	for i in $(mysql -e 'show processlist' | grep 'Sleep' | awk '{print $1}'); do
                         #declare -i prockilled=0
@@ -217,16 +217,12 @@ function kill_mysql_sleeping_proc_user() {
                 done
                 if [ ! -z $prockilled ] && [ $prockilled -lt 1 ]; then
                         echo "No quries associated with $sqluser have been running for more than $allowedsleep seconds"
-			unset $sqluser
                 elif [ ! -z $prockilled ] && [ $prockilled -eq 1 ]; then
                         echo "User: $sqluser .. killed only 1 MySQL query that was sleeping for more than $allowedsleep seconds"
-			unset $sqluser
                 elif [ ! -z $prockilled ] && [ $prockilled -gt 1 ]; then
                         echo "User: $sqluser .. killed $prockilled MySQL query that was sleeping for more than $allowedsleep seconds"
-			unset $sqluser
                 else {
                       	echo "User: $sqluser .. No quries have been sleeping for more than $allowedsleep seconds"
-			unset $sqluser
                 }
                 fi
         fi
