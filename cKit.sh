@@ -424,8 +424,8 @@ function GetPortConn(){
 ##
 # Function that monitors the CPU usage
 ##
-trap command SIGINT
 function MonitorCpu(){
+trap command SIGINT
 while true; do 
         echo '';
         echo 'The current CPU usage is:'; 
@@ -434,6 +434,7 @@ while true; do
         echo "To stop the script press 'Ctrl+C'"
         sleep 2 || break
 done
+	trap - SIGINT
 	ToolsMenu
 }
 
