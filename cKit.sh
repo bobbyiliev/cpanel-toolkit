@@ -438,16 +438,10 @@ done
 	ToolsMenu
 }
 
-exitFunction(){
-#echo "Exit function has been called..."
-exit 0;
-}
-
 ##
-# Function that generated a random password
+# Function that generates a random password
 # You can use it whenever you need to enter new password
 ##
-
 function randompass(){
         date +%s | sha256sum | base64 | head -c 14 ; echo
         echo "Do you want to genrate stronger password[yes/no]"
@@ -458,6 +452,17 @@ else {
         echo "Exit then"
 }
 fi
+ToolsMenu
+}
+
+##
+# Function that finds files larger than 100MB in /home/
+##
+function FindLargeFiles(){
+trap command SIGINT
+ 	echo $(ColorGreen "This might take some time. To stop the script press 'Ctrl+C")
+	ionice -n 3 -c 3 find /home ! -path "/home/virtfs/*" -type f -size +100M -exec du -hs {} \;
+	trap - SIGINT
 ToolsMenu
 }
 
@@ -576,6 +581,7 @@ $(ColorGreen '1)') Check if a PHP extension is enabled on the server.
 $(ColorGreen '2)') Check if a PHP function is enabled on the server.
 $(ColorGreen '3)') Generate a random password
 $(ColorGreen '4)') Live Monitor of the CPU.
+$(ColorGreen '5)') Find files larger than 100MB in /home/
 $(ColorGreen '0)') Back To Main Menu.
 
 $(ColorBlue 'Choose an option:') "
@@ -585,6 +591,7 @@ $(ColorBlue 'Choose an option:') "
                 2) is_function;;
 		3) randompass;;
 		4) MonitorCpu;;
+		5) FindLargeFiles;;
                 0) MainMenu;;
 		*) echo -e $red"Wrong command."$clear; ToolsMenu;;
         esac
