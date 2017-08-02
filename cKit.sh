@@ -676,7 +676,7 @@ $(ColorBlue 'Choose an option:') "
 ##
 
 CloudMenu(){
-if [[ ! -f /etc/userdomains ]]; then
+if [[ -f /etc/userdomains ]]; then
 echo $(ColorRed 'You are not on the Cloud')
 WrongCommand
 MainMenu
