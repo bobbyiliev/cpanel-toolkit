@@ -442,6 +442,25 @@ exitFunction(){
 #echo "Exit function has been called..."
 exit 0;
 }
+
+##
+# Function that generated a random password
+# You can use it whenever you need to enter new password
+##
+
+function randompass(){
+        date +%s | sha256sum | base64 | head -c 14 ; echo
+        echo "Do you want to genrate stronger password[yes/no]"
+        read answer
+        if [ ! -z $answer ] && [ $answer = "yes" ]; then
+        date +%s | sha256sum | base64 | head -c 20 ; echo
+else {
+        echo "Exit then"
+}
+fi
+ToolsMenu
+}
+
 ###########################
 ###  Quick Access Menu ###
 ###########################
@@ -555,6 +574,7 @@ Cool Tools
 
 $(ColorGreen '1)') Check if a PHP extension is enabled on the server.
 $(ColorGreen '2)') Check if a PHP function is enabled on the server.
+$(ColorGreen '3)') Generate a random password
 $(ColorGreen '4)') Live Monitor of the CPU.
 $(ColorGreen '0)') Back To Main Menu.
 
@@ -563,6 +583,7 @@ $(ColorBlue 'Choose an option:') "
                 case $a in
                 1) is_extension;;
                 2) is_function;;
+		3) randompass;;
 		4) MonitorCpu;;
                 0) MainMenu;;
 		*) echo -e $red"Wrong command."$clear; ToolsMenu;;
@@ -572,7 +593,7 @@ $(ColorBlue 'Choose an option:') "
 DDoSMenu(){
                 ColorGreen "        "
 echo -ne "
-DDoS Menu
+Web Traffic Menu
 
 $(ColorGreen '1)') Lists the Ips which are connected to server and how many connections exist from each IP
 $(ColorGreen '2)') lists the users which are running the most processes at the moment - the top 5 users
@@ -606,7 +627,7 @@ Main Menu
 $(ColorGreen '1)') Access Logs Menu
 $(ColorGreen '2)') SPAM Scan Menu
 $(ColorGreen '3)') MySQL Menu
-$(ColorGreen '4)') DDoS Menu
+$(ColorGreen '4)') Web Traffic Menu
 $(ColorGreen '5)') Handy Tools
 $(ColorGreen '0)') Exit
 
