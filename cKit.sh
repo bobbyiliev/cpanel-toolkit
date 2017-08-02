@@ -689,7 +689,7 @@ ToolsMenu
 # Access Logs Menu
 ##
 MenuAcess(){
-if [[ $(pwd | grep '/var/sites/') ]]; then
+if [[ ! -f /etc/userdomains ]]; then
 echo $(ColorRed 'You are not on cPanel')
 WrongCommand
 MainMenu
@@ -768,7 +768,7 @@ MenuAcess
 # Email Features Menu
 ##
 EmailsMenu(){
-if [[ $(pwd | grep '/var/sites/') ]]; then
+if [[ ! -f /etc/userdomains ]]; then
 echo $(ColorRed 'You are not on cPanel')
 WrongCommand
 MainMenu
@@ -842,7 +842,7 @@ fi
 }
 
 ToolsMenu(){
-if [[ $(pwd | grep '/var/sites/') ]]; then
+if [[ ! -f /etc/userdomains ]]; then
 echo $(ColorRed 'You are not on cPanel')
 WrongCommand
 MainMenu
