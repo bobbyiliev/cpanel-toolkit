@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(0);
 if(function_exists('functionExists')) {
     echo PHP_EOL . escapeshellarg(functionExists) . " is enabled on the server".PHP_EOL;
 }
