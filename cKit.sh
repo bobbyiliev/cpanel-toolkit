@@ -204,18 +204,13 @@ MySQLMenu
 function kill_mysql_sleeping_proc() {
     sleepingProc=$(mysqladmin proc | grep Sleep)
     allowedsleep=60
-    #echo "Only for SysAdmins! Please enter the secret password:"
     unset password
     while [ -z $password ] ; do
     echo "Only for SysAdmins! Please enter the secret password or type exit:"
     read password
     done
-    #if [ $password = "exit" ]; then
-    #MySQLMenu
-    #else
     if [ $password = "SysAdmins" ]; then
     unset password
-        #read password
         if [ -z "$sleepingProc" ]; then
         echo "No Sleeping MySQL Proccesses ATM";
         else
@@ -242,7 +237,6 @@ function kill_mysql_sleeping_proc() {
                 fi
         fi
 	fi
-	#fi
 MySQLMenu
 }
 
@@ -251,18 +245,27 @@ MySQLMenu
 # In case you need to reduce the CPU load or free up some RAM you could use this function
 ##
 function kill_mysql_sleeping_proc_user() {
+    echo ""
     echo "Use this if you would like to kill all sleeping MySQL proccesses for 1 MySQL user only"
-    unset sqluser	
-    while [ -z $sqluser ]; do
-    echo "Please Enter MySQL user or type exit:"
-    read sqluser
+    unset password
+    echo ""
+    while [ -z $password ] ; do
+        echo "Only for SysAdmins! Please enter the secret password or type exit:"
+    read password
     done
-    if [ $sqluser = "exit" ]; then
-    MySQLMenu
-    #exit 0;
-    else
-    sleepingProc=$(mysqladmin proc | grep Sleep | grep $sqluser)
-    allowedsleep=10
+    if [ $password = "SysAdmins" ]; then
+    unset password
+      unset sqluser	
+      while [ -z $sqluser ]; do
+      echo "Please Enter MySQL user or type exit:"
+      read sqluser
+      done
+      if [ $sqluser = "exit" ]; then
+      MySQLMenu
+      #exit 0;
+      else
+      sleepingProc=$(mysqladmin proc | grep Sleep | grep $sqluser)
+      allowedsleep=10
         if [ -z "$sleepingProc" ]; then
         echo "No Sleeping MySQL Proccesses ATM";
         else
@@ -289,6 +292,7 @@ function kill_mysql_sleeping_proc_user() {
                 fi
         fi
    fi
+  fi
 MySQLMenu
 }
 
