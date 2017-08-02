@@ -672,7 +672,7 @@ ToolsMenu
 # Access Logs Menu
 ##
 MenuAcess(){
-if [[ ! -f /etc/userdomains ]]; then
+if [[ $(pwd | grep '/var/sites/') ]]; then
 echo $(ColorRed 'You are not on cPanel')
 WrongCommand
 MainMenu
@@ -704,7 +704,7 @@ fi
 # Cloud Menu
 ##
 CloudMenu(){
-if [[ -f /etc/userdomains ]]; then
+if [[ ! $(pwd | grep '/var/sites/') ]]; then
 echo $(ColorRed 'You are not on the Cloud')
 WrongCommand
 MainMenu
@@ -749,7 +749,7 @@ MenuAcess
 # Email Features Menu
 ##
 EmailsMenu(){
-if [[ ! -f /etc/userdomains ]]; then
+if [[ $(pwd | grep '/var/sites/') ]]; then
 echo $(ColorRed 'You are not on cPanel')
 WrongCommand
 MainMenu
@@ -791,7 +791,7 @@ fi
 ##
 MySQLMenu(){
 #check_mysql_startup_info
-if [[ ! -f /etc/userdomains ]]; then
+if [[ $(pwd | grep '/var/sites/') ]]; then
 echo $(ColorRed 'You are not on cPanel')
 WrongCommand
 MainMenu
@@ -823,7 +823,7 @@ fi
 }
 
 ToolsMenu(){
-if [[ ! -f /etc/userdomains ]]; then
+if [[ $(pwd | grep '/var/sites/') ]]; then
 echo $(ColorRed 'You are not on cPanel')
 WrongCommand
 MainMenu
@@ -857,7 +857,7 @@ fi
 }
 
 DDoSMenu(){
-if [[ ! -f /etc/userdomains ]]; then
+if [[ $(pwd | grep '/var/sites/') ]]; then
 echo $(ColorRed 'You are not on cPanel')
 WrongCommand
 MainMenu
