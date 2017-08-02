@@ -424,11 +424,23 @@ function GetPortConn(){
 ##
 # Function that monitors the CPU usage
 ##
+trap command SIGINT
 function MonitorCpu(){
-while true; do echo 'The current CPU usage is:'; grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage "%"}' ; sleep 1; done
+while true; do 
+        echo '';
+        echo 'The current CPU usage is:'; 
+        grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage "%"}' || break
+        echo '';
+        echo "To stop the script press 'Ctrl+C'"
+        sleep 2 || break
+done
+	ToolsMenu
 }
 
-
+exitFunction(){
+#echo "Exit function has been called..."
+exit 0;
+}
 ###########################
 ###  Quick Access Menu ###
 ###########################
