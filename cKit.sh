@@ -700,7 +700,7 @@ $(ColorBlue 'Choose an option:') "
                 2) composer_cloud_install;;
                 3) laravel_cloud_installer;;
                 0) MainMenu;;
-                *) echo -e $red"Wrong command."$clear; MenuAcess;;
+                *) echo -e $red"Wrong command."$clear; CloudMenu;;
         esac
 fi
 }
