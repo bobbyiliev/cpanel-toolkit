@@ -204,6 +204,18 @@ MySQLMenu
 function kill_mysql_sleeping_proc() {
     sleepingProc=$(mysqladmin proc | grep Sleep)
     allowedsleep=60
+    #echo "Only for SysAdmins! Please enter the secret password:"
+    unset password
+    while [ -z $password ] ; do
+    echo "Only for SysAdmins! Please enter the secret password or type exit:"
+    read password
+    done
+    #if [ $password = "exit" ]; then
+    #MySQLMenu
+    #else
+    if [ $password = "SysAdmins" ]; then
+    unset password
+        #read password
         if [ -z "$sleepingProc" ]; then
         echo "No Sleeping MySQL Proccesses ATM";
         else
@@ -229,6 +241,8 @@ function kill_mysql_sleeping_proc() {
                 }
                 fi
         fi
+	fi
+	#fi
 MySQLMenu
 }
 
