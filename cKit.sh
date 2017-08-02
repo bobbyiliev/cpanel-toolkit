@@ -202,6 +202,7 @@ MySQLMenu
 # In case you need to reduce the CPU load or free up some RAM you could use this function
 ##
 function kill_mysql_sleeping_proc() {
+trap command SIGINT
     sleepingProc=$(mysqladmin proc | grep Sleep)
     allowedsleep=60
     unset password
@@ -237,6 +238,7 @@ function kill_mysql_sleeping_proc() {
                 fi
         fi
 	fi
+trap - SIGINT
 MySQLMenu
 }
 
@@ -245,6 +247,7 @@ MySQLMenu
 # In case you need to reduce the CPU load or free up some RAM you could use this function
 ##
 function kill_mysql_sleeping_proc_user() {
+    trap command SIGINT
     echo ""
     echo "Use this if you would like to kill all sleeping MySQL proccesses for 1 MySQL user only"
     unset password
@@ -293,6 +296,7 @@ function kill_mysql_sleeping_proc_user() {
         fi
    fi
   fi
+trap - SIGINT
 MySQLMenu
 }
 
