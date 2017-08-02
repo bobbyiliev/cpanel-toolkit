@@ -470,8 +470,179 @@ trap command SIGINT
 ToolsMenu
 }
 
+#############################
+### Cloud Functoions Only ###
+#############################
+
+##
+# Function that installs wp-cli on the Cloud platform
+##
+function wp_cli_cloud_install() {
+	echo -e "\e[92mImportant! Use only on the Cloud \e[97m"
+	echo -e "\e[92mAre you running this on the cloud? Enter [yes/no] \e[97m" 
+	unset answer
+	read answer
+	while [ -z $answer ]; do
+		echo -e "\e[92mAre you running this on the cloud? [yes/no] \e[97m"
+	read answer
+	done
+	if [ $answer = "yes" ]; then
+
+		cd ~/
+		curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+		chmod +x wp-cli.phar
+		echo '' >> ~/.bashrc
+		CLI_ALIAS="alias wp='/usr/bin/php-5.6-cli ~/wp-cli.phar'"
+		if grep -q "alias wp='/usr/bin/php-5.6-cli ~/wp-cli.phar'" ".bashrc"
+		then
+			echo ""
+			echo -e "\e[92mwpcli has already been installed, no need of running the command again"	
+		else 
+			echo $CLI_ALIAS >> ~/.bashrc
+		fi
+
+		echo ""
+		echo -e "\e[92mTo test the installation run: "
+		echo -e 'source ~/.bashrc'
+		echo -e "\e[92mwp plugin list --path='public_html'"
+		echo -e "\e[97mAnd that's all!"
+	fi
+CloudMenu
+}
+
+##
+# Function that installs composer on the Cloud platform
+##
+function composer_cloud_install() {
+        echo -e "\e[92mImportant! Use only on the Cloud \e[97m"
+        echo -e "\e[92mAre you running this on the cloud? Enter [yes/no] \e[97m"
+        unset answer
+        read answer
+        while [ -z $answer ]; do
+                echo -e "\e[92mAre you running this on the cloud? [yes/no] \e[97m"
+        read answer
+        done
+	if [ $answer = "yes" ]; then
+		cd ~/
+		mkdir -p ~/bin/composer
+		#ln -s /usr/bin/php-5.6-cli php
+		ln -s /usr/bin/php-7.0 php
+              	ln -s /usr/bin/php-7.0 ~/bin/php
+		curl -sS https://getcomposer.org/installer | /usr/bin/php-5.6-cli
+		mv ~/composer.phar ~/bin/composer/ 
+		echo '' >> ~/.bashrc
+		COMPOSER="alias composer='/usr/bin/php-5.6-cli ~/bin/composer/composer.phar'"
+		if grep -q "alias composer='/usr/bin/php-5.6-cli ~/bin/composer/composer.phar'" ".bashrc"
+		then
+			echo "composer has already been installed, no need of running the command again"
+		else
+			echo $COMPOSER >>  ~/.bashrc
+		fi
+	echo -e ""
+	echo -e "\e[92mTo test the installation run: "
+	echo -e 'source ~/.bashrc'
+	echo -e "\e[92mcomposer --version"
+	echo -e "\e[97mAnd that's all!!"
+	fi
+CloudMenu
+}
+
+##
+# Function that installs laravel on the Cloud platform
+# Laravel Auto Installer - Cloud Platform Only
+##
+function laravel_cloud_installer() {
+        echo -e "\e[92mImportant! Use only on the Cloud \e[97m"
+        echo -e "\e[92mAre you running this on the cloud? Enter [yes/no] \e[97m"
+        unset answer
+        read answer
+        while [ -z $answer ]; do
+                echo -e "\e[92mAre you running this on the cloud? [yes/no] \e[97m"
+        read answer
+        done
+	if [ $answer = "yes" ]; then
+		echo "#  Laravel Auto Installer - Cloud Platform Only  #"
+
+			cd ~/
+
+			###
+			# The bellow fixes the issue where some scripts detect a wrong php version due to the new #!/usr/bin/env php shebang
+			###
+
+			if grep -q 'HOME/bin' ~/.bashrc 
+			then
+				echo "You already have a custom bin folder."
+			else
+			echo "
+if [ -d "\$HOME/bin" ] ; then
+PATH="\$HOME/bin:\$PATH"
+fi" >> ~/.bashrc
+			fi
+
+			source ~/.bashrc
+
+			mkdir -p ~/bin/composer
+
+			ln -sfn /usr/bin/php-7.0 php
+			ln -sfn /usr/bin/php-7.0 ~/bin/php
+
+			sed -i "s/5.4/5.6/g" ~/.bashrc
+
+			source ~/.bashrc
+
+			###
+			# Install Composer
+			###
+
+			curl -sS https://getcomposer.org/installer | /usr/bin/php-7.0
+
+			mv ~/composer.phar ~/bin/composer/ 
+
+			echo '' >> ~/.bashrc
+
+			COMPOSER="alias composer='/usr/bin/php-7.0 ~/bin/composer/composer.phar'"
+
+			if grep -q "alias composer='/usr/bin/php-7.0 ~/bin/composer/composer.phar'" ".bashrc"
+
+			then
+				echo "No need of running the command again"
+			else
+				echo $COMPOSER >>  ~/.bashrc
+			fi
+
+			###
+			# Create the new laravel project:
+			###
+
+			/usr/bin/php-7.0 ~/bin/composer/composer.phar create-project --prefer-dist laravel/laravel project
+
+			wait
+
+			###
+			# Create a symlink for ~/project/public to public_html so that the laravel installation could be accessed directly via the domain rather than domain.com/public
+			###
+
+			ln -s ~/project/public ~/public_html/public
+
+			echo ""
+        	        echo -e "\e[92mLaravel has been installed at ~/public_html/public"
+			domainname=$(pwd | awk -F"/" '{ print $5}')
+			echo "Visit $domainname/public to make sure that it is working."
+			echo -e "\e[92mIf you are getting a Syntax error, please change the PHP version to PHP 7+"
+			echo -e "\e[92mAlso, you can use this .htaccess rule to make the site load from the domain itself $domainname rather than the $domainname/public subfolder\e[97m"
+			echo ""
+			echo '<IfModule mod_rewrite.c>'
+			echo '    RewriteEngine On'
+			echo '    RewriteRule ^(.*)$ public/$1 [L]'
+			echo '</IfModule>'
+			echo ""
+			echo -e "\e[92mAny questions, please check with Bobby\e[97m"
+	fi
+CloudMenu
+}
+
 ###########################
-###  Quick Access Menu ###
+###  Quick Access Menu  ###
 ###########################
 
 ##
@@ -499,15 +670,45 @@ $(ColorBlue 'Choose an option:') "
         esac
 }
 
+
+##
+# Cloud Meny
+##
+
+CloudMenu(){
+
+                ColorGreen "        "
+echo -ne "
+Cloud Menu
+
+$(ColorRed 'Please note that you should run those only on the Cloud!!!')
+
+$(ColorGreen '1)') Install wp-cli on the Cloud
+$(ColorGreen '2)') Install composer on the Cloud
+$(ColorGreen '3)') Install laravel on the Cloud
+$(ColorGreen '0)') Back to Main Menu
+
+$(ColorBlue 'Choose an option:') "
+                read a
+                case $a in
+                1) wp_cli_cloud_install;;
+                2) composer_cloud_install;;
+                3) laravel_cloud_installer;;
+                0) MainMenu;;
+                *) echo -e $red"Wrong command."$clear; MenuAcess;;
+        esac
+}
+
 ##
 #  Section in the Access Logs Menu that ask for a specific domain 
 ##
 MenuAcessDomain(){
 
 	echo -ne "
-Please type the domain (example.com)"
+Please type the domain (example.com): "
                 read responsedomain
 		SpecificDomainAccessLogs
+MenuAcess
 }
 
 ##
@@ -640,6 +841,7 @@ $(ColorGreen '2)') SPAM Scan Menu
 $(ColorGreen '3)') MySQL Menu
 $(ColorGreen '4)') Web Traffic Menu
 $(ColorGreen '5)') Handy Tools
+$(ColorGreen '6)') Cloud Tools
 $(ColorGreen '0)') Exit
 
 $(ColorBlue 'Choose an option:') "
@@ -650,6 +852,7 @@ $(ColorBlue 'Choose an option:') "
 		3) MySQLMenu;;
 		4) DDoSMenu;;
 		5) ToolsMenu;;
+		6) CloudMenu;;
 		0) Exitmenu;;
 		*) echo -e $red"Wrong command."$clear; WrongCommand;;
         esac
