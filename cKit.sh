@@ -441,6 +441,25 @@ exitFunction(){
 #echo "Exit function has been called..."
 exit 0;
 }
+
+##
+# Function that generated a random password
+# You can use it whenever you need to enter new password
+##
+
+function randompass(){
+        date +%s | sha256sum | base64 | head -c 14 ; echo
+        echo "Do you wat asdadasd [yes/no]"
+        read answer
+        if [ ! -z $answer ] && [ $answer = "yes" ]; then
+        date +%s | sha256sum | base64 | head -c 20 ; echo
+else {
+        echo "Exit then"
+}
+fi
+ToolsMenu
+}
+
 ###########################
 ###  Quick Access Menu ###
 ###########################
@@ -554,6 +573,7 @@ Cool Tools
 
 $(ColorGreen '1)') Check if a PHP extension is enabled on the server.
 $(ColorGreen '2)') Check if a PHP function is enabled on the server.
+$(ColorGreen '3)') Generate a random password
 $(ColorGreen '4)') Live Monitor of the CPU.
 $(ColorGreen '0)') Back To Main Menu.
 
@@ -562,6 +582,7 @@ $(ColorBlue 'Choose an option:') "
                 case $a in
                 1) is_extension;;
                 2) is_function;;
+		3) randompass;;
 		4) MonitorCpu;;
                 0) MainMenu;;
 		*) echo -e $red"Wrong command."$clear; ToolsMenu;;
