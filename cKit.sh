@@ -431,7 +431,7 @@ while true; do
         echo 'The current CPU usage is:'; 
         grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage "%"}' || break
         echo '';
-        echo "To stop the script press 'Ctrl+C'"
+        echo $(ColorGreen "To stop the script press 'Ctrl+C'")
         sleep 2 || break
 done
 	trap - SIGINT
