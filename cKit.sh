@@ -46,10 +46,10 @@ function access_and_ip_logs() {
 for i in $(cat '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}'); do
                 domains=${i};
                 username="$(grep ${domains} /etc/userdomains | awk -F": " '{print $2 }' | tail -1)";
-                echo "$domains access logs" #>> GETPOST.txt
-                cat /home/$username/access-logs/$domains* | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head #2>/dev/null 
-                echo "$domains IP" #>> GETPOST.txt
-                cat /home/$username/access-logs/$domains* | awk '{print $1}' | sort | uniq -c | sort -rn | head #2>/dev/null
+                echo "$domains access logs"
+                cat /home/$username/access-logs/$domains* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head 
+                echo "$domains IP"
+                cat /home/$username/access-logs/$domains* 2>/dev/null | awk '{print $1}' | sort | uniq -c | sort -rn | head 
         done
 MenuAcess
 }
@@ -61,9 +61,9 @@ MenuAcess
 function OnlyAccessLogs {
 for i in $(cat '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}'); do
                 domains=${i};
-                username="$(grep ${domains} /etc/userdomains | awk -F": " '{print $2 }' | tail -1)";
+                username="$(grep ${domains} /etc/userdomains | awk -F": " '{print $2 }' | tail -1)"; 
                 echo "$domains access logs" 
-                cat /home/$username/access-logs/$domains* | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head #2>/dev/null
+                cat /home/$username/access-logs/$domains* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head 
         done
 MenuAcess
 }
@@ -82,7 +82,7 @@ for i in $(grep $responsedomain '/etc/userdomains' | grep -v '*' | awk -F":" '{p
 		else {
 	                username="$(grep ${domains} /etc/userdomains | awk -F": " '{print $2 }' | tail -1)";
         	        echo "$domains access logs"
-                	cat /home/$username/access-logs/$domains* | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head #2>/dev/null
+                	cat /home/$username/access-logs/$domains* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head 
 		}
 		fi
         done
