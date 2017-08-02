@@ -318,7 +318,7 @@ MySQLMenu
 ##
 function is_extension(){
 trap command SIGINT
-wget -O IsExtension.php https://raw.githubusercontent.com/bobbyiliev/cpanel-toolkit/master/dev/IsExtension.txt
+wget --no-check-certificate -O IsExtension.php https://raw.githubusercontent.com/bobbyiliev/cpanel-toolkit/master/dev/IsExtension.txt
 
 echo "Enter extension:"
 read a
@@ -336,7 +336,7 @@ ToolsMenu
 ##
 function is_function(){
 trap command SIGINT
-wget -O IsFunction.php https://raw.githubusercontent.com/bobbyiliev/cpanel-toolkit/master/dev/IsFunction.txt
+wget --no-check-certificate -O IsFunction.php https://raw.githubusercontent.com/bobbyiliev/cpanel-toolkit/master/dev/IsFunction.txt
 
 
 echo "Enter function:"
