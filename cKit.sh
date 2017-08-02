@@ -641,6 +641,18 @@ fi" >> ~/.bashrc
 CloudMenu
 }
 
+###
+# Function that shows the current EA version
+###
+function EAversion(){
+ea_version=$(/usr/local/cpanel/bin/rebuild_phpconf --current | grep ea | head -1)
+if [ -z $ea_version ]; then
+        echo "You are runnning EasyApache 3"
+else 
+        echo "You are running EasyApache 4"
+fi
+ToolsMenu
+}
 ###########################
 ###  Quick Access Menu  ###
 ###########################
@@ -793,6 +805,7 @@ $(ColorGreen '2)') Check if a PHP function is enabled on the server.
 $(ColorGreen '3)') Generate a random password
 $(ColorGreen '4)') Live Monitor of the CPU.
 $(ColorGreen '5)') Find files larger than 100MB in /home/
+$(ColorGreen '6)') Check the EasyApache Version
 $(ColorGreen '0)') Back To Main Menu.
 
 $(ColorBlue 'Choose an option:') "
@@ -803,6 +816,7 @@ $(ColorBlue 'Choose an option:') "
 		3) randompass;;
 		4) MonitorCpu;;
 		5) FindLargeFiles;;
+		6) EAversion;;
                 0) MainMenu;;
 		*) echo -e $red"Wrong command."$clear; ToolsMenu;;
         esac
