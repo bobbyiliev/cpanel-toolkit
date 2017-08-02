@@ -10,6 +10,8 @@ function welcome() {
 	echo "Total of $(lscpu | grep -v 'node' | grep 'CPU(s):' | awk '{ print $2 }') CPU(s)"
 
 	echo "OS: $(cat /etc/redhat-release)"
+
+	echo "If CentOS is under version 6, EasyApache 4 and Let's Encrypt can not be installed"
 }
 
 welcome
