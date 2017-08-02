@@ -449,7 +449,7 @@ exit 0;
 
 function randompass(){
         date +%s | sha256sum | base64 | head -c 14 ; echo
-        echo "Do you wat asdadasd [yes/no]"
+        echo "Do you want to genrate stronger password[yes/no]"
         read answer
         if [ ! -z $answer ] && [ $answer = "yes" ]; then
         date +%s | sha256sum | base64 | head -c 20 ; echo
