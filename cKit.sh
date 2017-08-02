@@ -46,10 +46,12 @@ function access_and_ip_logs() {
 for i in $(cat '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}'); do
                 domains=${i};
                 username="$(grep ${domains} /etc/userdomains | awk -F": " '{print $2 }' | tail -1)";
-                echo "$domains access logs"
+		echo "#####################"
+                echo "$domains access logs:"
                 cat /home/$username/access-logs/$domains* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head 
-                echo "$domains IP"
-                cat /home/$username/access-logs/$domains* 2>/dev/null | awk '{print $1}' | sort | uniq -c | sort -rn | head 
+                echo "$domains most hits from IP:"
+                cat /home/$username/access-logs/$domains* 2>/dev/null | awk '{print $1}' | sort | uniq -c | sort -rn | head
+		echo "#####################"
         done
 MenuAcess
 }
@@ -62,8 +64,10 @@ function OnlyAccessLogs {
 for i in $(cat '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}'); do
                 domains=${i};
                 username="$(grep ${domains} /etc/userdomains | awk -F": " '{print $2 }' | tail -1)"; 
-                echo "$domains access logs" 
+        	echo "#####################"
+	        echo "$domains access logs: "
                 cat /home/$username/access-logs/$domains* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head 
+		echo "#####################"
         done
 MenuAcess
 }
@@ -188,6 +192,7 @@ function check_mysql_startup_info() {
 function list_sleeping_mysql() {
     sleepingProc=$(mysqladmin proc | grep Sleep)
     if [ -z "$sleepingProc" ]; then
+	echo ""
         echo "No Sleeping MySQL Proccesses ATM";
     else {
         mysqladmin proc | head -3
@@ -213,6 +218,7 @@ trap command SIGINT
     if [ $password = "SysAdmins" ]; then
     unset password
         if [ -z "$sleepingProc" ]; then
+	echo ""
         echo "No Sleeping MySQL Proccesses ATM";
         else
             	for i in $(mysql -e 'show processlist' | grep 'Sleep' | awk '{print $1}'); do
@@ -861,7 +867,7 @@ echo -ne "
 Web Traffic Menu
 
 $(ColorGreen '1)') Lists the Ips which are connected to server and how many connections exist from each IP
-$(ColorGreen '2)') lists the users which are running the most processes at the moment - the top 5 users
+$(ColorGreen '2)') Lists the users which are running the most processes at the moment - the top 5 users
 $(ColorGreen '3)') Function that lists the total process running by the users
 $(ColorGreen '4)') Function that shows the % CPU usage at the moment
 $(ColorGreen '5)') Function that lists all the active connections for a specific port defined by the script user
