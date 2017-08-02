@@ -317,6 +317,7 @@ MySQLMenu
 # Function that shows if an extension is enabled 
 ##
 function is_extension(){
+trap command SIGINT
 wget -O IsExtension.php https://raw.githubusercontent.com/bobbyiliev/cpanel-toolkit/master/dev/IsExtension.txt
 
 echo "Enter extension:"
@@ -326,6 +327,7 @@ if [ -f "IsExtension.php" ]; then
 fi
 php IsExtension.php
 rm IsExtension.php
+trap - SIGINT
 ToolsMenu
 }
 
@@ -333,6 +335,7 @@ ToolsMenu
 # Function that shows if a function is enabled
 ##
 function is_function(){
+trap command SIGINT
 wget -O IsFunction.php https://raw.githubusercontent.com/bobbyiliev/cpanel-toolkit/master/dev/IsFunction.txt
 
 
@@ -343,6 +346,7 @@ if [ -f "IsFunction.php" ]; then
 fi
 php IsFunction.php
 rm IsFunction.php
+trap - SIGINT
 ToolsMenu
 }
 
@@ -460,7 +464,7 @@ ToolsMenu
 ##
 function FindLargeFiles(){
 trap command SIGINT
- 	echo $(ColorGreen "This might take some time. To stop the script press 'Ctrl+C")
+ 	echo $(ColorGreen "This might take some time. To stop the script press 'Ctrl+C'")
 	ionice -n 3 -c 3 find /home ! -path "/home/virtfs/*" -type f -size +100M -exec du -hs {} \;
 	trap - SIGINT
 ToolsMenu
