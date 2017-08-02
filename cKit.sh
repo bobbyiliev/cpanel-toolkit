@@ -470,6 +470,23 @@ ToolsMenu
 }
 
 ##
+# Function that generates a random password on the Cloud
+# You can use it whenever you need to enter new password
+##
+function randompass(){
+        date +%s | sha256sum | base64 | head -c 14 ; echo
+        echo "Do you want to genrate stronger password[yes/no]"
+        read answer
+        if [ ! -z $answer ] && [ $answer = "yes" ]; then
+        date +%s | sha256sum | base64 | head -c 20 ; echo
+else {
+       	echo "Exit then"
+}
+fi
+CloudMenu
+}
+
+##
 # Function that finds files larger than 100MB in /home/
 ##
 function FindLargeFiles(){
@@ -719,6 +736,7 @@ $(ColorRed 'Please note that you should run those only on the Cloud!!!')
 $(ColorGreen '1)') Install wp-cli on the Cloud
 $(ColorGreen '2)') Install composer on the Cloud
 $(ColorGreen '3)') Install laravel on the Cloud
+$(ColorGreen '4)') Generate random password
 $(ColorGreen '0)') Back to Main Menu
 
 $(ColorBlue 'Choose an option:') "
@@ -727,6 +745,7 @@ $(ColorBlue 'Choose an option:') "
                 1) wp_cli_cloud_install;;
                 2) composer_cloud_install;;
                 3) laravel_cloud_installer;;
+		4) randompass_cloud;;
                 0) MainMenu;;
                 *) echo -e $red"Wrong command."$clear; CloudMenu;;
         esac
