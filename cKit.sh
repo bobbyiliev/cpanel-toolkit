@@ -645,6 +645,7 @@ CloudMenu
 # Function that shows the current EA version
 ###
 function EAversion(){
+
 ea_version=$(/usr/local/cpanel/bin/rebuild_phpconf --current | grep ea | head -1)
 if [ -z $ea_version ]; then
         echo "You are runnning EasyApache 3"
@@ -661,6 +662,11 @@ ToolsMenu
 # Access Logs Menu
 ##
 MenuAcess(){
+if [[ ! -f /etc/userdomains ]]; then
+echo $(ColorRed 'You are not on cPanel')
+WrongCommand
+MainMenu
+else
 
             	ColorGreen "        "
 echo -ne "
@@ -680,13 +686,13 @@ $(ColorBlue 'Choose an option:') "
 		0) MainMenu;;
 		*) echo -e $red"Wrong command."$clear; MenuAcess;;
         esac
+fi
 }
 
 
 ##
 # Cloud Menu
 ##
-
 CloudMenu(){
 if [[ -f /etc/userdomains ]]; then
 echo $(ColorRed 'You are not on the Cloud')
@@ -733,6 +739,11 @@ MenuAcess
 # Email Features Menu
 ##
 EmailsMenu(){
+if [[ ! -f /etc/userdomains ]]; then
+echo $(ColorRed 'You are not on cPanel')
+WrongCommand
+MainMenu
+else
 
             	ColorGreen "        "
 echo -ne "
@@ -762,6 +773,7 @@ $(ColorBlue 'Choose an option:') "
                 0) MainMenu;;
 		*) echo -e $red"Wrong command."$clear; EmailsMenu;;
         esac
+fi
 }
 
 ##
@@ -769,6 +781,11 @@ $(ColorBlue 'Choose an option:') "
 ##
 MySQLMenu(){
 #check_mysql_startup_info
+if [[ ! -f /etc/userdomains ]]; then
+echo $(ColorRed 'You are not on cPanel')
+WrongCommand
+MainMenu
+else
                 ColorGreen "        "
 echo -ne "
 
@@ -792,9 +809,15 @@ $(ColorBlue 'Choose an option:') "
                 0) MainMenu;;
 		*) echo -e $red"Wrong command."$clear; MySQLMenu;;
         esac
+fi
 }
 
 ToolsMenu(){
+if [[ ! -f /etc/userdomains ]]; then
+echo $(ColorRed 'You are not on cPanel')
+WrongCommand
+MainMenu
+else
                 ColorGreen "        "
 echo -ne "
 
@@ -820,9 +843,15 @@ $(ColorBlue 'Choose an option:') "
                 0) MainMenu;;
 		*) echo -e $red"Wrong command."$clear; ToolsMenu;;
         esac
+fi
 }
 
 DDoSMenu(){
+if [[ ! -f /etc/userdomains ]]; then
+echo $(ColorRed 'You are not on cPanel')
+WrongCommand
+MainMenu
+else
                 ColorGreen "        "
 echo -ne "
 Web Traffic Menu
@@ -845,6 +874,7 @@ $(ColorBlue 'Choose an option:') "
                 0) MainMenu;;
                 *) echo -e $red"Wrong command."$clear; WrongCommand;;
         esac
+fi
 }
 
 #################
