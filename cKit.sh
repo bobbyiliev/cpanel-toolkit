@@ -496,9 +496,10 @@ $(ColorBlue 'Choose an option:') "
 MenuAcessDomain(){
 
 	echo -ne "
-Please type the domain (example.com)"
+Please type the domain (example.com): "
                 read responsedomain
 		SpecificDomainAccessLogs
+MenuAcess
 }
 
 ##
