@@ -421,6 +421,14 @@ function GetPortConn(){
        	DDoSMenu
 }
 
+##
+# Function that monitors the CPU usage
+##
+function MonitorCpu(){
+while true; do echo 'The current CPU usage is:'; grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage "%"}' ; sleep 1; done
+}
+
+
 ###########################
 ###  Quick Access Menu ###
 ###########################
@@ -534,6 +542,7 @@ Cool Tools
 
 $(ColorGreen '1)') Check if a PHP extension is enabled on the server.
 $(ColorGreen '2)') Check if a PHP function is enabled on the server.
+$(ColorGreen '4)') Live Monitor of the CPU.
 $(ColorGreen '0)') Back To Main Menu.
 
 $(ColorBlue 'Choose an option:') "
@@ -541,6 +550,7 @@ $(ColorBlue 'Choose an option:') "
                 case $a in
                 1) is_extension;;
                 2) is_function;;
+		4) MonitorCpu;;
                 0) MainMenu;;
 		*) echo -e $red"Wrong command."$clear; ToolsMenu;;
         esac
