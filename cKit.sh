@@ -737,6 +737,8 @@ $(ColorGreen '1)') Install wp-cli on the Cloud
 $(ColorGreen '2)') Install composer on the Cloud
 $(ColorGreen '3)') Install laravel on the Cloud
 $(ColorGreen '4)') Generate random password
+$(ColorGreen '5)') Check if a PHP extension is enabled on the server.
+$(ColorGreen '6)') Check if a PHP function is enabled on the server.
 $(ColorGreen '0)') Back to Main Menu
 
 $(ColorBlue 'Choose an option:') "
@@ -746,7 +748,9 @@ $(ColorBlue 'Choose an option:') "
                 2) composer_cloud_install;;
                 3) laravel_cloud_installer;;
 		4) randompass_cloud;;
-                0) MainMenu;;
+                5) is_extension;;
+                6) is_function;;
+		0) MainMenu;;
                 *) echo -e $red"Wrong command."$clear; CloudMenu;;
         esac
 fi
