@@ -24,7 +24,9 @@ green='\e[32m'
 blue='\e[34m'
 clear='\e[0m'
 red='\e[31m'
-
+executionTime=`date +%Y-%m-%d:%H:%M`
+server=$(hostname)
+location=$(pwd)
 ###################
 ###  Functions  ###
 ###################
@@ -746,6 +748,7 @@ echo $(ColorRed 'You are not on cPanel')
 WrongCommand
 MainMenu
 else
+executionTime=`date +%Y-%m-%d:%H:%M`
 
             	ColorGreen "        "
 echo -ne "
@@ -759,10 +762,10 @@ $(ColorGreen '0)') Back to Main Menu
 $(ColorBlue 'Choose an option:') "
                 read a
                 case $a in
-                1) access_and_ip_logs;;
-                2) OnlyAccessLogs;;
-		3) MenuAcessDomain;;
-		0) MainMenu;;
+                1) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; access_and_ip_logs;;
+                2) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; OnlyAccessLogs;;
+		3) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; MenuAcessDomain;;
+		0) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; MainMenu;;
 		*) echo -e $red"Wrong command."$clear; MenuAcess;;
         esac
 fi
@@ -797,14 +800,14 @@ $(ColorGreen '0)') Back to Main Menu
 $(ColorBlue 'Choose an option:') "
                 read a
                 case $a in
-                1) wp_cli_cloud_install;;
-                2) composer_cloud_install;;
-                3) laravel_cloud_installer;;
-		4) randompass_cloud;;
-                5) is_extension;;
-                6) is_function;;
-		7) ChangeShellPHP;;
-		0) MainMenu;;
+                1) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; wp_cli_cloud_install;;
+                2) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; composer_cloud_install;;
+                3) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; laravel_cloud_installer;;
+		4) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; randompass_cloud;;
+                5) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; is_extension;;
+                6) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; is_function;;
+		7) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; ChangeShellPHP;;
+		0) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; MainMenu;;
                 *) echo -e $red"Wrong command."$clear; CloudMenu;;
         esac
 fi
@@ -849,15 +852,15 @@ $(ColorGreen '0)') Back to Main Menu.
 $(ColorBlue 'Choose an option:') "
                 read a
                 case $a in
-                1) showexim ;;
-                2) originate;;
-                3) originate2;;
-                4) whichphpscript;;
-                5) getnetstat;;
-                6) nobodyspam;;
-                7) nobodyspamafter;;
-                8) showeximsum;;
-                0) MainMenu;;
+                1) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; showexim ;;
+                2) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; originate;;
+                3) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; originate2;;
+                4) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; whichphpscript;;
+                5) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; getnetstat;;
+                6) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; nobodyspam;;
+                7) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; nobodyspamafter;;
+                8) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; showeximsum;;
+                0) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; MainMenu;;
 		*) echo -e $red"Wrong command."$clear; EmailsMenu;;
         esac
 fi
@@ -888,12 +891,12 @@ $(ColorGreen '0)') Back To Main Menu.
 $(ColorBlue 'Choose an option:') "
                 read a
                 case $a in
-                1) list_sleeping_mysql;;
-                2) kill_mysql_sleeping_proc;;
-                3) show_full_processlist;;
- 	        4) mysql_status;;
-		5) kill_mysql_sleeping_proc_user;;
-                0) MainMenu;;
+                1) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; list_sleeping_mysql;;
+                2) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; kill_mysql_sleeping_proc;;
+                3) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; show_full_processlist;;
+ 	        4) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; mysql_status;;
+		5) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; kill_mysql_sleeping_proc_user;;
+                0) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; MainMenu;;
 		*) echo -e $red"Wrong command."$clear; MySQLMenu;;
         esac
 fi
@@ -921,13 +924,13 @@ $(ColorGreen '0)') Back To Main Menu.
 $(ColorBlue 'Choose an option:') "
                 read a
                 case $a in
-                1) is_extension;;
-                2) is_function;;
-		3) randompass;;
-		4) MonitorCpu;;
-		5) FindLargeFiles;;
-		6) EAversion;;
-                0) MainMenu;;
+                1) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; is_extension;;
+                2) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; is_function;;
+		3) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; randompass;;
+		4) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; MonitorCpu;;
+		5) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; FindLargeFiles;;
+		6) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; EAversion;;
+                0) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; MainMenu;;
 		*) echo -e $red"Wrong command."$clear; ToolsMenu;;
         esac
 fi
@@ -953,12 +956,12 @@ $(ColorGreen '0)') Back To Main Menu
 $(ColorBlue 'Choose an option:') "
                 read a
                 case $a in
-		1) ActiveConn;;
-                2) TopUsers;;
-                3) AllUsers;;
-                4) CurrentCPUusage;;
-                5) GetPortConn;;
-                0) MainMenu;;
+		1) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; ActiveConn;;
+                2) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; TopUsers;;
+                3) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; AllUsers;;
+                4) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; CurrentCPUusage;;
+                5) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; GetPortConn;;
+                0) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; MainMenu;;
                 *) echo -e $red"Wrong command."$clear; WrongCommand;;
         esac
 fi
@@ -969,6 +972,11 @@ fi
 #################
 MainMenu(){
 tput clear
+while [ -z $paruser ] ; do
+    echo "To start please enter your paruser:"
+    read paruser
+done
+
                 ColorGreen "        "
 echo -ne "
 Main Menu
@@ -984,13 +992,13 @@ $(ColorGreen '0)') Exit
 $(ColorBlue 'Choose an option:') "
                 read a
                 case $a in
-                1) MenuAcess;;
-		2) EmailsMenu;;
-		3) MySQLMenu;;
-		4) DDoSMenu;;
-		5) ToolsMenu;;
-		6) CloudMenu;;
-		0) Exitmenu;;
+                1) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; MenuAcess;;
+		2) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; EmailsMenu;;
+		3) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; MySQLMenu;;
+		4) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; DDoSMenu;;
+		5) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; ToolsMenu;;
+		6) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; CloudMenu;;
+		0) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; Exitmenu;;
 		*) echo -e $red"Wrong command."$clear; WrongCommand;;
         esac
 }
