@@ -711,7 +711,7 @@ else
     echo -e "export TERM=xterm\n$(cat ~/.bashrc)" > ~/.bashrc
 fi
 grep 'alias php=/usr/bin/*'  ~/.bashrc | sed -i "s/php-5\../php-7\.0/"  ~/.bashrc
-if grep -q "export TERM=xterm" ".bashrc" 
+if grep -q "export PATH=$PATH" ".bashrc" 
 then
     echo "PATH already exists"
 else
