@@ -52,7 +52,8 @@ for i in $(cat '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}'); do
 		grep $domains /home/$username/access-logs/* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head
                 echo "$domains most hits from IP:"
                 #cat /home/$username/access-logs/$domains* 2>/dev/null | awk '{print $1}' | sort | uniq -c | sort -rn | head
-		grep $domains /home/$username/access-logs/* 2>/dev/null | awk '{print $1}' | sort | uniq -c | sort -rn | head
+		#grep $domains /home/$username/access-logs/* 2>/dev/null | awk '{print $1}' | sort | uniq -c | sort -rn | head
+		grep $domains /home/$username/access-logs/* 2>/dev/null | awk -F":" '{print $2}' | awk -F"-" '{print $1}' |sort | uniq -c | sort -rn | head
 		echo "#####################"
         done
 MenuAcess
@@ -70,6 +71,8 @@ for i in $(cat '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}'); do
 	        echo "$domains access logs: "
                 #cat /home/$username/access-logs/$domains* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head 
 		grep $domains /home/$username/access-logs/* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head
+		echo "$domains most hits from IP:"
+		grep $domains /home/$username/access-logs/* 2>/dev/null | awk -F":" '{print $2}' | awk -F"-" '{print $1}' |sort | uniq -c | sort -rn | head
 		echo "#####################"
         done
 MenuAcess
