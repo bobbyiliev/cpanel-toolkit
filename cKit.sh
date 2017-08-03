@@ -367,7 +367,7 @@ ToolsMenu
 WrongCommand(){
         echo "Press Enter to go back to Main menu"
         read a
-        clear
+        #clear
         MainMenu
 }
 
