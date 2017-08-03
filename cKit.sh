@@ -708,7 +708,7 @@ CloudMenu
 # Function that changes the Shell PHP vesrion on the Cloud
 ##
 function ChangeShellPHP(){
-echo -ne "$(ColorGreen '-Checking if export TERM=xterm and export PATH=$PATH needs to be added to .bashrc:')";
+echo -ne "$(ColorGreen '-Checking if export TERM=xterm and export PATH=$PATH need to be added to .bashrc:')";
 if grep -q "export TERM=xterm" ".bashrc" 
 then
     echo -ne "
@@ -731,8 +731,8 @@ fi
 echo  -ne "
 $(ColorGreen '-Version changed to 7. Please run source ~/.bashrc in order to complete the process.')
 ";
-
 }
+
 ###########################
 ###  Quick Access Menu  ###
 ###########################
