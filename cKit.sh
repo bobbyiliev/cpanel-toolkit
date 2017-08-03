@@ -781,7 +781,7 @@ echo $(ColorRed 'You are not on the Cloud')
 WrongCommand
 MainMenu
 else
-
+ExecutionTime=`date +%Y-%m-%d:%H:%M`
                 ColorGreen "        "
 echo -ne "
 Cloud Menu
