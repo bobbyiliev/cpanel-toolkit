@@ -367,7 +367,7 @@ ToolsMenu
 WrongCommand(){
         echo "Press Enter to go back to Main menu"
         read a
-        #clear
+        tput clear
         MainMenu
 }
 
@@ -914,7 +914,7 @@ fi
 # The Main Menu #
 #################
 MainMenu(){
-clear
+tput clear
                 ColorGreen "        "
 echo -ne "
 Main Menu
@@ -940,5 +940,5 @@ $(ColorBlue 'Choose an option:') "
 		*) echo -e $red"Wrong command."$clear; WrongCommand;;
         esac
 }
-clear
+tput clear
 MainMenu
