@@ -708,18 +708,21 @@ CloudMenu
 # Function that changes the Shell PHP vesrion on the Cloud
 ##
 function ChangeShellPHP(){
+echo 'Checking if export TERM=xterm and export PATH=$PATH needs to be added'
 if grep -q "export TERM=xterm" ".bashrc" 
 then
-    echo "TERM already exists"
+    echo "TERM already exists-skipping"
 else
     echo -e "export TERM=xterm\n$(cat ~/.bashrc)" > ~/.bashrc
+    echo 'TERM added to .bashrc'
 fi
 grep 'alias php=/usr/bin/*'  ~/.bashrc | sed -i "s/php-5\../php-7\.0/"  ~/.bashrc
 if grep -q "export PATH=$PATH" ".bashrc" 
 then
-    echo "PATH already exists"
+    echo "PATH already exists-skipping"
 else
     echo -e 'export PATH=$PATH' >> ~/.bashrc
+    echo 'PATH added to .bashrc'	
 fi
 echo  -ne "$(ColorGreen 'Version changed to 7. Please run source ~/.bashrc in order to complete the process.')
 ";
