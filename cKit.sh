@@ -685,9 +685,13 @@ fi" >> ~/.bashrc
 CloudMenu
 }
 
+##
+# Function that changes the Shell PHP vesrion on the Cloud
+##
 function ChangeShellPHP(){
-grep 'alias php=/usr/bin/*'  ~/.bashrc | sed -i "s/php-5.*/php-7.0/"  ~/.bashrc
-echo  -ne "$(ColorGreen '1)')" 
+grep 'alias php=/usr/bin/*'  ~/.bashrc | sed -i "s/php-5\../php-7\.0/"  ~/.bashrc
+echo  -ne "$(ColorGreen 'Version changed to 7. Please run source ~/.bashrc in order to complete the process.')
+";
 }
 
 ###########################
