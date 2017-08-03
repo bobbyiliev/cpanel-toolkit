@@ -652,22 +652,37 @@ fi" >> ~/.bashrc
 			###
 			# Create a symlink for ~/project/public to public_html so that the laravel installation could be accessed directly via the domain rather than domain.com/public
 			###
+			if [ -d ~/public_html ]; then
+				ln -s ~/project/public ~/public_html/public
 
-			ln -s ~/project/public ~/public_html/public
-
-			echo ""
-        	        echo -e "\e[92mLaravel has been installed at ~/public_html/public"
-			domainname=$(pwd | awk -F"/" '{ print $5}')
-			echo "Visit $domainname/public to make sure that it is working."
-			echo -e "\e[92mIf you are getting a Syntax error, please change the PHP version to PHP 7+"
-			echo -e "\e[92mAlso, you can use this .htaccess rule to make the site load from the domain itself $domainname rather than the $domainname/public subfolder\e[97m"
-			echo ""
-			echo '<IfModule mod_rewrite.c>'
-			echo '    RewriteEngine On'
-			echo '    RewriteRule ^(.*)$ public/$1 [L]'
-			echo '</IfModule>'
-			echo ""
-			echo -e "\e[92mAny questions, please check with Bobby\e[97m"
+				echo ""
+        		        echo -e "\e[92mLaravel has been installed at ~/public_html/public"
+				domainname=$(pwd | awk -F"/" '{ print $5}')
+				echo "Visit $domainname/public to make sure that it is working."
+				echo -e "\e[92mIf you are getting a Syntax error, please change the PHP version to PHP 7+"
+				echo -e "\e[92mAlso, you can use this .htaccess rule to make the site load from the domain itself $domainname rather than the $domainname/public subfolder\e[97m"
+				echo ""
+				echo '<IfModule mod_rewrite.c>'
+				echo '    RewriteEngine On'
+				echo '    RewriteRule ^(.*)$ public/$1 [L]'
+				echo '</IfModule>'
+				echo ""
+				echo -e "\e[92mAny questions, please check with Bobby\e[97m"
+			else
+				echo -e "\e[92mYou do not have a public_html folder!"
+				echo -e "\e[92mLaravel has been installed at ~/project/public"
+				echo ""
+				echo -e "Additional information: "
+                                echo -e "\e[92mIf you are getting a Syntax error, please change the PHP version to PHP 7+"
+                                echo -e "\e[92mAlso, you can use this .htaccess rule to make the site load from the domain itself $domainname rather than the $domainname/public subfolder\e[97m"
+                               	echo ""
+                                echo '<IfModule mod_rewrite.c>'
+                                echo '    RewriteEngine On'
+                                echo '    RewriteRule ^(.*)$ public/$1 [L]'
+                                echo '</IfModule>'
+                               	echo ""
+                                echo -e "\e[92mAny questions, please check with Bobby\e[97m"
+			fi
 	fi
 CloudMenu
 }
