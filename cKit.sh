@@ -840,13 +840,13 @@ echo -ne "
 Choose the information you need regarding Email Logs
 
 $(ColorGreen '1)') Receive a sorted list of all the email senders in the exim mail queue.
-$(ColorGreen '2)') The following option will display the directories from which the emails are being sent.
-$(ColorGreen '3)') The following option will check for emails sent via php script.
-$(ColorGreen '4)') The following option will display the users which were sending out emails within their directories.
+$(ColorGreen '2)') This option will display the directories from which the emails are being sent.
+$(ColorGreen '3)') This option will check for emails sent via php script.
+$(ColorGreen '4)') This option will display the users which were sending out emails within their directories.
 $(ColorGreen '5)') It shows the IPs which were sending emails via port 25..
 $(ColorGreen '6)') In order to find “nobody” spamming, use this option..
-$(ColorGreen '7)') The above command is valid only if the spamming is currently in progress If not use this otpion..
-$(ColorGreen '8)') The following script will give the summary of mails in the mail queue.
+$(ColorGreen '7)') The above option is valid only if the spamming is currently in progress If not use this otpion..
+$(ColorGreen '8)') Summary of the mails in the mail queue.
 $(ColorGreen '0)') Back to Main Menu.
 
 $(ColorBlue 'Choose an option:') "
