@@ -529,7 +529,7 @@ function wp_cli_cloud_install() {
 		fi
 
 		echo ""
-		echo -e "\e[92mTo test the installation run: "
+		echo -e "\e[92mTo test the installation, exit the script and then run: "
 		echo -e 'source ~/.bashrc'
 		echo -e "\e[92mwp plugin list --path='public_html'"
 		echo -e "\e[97mAnd that's all!"
@@ -566,7 +566,7 @@ function composer_cloud_install() {
 			echo $COMPOSER >>  ~/.bashrc
 		fi
 	echo -e ""
-	echo -e "\e[92mTo test the installation run: "
+	echo -e "\e[92mTo test the installation, exit the script and then run: "
 	echo -e 'source ~/.bashrc'
 	echo -e "\e[92mcomposer --version"
 	echo -e "\e[97mAnd that's all!!"
@@ -673,11 +673,11 @@ CloudMenu
 ###
 function EAversion(){
 
-ea_version=$(/usr/local/cpanel/bin/rebuild_phpconf --current | grep ea | head -1)
+ea_version=$(/usr/local/cpanel/bin/rebuild_phpconf --current | grep ea | head -1 | awk '{ print $1}')
 if [ -z $ea_version ]; then
         echo "You are runnning EasyApache 3"
-else 
-        echo "You are running EasyApache 4"
+else
+	echo "You are running EasyApache 4"
 fi
 ToolsMenu
 }
