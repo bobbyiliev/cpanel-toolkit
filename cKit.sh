@@ -473,7 +473,7 @@ ToolsMenu
 # Function that generates a random password on the Cloud
 # You can use it whenever you need to enter new password
 ##
-function randompass(){
+function randompass_cloud(){
         date +%s | sha256sum | base64 | head -c 14 ; echo
         echo "Do you want to genrate stronger password[yes/no]"
         read answer
