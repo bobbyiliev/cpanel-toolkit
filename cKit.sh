@@ -686,14 +686,14 @@ CloudMenu
 }
 
 function ChangeShellPHP(){
-grep 'alias php=/usr/bin/*' .bashrc | sed -i "s/php-5.*/php-7.0/" .bashrc
-source .bashrc
+grep 'alias php=/usr/bin/*'  ~/.bashrc | sed -i "s/php-5.*/php-7.0/"  ~/.bashrc
+echo  -ne "$(ColorGreen '1)')" 
 }
 
 ###########################
 ###  Quick Access Menu  ###
 ###########################
-
+ 
 ##
 # Access Logs Menu
 ##
