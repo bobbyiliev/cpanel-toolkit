@@ -712,24 +712,24 @@ echo -ne "$(ColorGreen 'Checking if export TERM=xterm and export PATH=$PATH need
 if grep -q "export TERM=xterm" ".bashrc" 
 then
     echo -ne "
-	   $(ColorGreen 'TERM already exists in .bashrc -skipping')"
+$(ColorGreen 'TERM already exists in .bashrc -skipping')"
 else
     echo -e "export TERM=xterm\n$(cat ~/.bashrc)" > ~/.bashrc
     echo -ne "
 	   $(ColorGreen 'TERM added to .bashrc')"
 fi
 grep 'alias php=/usr/bin/*'  ~/.bashrc | sed -i "s/php-5\../php-7\.0/"  ~/.bashrc
-if grep -q "export PATH=$PATH" ".bashrc" 
+if grep -q 'export PATH=$PATH' ".bashrc" 
 then
     echo -ne "
-	   $(ColorGreen 'PATH already exists in .bashrc-skipping')"
+$(ColorGreen 'PATH already exists in .bashrc-skipping')"
 else
     echo -e 'export PATH=$PATH' >> ~/.bashrc
     echo -ne "
-           $(ColorGreen 'PATH added to .bashrc')"
+$(ColorGreen 'PATH added to .bashrc')"
 fi
 echo  -ne "
-	   $(ColorGreen 'Version changed to 7. Please run source ~/.bashrc in order to complete the process.')
+$(ColorGreen 'Version changed to 7. Please run source ~/.bashrc in order to complete the process.')
 ";
 
 }
