@@ -501,6 +501,19 @@ trap command SIGINT
 ToolsMenu
 }
 
+###
+# Function that shows the current EA version
+###
+function EAversion(){
+
+ea_version=$(/usr/local/cpanel/bin/rebuild_phpconf --current | grep ea | head -1 | awk '{ print $1}')
+if [ -z $ea_version ]; then
+        echo "You are runnning EasyApache 3"
+else
+        echo "You are running EasyApache 4"
+fi
+ToolsMenu
+}
 #############################
 ### Cloud Functoions Only ###
 #############################
@@ -687,19 +700,11 @@ fi" >> ~/.bashrc
 CloudMenu
 }
 
-###
-# Function that shows the current EA version
-###
-function EAversion(){
-
-ea_version=$(/usr/local/cpanel/bin/rebuild_phpconf --current | grep ea | head -1 | awk '{ print $1}')
-if [ -z $ea_version ]; then
-        echo "You are runnning EasyApache 3"
-else
-	echo "You are running EasyApache 4"
-fi
-ToolsMenu
+function ChangeShellPHP(){
+grep 'alias php=/usr/bin/*' .bashrc | sed -i "s/php-5.*/php-7.0/" .bashrc
+source .bashrc
 }
+
 ###########################
 ###  Quick Access Menu  ###
 ###########################
@@ -758,6 +763,7 @@ $(ColorGreen '3)') Install laravel on the Cloud
 $(ColorGreen '4)') Generate random password
 $(ColorGreen '5)') Check if a PHP extension is enabled on the server.
 $(ColorGreen '6)') Check if a PHP function is enabled on the server.
+$(ColorGreen '7)') Change the Shell PHP version to 7
 $(ColorGreen '0)') Back to Main Menu
 
 $(ColorBlue 'Choose an option:') "
@@ -769,6 +775,7 @@ $(ColorBlue 'Choose an option:') "
 		4) randompass_cloud;;
                 5) is_extension;;
                 6) is_function;;
+		7) ChangeShellPHP;;
 		0) MainMenu;;
                 *) echo -e $red"Wrong command."$clear; CloudMenu;;
         esac
