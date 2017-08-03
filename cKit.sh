@@ -715,7 +715,7 @@ if grep -q "export PATH=$PATH" ".bashrc"
 then
     echo "PATH already exists"
 else
-    echo -e "export PATH=$PATH" >> ~/.bashrc
+    echo -e 'export PATH=$PATH' >> ~/.bashrc
 fi
 echo  -ne "$(ColorGreen 'Version changed to 7. Please run source ~/.bashrc in order to complete the process.')
 ";
