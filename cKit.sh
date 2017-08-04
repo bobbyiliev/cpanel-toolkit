@@ -103,6 +103,29 @@ for i in $(grep $responsedomain '/etc/userdomains' | grep -v '*' | awk -F":" '{p
 }
 
 ##
+# Function that lists access logs for IP on a specific website 
+##
+
+function SpecificDomainAccessLogsWithIP {
+for i in $(grep $responsedomain '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}'); do
+                domains=${i};
+                if [ -z $domains ] ; then
+                        echo "Domain not found on this server! Please check for typos or try another domain."
+                MenuAcessDomain
+                else {
+                        username="$(grep ${domains} /etc/userdomains | awk -F": " '{print $2 }' | tail -1)";
+                        echo "$domains access logs"
+                        #cat /home/$username/access-logs/$domains* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head
+                        grep $domains /home/$username/access-logs/* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head
+                        echo "$domains most hits from IP:"
+			grep $domains /home/$username/access-logs/* 2>/dev/null | grep $responseIP | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head
+                        echo "#####################"
+                }
+                fi
+        done
+}
+
+##
 # Function that lists all the email senders in the exim mail queue
 # You can use it in order to see which emails accounts have authenticated
 ##
@@ -761,17 +784,19 @@ executionTime=`date +%Y-%m-%d:%H:%M:%S`
 echo -ne "
 Choose the information you need regardin Access Logs
 
-$(ColorGreen '1)') GET/POST Requests + IP addresses for every website on the VPS
-$(ColorGreen '2)') GET/POST Requests for every website on the VPS
-$(ColorGreen '3)') GET/POST Requests for a specific website
+$(ColorGreen '1)') GET/POST requests for a specific website
+$(ColorGreen '2)') GET/POST requests from particualr IP for a specific website
+$(ColorGreen '3)') GET/POST requests + IP addresses for every website on the server
+$(ColorGreen '4)') GET/POST requests for every website on the server
 $(ColorGreen '0)') Back to Main Menu
 
 $(ColorBlue 'Choose an option:') "
                 read a
                 case $a in
-                1) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=AccessAndIPLogs\&Server=$server\&Path=$location ; access_and_ip_logs;;
-                2) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=OnlyAccessLogs\&Server=$server\&Path=$location ; OnlyAccessLogs;;
-		3) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=AccessLogsForDomain\&Server=$server\&Path=$location ; MenuAcessDomain;;
+		1) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=AccessLogsForDomain\&Server=$server\&Path=$location ; MenuAcessDomain;;
+		2) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=AccessLogsFromSpecificIPForDomain\&Server=$server\&Path=$location ; MenuAcessSpecificIPForDomain;;
+                3) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=AccessAndIPLogs\&Server=$server\&Path=$location ; access_and_ip_logs;;
+                4) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=OnlyAccessLogs\&Server=$server\&Path=$location ; OnlyAccessLogs;;
 		0) curl http://wpcli.bobbyiliev.com/ckit/log.php?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; MainMenu;;
 		*) echo -e $red"Wrong command."$clear; MenuAcess;;
         esac
@@ -829,6 +854,21 @@ MenuAcessDomain(){
 Please type the domain (example.com): "
                 read responsedomain
 		SpecificDomainAccessLogs
+MenuAcess
+}
+
+##
+#  Section in the Access Logs Menu that ask for a specific domain 
+##
+MenuAcessSpecificIPForDomain(){
+
+        echo -ne "
+Please type the domain (example.com): "
+                read responsedomain
+ echo -ne "
+Please type the IP: "
+		read responseIP 
+		SpecificDomainAccessLogsWithIP
 MenuAcess
 }
 
