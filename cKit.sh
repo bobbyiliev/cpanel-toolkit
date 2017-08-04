@@ -710,6 +710,9 @@ CloudMenu
 # Function that changes the Shell PHP vesrion on the Cloud
 ##
 function ChangeShellPHP(){
+if [ ! -f ~/.bashrc ]; then
+    touch "~/.bashrc"
+fi
 echo -ne "$(ColorGreen '-Checking if export TERM=xterm and export PATH=$PATH need to be added to .bashrc:')";
 if grep -q "export TERM=xterm" ".bashrc" 
 then
