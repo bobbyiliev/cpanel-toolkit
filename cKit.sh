@@ -27,7 +27,7 @@ red='\e[31m'
 executionTime=`date +%Y-%m-%d:%H:%M:%S`
 server=$(hostname)
 location=$(pwd)
-reportDomain='http://wpcli.bobbyiliev.com/ckit/log.php'
+reportDomain='http://wpcli.bobbyiliev.com/ckit/datalog/datalog.php'
 ###################
 ###  Functions  ###
 ###################
