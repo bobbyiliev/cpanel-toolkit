@@ -711,20 +711,25 @@ CloudMenu
 ##
 function ChangeShellPHP(){
 if [ ! -f ~/.bashrc ]; then
-    touch "~/.bashrc"
+    touch "~/.bashrc" 2>/dev/null
 fi
 echo -ne "$(ColorGreen '-Checking if export TERM=xterm and export PATH=$PATH need to be added to .bashrc:')";
-if grep -q "export TERM=xterm" ".bashrc" 
+if grep -q "export TERM=xterm" ".bashrc" 2>/dev/null
 then
     echo -ne "
 $(ColorGreen '-TERM already exists in .bashrc -skipping')"
 else
-    echo -e "export TERM=xterm\n$(cat ~/.bashrc)" > ~/.bashrc
+    echo -e "export TERM=xterm\n$(cat ~/.bashrc 2>/dev/null)" > ~/.bashrc 2>/dev/null
     echo -ne "
 $(ColorGreen '-TERM added to .bashrc')"
 fi
-grep 'alias php=/usr/bin/*'  ~/.bashrc | sed -i "s/php-5\../php-7\.0/"  ~/.bashrc
-if grep -q 'export PATH=$PATH' ".bashrc" 
+if grep -q "alias php=/usr/bin/php-*" ".bashrc" 
+then
+echo -e'alias php=/usr/bin/php-7.0'  >> ~/.bashrc
+else
+grep 'alias php=/usr/bin/*'  ~/.bashrc | sed -i "s/php-5\../php-7\.0/"  ~/.bashrc 2>/dev/null
+fi
+if grep -q 'export PATH=$PATH' ".bashrc"  2>/dev/null
 then
     echo -ne "
 $(ColorGreen '-PATH already exists in .bashrc-skipping')"
