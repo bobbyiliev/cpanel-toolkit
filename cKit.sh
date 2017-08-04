@@ -1023,8 +1023,13 @@ fi
 MainMenu(){
 tput clear
 while [ -z $paruser ] ; do
-    echo "To start please enter your paruser:"
+    	echo ""
+	echo "To start please enter your paruser:"
     read paruser
+	if [[ ! $paruser =~ ^[a-z_]+$ ]]; then
+		unset paruser
+		echo "Don't cheat! Enter your correct paruser!"
+	fi
 done
 
                 ColorGreen "        "
