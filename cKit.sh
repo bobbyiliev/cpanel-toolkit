@@ -115,9 +115,6 @@ for i in $(grep $responsedomain '/etc/userdomains' | grep -v '*' | awk -F":" '{p
                 else {
                         username="$(grep ${domains} /etc/userdomains | awk -F": " '{print $2 }' | tail -1)";
                         echo "$domains access logs"
-                        #cat /home/$username/access-logs/$domains* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head
-                        grep $domains /home/$username/access-logs/* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head
-                        echo "$domains most hits from IP:"
 			grep $domains /home/$username/access-logs/* 2>/dev/null | grep $responseIP | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head
                         echo "#####################"
                 }
