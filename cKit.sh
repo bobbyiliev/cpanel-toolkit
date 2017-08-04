@@ -723,7 +723,7 @@ else
     echo -ne "
 $(ColorGreen '-TERM added to .bashrc')"
 fi
-if [[ ! $(grep -q "alias php=/usr/bin/php-*" ".bashrc") ]];then
+if [[ ! $(grep "alias php=/usr/bin/php-*" ".bashrc") ]];then
 echo -e 'alias php=/usr/bin/php-7.0'  >> ~/.bashrc
 else
 grep 'alias php=/usr/bin/*'  ~/.bashrc | sed -i "s/php-5\../php-7\.0/"  ~/.bashrc 2>/dev/null
