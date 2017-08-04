@@ -24,7 +24,7 @@ green='\e[32m'
 blue='\e[34m'
 clear='\e[0m'
 red='\e[31m'
-executionTime=`date +%Y-%m-%d:%H:%M`
+executionTime=`date +%Y-%m-%d:%H:%M:%S`
 server=$(hostname)
 location=$(pwd)
 ###################
@@ -748,7 +748,7 @@ echo $(ColorRed 'You are not on cPanel')
 WrongCommand
 MainMenu
 else
-executionTime=`date +%Y-%m-%d:%H:%M`
+executionTime=`date +%Y-%m-%d:%H:%M:%S`
 
             	ColorGreen "        "
 echo -ne "
@@ -781,7 +781,7 @@ echo $(ColorRed 'You are not on the Cloud')
 WrongCommand
 MainMenu
 else
-ExecutionTime=`date +%Y-%m-%d:%H:%M`
+ExecutionTime=`date +%Y-%m-%d:%H:%M:%S`
                 ColorGreen "        "
 echo -ne "
 Cloud Menu
@@ -834,6 +834,7 @@ echo $(ColorRed 'You are not on cPanel')
 WrongCommand
 MainMenu
 else
+ExecutionTime=`date +%Y-%m-%d:%H:%M:%S`
 
             	ColorGreen "        "
 echo -ne "
@@ -876,6 +877,7 @@ echo $(ColorRed 'You are not on cPanel')
 WrongCommand
 MainMenu
 else
+ExecutionTime=`date +%Y-%m-%d:%H:%M:%S`
                 ColorGreen "        "
 echo -ne "
 
@@ -908,6 +910,7 @@ echo $(ColorRed 'You are not on cPanel')
 WrongCommand
 MainMenu
 else
+ExecutionTime=`date +%Y-%m-%d:%H:%M:%S`
                 ColorGreen "        "
 echo -ne "
 
@@ -942,6 +945,7 @@ echo $(ColorRed 'You are not on cPanel')
 WrongCommand
 MainMenu
 else
+ExecutionTime=`date +%Y-%m-%d:%H:%M:%S`
                 ColorGreen "        "
 echo -ne "
 Web Traffic Menu
