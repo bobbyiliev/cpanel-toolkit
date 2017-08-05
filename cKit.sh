@@ -764,6 +764,171 @@ $(ColorGreen '-Version changed to 7. Please run source ~/.bashrc in order to com
 ";
 }
 
+##
+# Function that detirmines the current executed PHP version and deployes an optimized php.ini
+# while configuring the SuPHP_ConfigPath
+##
+function DeployPHPini(){
+	whichletter="$(pwd | awk -F/ '{print $4}')"
+	whichdomain="$(pwd | awk -F/ '{print $5}')"
+
+if [ ! -f ~/public_html/.htaccess ]; then
+   		cd ~/public_html/  
+		touch ".htaccess" #2>/dev/null
+		echo -ne "$(ColorGreen '- .htaccess does not exists. Creating the file in public_html/')
+";
+fi
+
+if ! grep -q "AddType x-httpd-ph*" ~/public_html/.htacces 2>/dev/null
+then
+		echo "$(ColorGreen 'There is no AddType in the .htaccess. This means the website is using the default PHP version which is 5.6')
+                ";
+		cd ~/public_html/
+                mv php.ini php.ini-old 2>/dev/null
+                cd
+                mv php.ini php.ini-old 2>/dev/null
+                wget -Nq http://paragon.alexgeorgiev.net/phpini/php.ini-5-6
+                echo -ne "$(ColorGreen '- Creating a new optimized php.ini file. Memory_limit has been set to 1024M, max_execution_time has been set to 900, max_input_vars has been seto to 8000 and error_logging has been
+created.')
+";
+                mv php.ini-5-6 php.ini 2>/dev/null
+        if grep -q "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/.htaccess" ~/public_html/.htaccess 2>/dev/null
+        then
+            	echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
+";
+  	else
+            	echo -ne "$(ColorGreen "- Couldn't find a valid SuPHP_ConfigPath, creating a new one in public_html/.htaccess")
+";
+                echo -e "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/.htaccess\n$(cat ~/public_html/.htaccess 2>/dev/null)" > ~/public_html/.htaccess 2>/dev/null
+        fi
+fi
+
+if grep -q "AddType x-httpd-php56 .php" ~/public_html/.htaccess 2>/dev/null
+then
+		echo "$(ColorGreen 'The current PHP version is 5.6')
+		";
+		cd ~/public_html/
+		mv php.ini php.ini-old 2>/dev/null
+		cd
+		mv php.ini php.ini-old 2>/dev/null
+		wget -Nq http://paragon.alexgeorgiev.net/phpini/php.ini-5-6
+                echo -ne "$(ColorGreen '- Creating a new optimized php.ini file. Memory_limit has been set to 1024M, max_execution_time has been set to 900, max_input_vars has been seto to 8000 and error_logging has been 
+created.')
+";
+		mv php.ini-5-6 php.ini 2>/dev/null
+	if grep -q "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/.htaccess" ~/public_html/.htaccess 2>/dev/null
+	then
+		echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
+";
+	else
+		echo -ne "$(ColorGreen "- Couldn't find a valid SuPHP_ConfigPath, creating a new one in public_html/.htaccess")
+";
+		echo -e "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/.htaccess\n$(cat ~/public_html/.htaccess 2>/dev/null)" > ~/public_html/.htaccess 2>/dev/null
+	fi
+fi
+
+if grep -q "AddType x-httpd-php55 .php" ~/public_html/.htaccess 2>/dev/null
+then
+                echo "$(ColorGreen 'The current PHP version is 5.5')
+                ";
+                cd ~/public_html/
+                mv php.ini php.ini-old 2>/dev/null
+                cd
+		mv php.ini php.ini-old 2>/dev/null
+                wget -Nq http://paragon.alexgeorgiev.net/phpini/php.ini-5-5
+                echo -ne "$(ColorGreen '- Creating a new optimized php.ini file. Memory_limit has been set to 1024M, max_execution_time has been set to 900, max_input_vars has been seto to 8000 and error_logging has been 
+created.')
+";
+
+                mv php.ini-5-5 php.ini
+        if grep -q "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/.htaccess" ~/public_html/.htaccess 2>/dev/null
+        then
+            	echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
+";
+  	else
+            	echo -ne "$(ColorGreen "- Couldn't find a valid SuPHP_ConfigPath, creating a new one in public_html/.htaccess")
+";
+                echo -e "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/.htaccess\n$(cat ~/public_html/.htaccess 2>/dev/null)" > ~/public_html/.htaccess 2>/dev/null
+        fi
+fi
+
+if grep -q "AddType x-httpd-php54 .php" ~/public_html/.htaccess 2>/dev/null
+then
+                echo "$(ColorGreen 'The current PHP version is 5.4')
+                ";
+                cd ~/public_html/
+                mv php.ini php.ini-old 2>/dev/null
+                cd
+		mv php.ini php.ini-old 2>/dev/null
+                wget -Nq http://paragon.alexgeorgiev.net/phpini/php.ini-5-4
+                echo -ne "$(ColorGreen '- Creating a new optimized php.ini file. Memory_limit has been set to 1024M, max_execution_time has been set to 900, max_input_vars has been seto to 8000 and error_logging has been 
+created.')
+";
+
+                mv php.ini-5-4 php.ini
+        if grep -q "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/.htaccess" ~/public_html/.htaccess 2>/dev/null
+        then
+            	echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
+";
+  	else
+            	echo -ne "$(ColorGreen "- Couldn't find a valid SuPHP_ConfigPath, creating a new one in public_html/.htaccess")
+";
+                echo -e "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/.htaccess\n$(cat ~/public_html/.htaccess 2>/dev/null)" > ~/public_html/.htaccess 2>/dev/null
+        fi
+fi
+
+if grep -q "AddType x-httpd-php7 .php" ~/public_html/.htaccess 2>/dev/null
+then
+                echo "$(ColorGreen 'The current PHP version is 7')
+               	";
+               	cd ~/public_html/
+                mv php.ini php.ini-old 2>/dev/null
+               	cd
+		mv php.ini php.ini-old 2>/dev/null
+                wget -Nq http://paragon.alexgeorgiev.net/phpini/php.ini-7
+		echo -ne "$(ColorGreen '- Creating a new optimized php.ini file. Memory_limit has been set to 1024M, max_execution_time has been set to 900, max_input_vars has been seto to 8000 and error_logging has been 
+created.')
+";
+
+                mv php.ini-7 php.ini
+        if grep -q "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/.htaccess" ~/public_html/.htaccess 2>/dev/null
+        then
+               	echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
+";
+        else
+                echo -ne "$(ColorGreen "- Couldn't find a valid SuPHP_ConfigPath, creating a new one in public_html/.htaccess")
+";
+            	echo -e "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/.htaccess\n$(cat ~/public_html/.htaccess 2>/dev/null)" > ~/public_html/.htaccess 2>/dev/null
+       	fi
+fi
+
+if grep -q "AddType x-httpd-php53 .php" ~/public_html/.htaccess 2>/dev/null
+then
+                echo "$(ColorGreen 'The current PHP version is 5.3')
+                ";
+                cd ~/public_html/
+                mv php.ini php.ini-old 2>/dev/null
+                cd
+                mv php.ini php.ini-old 2>/dev/null
+                wget -Nq http://paragon.alexgeorgiev.net/phpini/php.ini-5-3
+                echo -ne "$(ColorGreen '- Creating a new optimized php.ini file. Memory_limit has been set to 1024M, max_execution_time has been set to 900, max_input_vars has been seto to 8000 and error_logging has been 
+created.')
+";
+
+                mv php.ini-5-3 php.ini
+        if grep -q "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/.htaccess" ~/public_html/.htaccess 2>/dev/null
+        then
+                echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
+";
+	else
+               	echo -ne "$(ColorGreen "- Couldn't find a valid SuPHP_ConfigPath, creating a new one in public_html/.htaccess")
+";
+               	echo -e "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/.htaccess\n$(cat ~/public_html/.htaccess 2>/dev/null)" > ~/public_html/.htaccess 2>/dev/null
+        fi
+fi
+
+}
+
 ###########################
 ###  Quick Access Menu  ###
 ###########################
@@ -825,7 +990,8 @@ $(ColorGreen '3)') Install laravel on the Cloud
 $(ColorGreen '4)') Generate random password
 $(ColorGreen '5)') Check if a PHP extension is enabled on the server.
 $(ColorGreen '6)') Check if a PHP function is enabled on the server.
-$(ColorGreen '7)') Change the Shell PHP version to 7
+$(ColorGreen '7)') Deploy an optimized php.ini for the used PHP version.
+$(ColorGreen '8)') Change the Shell PHP version to 7
 $(ColorGreen '0)') Back to Main Menu
 
 $(ColorBlue 'Choose an option:') "
@@ -837,7 +1003,8 @@ $(ColorBlue 'Choose an option:') "
 		4) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=RandomPass\&Server=$server\&Path=$location ; randompass_cloud;;
                 5) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsExtensionEnabled\&Server=$server\&Path=$location ; is_extension;;
                 6) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsFunctionnEnabled\&Server=$server\&Path=$location ; is_function;;
-		7) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ChangeShellPHPVersion\&Server=$server\&Path=$location ; ChangeShellPHP;;
+		7) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Deploy_optimized_PHP_ini\&Server=$server\&Path=$location ; DeployPHPini;;
+		8) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ChangeShellPHPVersion\&Server=$server\&Path=$location ; ChangeShellPHP;;
 		0) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; MainMenu;;
                 *) echo -e $red"Wrong command."$clear; CloudMenu;;
         esac
