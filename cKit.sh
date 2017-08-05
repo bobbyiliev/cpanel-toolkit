@@ -799,7 +799,7 @@ created.')
   	else
             	echo -ne "$(ColorGreen "- Couldn't find a valid SuPHP_ConfigPath, creating a new one in public_html/.htaccess")
 ";
-                echo -e "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/.htaccess\n$(cat ~/public_html/.htaccess 2>/dev/null)" > ~/public_html/.htaccess 2>/dev/null
+                echo -e "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/php.ini\n$(cat ~/public_html/.htaccess 2>/dev/null)" > ~/public_html/.htaccess 2>/dev/null
         fi
 fi
 
@@ -823,7 +823,7 @@ created.')
 	else
 		echo -ne "$(ColorGreen "- Couldn't find a valid SuPHP_ConfigPath, creating a new one in public_html/.htaccess")
 ";
-		echo -e "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/.htaccess\n$(cat ~/public_html/.htaccess 2>/dev/null)" > ~/public_html/.htaccess 2>/dev/null
+		echo -e "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/php.ini\n$(cat ~/public_html/.htaccess 2>/dev/null)" > ~/public_html/.htaccess 2>/dev/null
 	fi
 fi
 
@@ -848,7 +848,7 @@ created.')
   	else
             	echo -ne "$(ColorGreen "- Couldn't find a valid SuPHP_ConfigPath, creating a new one in public_html/.htaccess")
 ";
-                echo -e "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/.htaccess\n$(cat ~/public_html/.htaccess 2>/dev/null)" > ~/public_html/.htaccess 2>/dev/null
+                echo -e "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/php.ini\n$(cat ~/public_html/.htaccess 2>/dev/null)" > ~/public_html/.htaccess 2>/dev/null
         fi
 fi
 
@@ -873,7 +873,7 @@ created.')
   	else
             	echo -ne "$(ColorGreen "- Couldn't find a valid SuPHP_ConfigPath, creating a new one in public_html/.htaccess")
 ";
-                echo -e "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/.htaccess\n$(cat ~/public_html/.htaccess 2>/dev/null)" > ~/public_html/.htaccess 2>/dev/null
+                echo -e "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/php.ini\n$(cat ~/public_html/.htaccess 2>/dev/null)" > ~/public_html/.htaccess 2>/dev/null
         fi
 fi
 
@@ -898,7 +898,7 @@ created.')
         else
                 echo -ne "$(ColorGreen "- Couldn't find a valid SuPHP_ConfigPath, creating a new one in public_html/.htaccess")
 ";
-            	echo -e "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/.htaccess\n$(cat ~/public_html/.htaccess 2>/dev/null)" > ~/public_html/.htaccess 2>/dev/null
+            	echo -e "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/php.ini\n$(cat ~/public_html/.htaccess 2>/dev/null)" > ~/public_html/.htaccess 2>/dev/null
        	fi
 fi
 
@@ -923,7 +923,7 @@ created.')
 	else
                	echo -ne "$(ColorGreen "- Couldn't find a valid SuPHP_ConfigPath, creating a new one in public_html/.htaccess")
 ";
-               	echo -e "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/.htaccess\n$(cat ~/public_html/.htaccess 2>/dev/null)" > ~/public_html/.htaccess 2>/dev/null
+               	echo -e "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/php.ini\n$(cat ~/public_html/.htaccess 2>/dev/null)" > ~/public_html/.htaccess 2>/dev/null
         fi
 fi
 
