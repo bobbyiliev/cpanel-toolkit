@@ -1193,7 +1193,7 @@ while [ -z $paruser ] ; do
     	echo ""
 	echo "To start please enter your paruser:"
     read paruser
-	if [[ ! $paruser =~ ^[a-z_]+$ ]]; then
+	if [[ ! $paruser =~ [a-z_]+$ ]] || [[ ! $paruser =~ ^par[a-z_]+$ ]]  ; then
 		unset paruser
 		echo "Don't cheat! Enter your correct paruser!"
 	fi
