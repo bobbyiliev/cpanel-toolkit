@@ -1027,7 +1027,7 @@ $(ColorGreen '0)') Back to Main Menu
 $(ColorBlue 'Choose an option:') "
                 read a
                 case $a in
-                1) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudQuickInstallMenu\&Server=$server\&Path=$location ; CloudMenuInstallations;;
+                1) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudQuickInstallMenu\&Server=$server\&Path=$location ; CloudQuickInstallMenu;;
                 2) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsExtensionEnabled\&Server=$server\&Path=$location ; is_extension;;
                 3) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsFunctionnEnabled\&Server=$server\&Path=$location ; is_function;;
 		4) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=RandomPass\&Server=$server\&Path=$location ; randompass_cloud;;
@@ -1042,7 +1042,7 @@ fi
 ##
 # The installation section in the Cloud Menu
 ##
-CloudMenuInstallations(){
+CloudQuickInstallMenu(){
 if [[ ! $(pwd | grep '/var/sites/') ]]; then
 echo $(ColorRed 'You are not on the Cloud')
 WrongCommand
@@ -1067,7 +1067,7 @@ $(ColorBlue 'Choose an option:') "
                 2) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=InstallComposer\&Server=$server\&Path=$location ; composer_cloud_install;;
                 3) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=InstallLaravel\&Server=$server\&Path=$location ; laravel_cloud_installer;;
                 0) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; CloudMenu;;
-		*) echo -e $red"Wrong command."$clear; CloudMenuInstallations;;
+		*) echo -e $red"Wrong command."$clear; CloudQuickInstallMenu;;
         esac
 fi
 }
