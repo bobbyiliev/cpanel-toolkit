@@ -779,6 +779,7 @@ if [ ! -f ~/public_html/.htaccess ]; then
 ";
 fi
 
+#If there is no Addtype added in public_html/.htaccess, automatically is asumed the PHP version is 5.6 and adds php.ini for it
 if ! grep -qi "AddType x-httpd-ph*" ~/public_html/.htaccess 2>/dev/null
 then
 		echo "$(ColorGreen 'There is no AddType in the .htaccess. This means the website is using the default PHP version which is 5.6')
@@ -803,6 +804,7 @@ created.')
         fi
 fi
 
+#Automatically creates an optimized php.ini for PHP 5.6and configures the suPHP_config path to the .htaccess
 if grep -qi "AddType x-httpd-php56 .php" ~/public_html/.htaccess 2>/dev/null
 then
 		echo "$(ColorGreen 'The current PHP version is 5.6')
@@ -827,6 +829,7 @@ created.')
 	fi
 fi
 
+#Automatically creates an optimized php.ini for PHP 5.5 and configures the suPHP_config path to the .htaccess
 if grep -qi "AddType x-httpd-php55 .php" ~/public_html/.htaccess 2>/dev/null
 then
                 echo "$(ColorGreen 'The current PHP version is 5.5')
@@ -852,6 +855,7 @@ created.')
         fi
 fi
 
+#Automatically creates an optimized php.ini for PHP 5.4 and configures the suPHP_config path to the .htaccess
 if grep -qi "AddType x-httpd-php54 .php" ~/public_html/.htaccess 2>/dev/null
 then
                 echo "$(ColorGreen 'The current PHP version is 5.4')
@@ -877,6 +881,7 @@ created.')
         fi
 fi
 
+#Automatically creates an optimized php.ini for PHP 7 and configures the suPHP_config path to the .htaccess
 if grep -qi "AddType x-httpd-php7 .php" ~/public_html/.htaccess 2>/dev/null
 then
                 echo "$(ColorGreen 'The current PHP version is 7')
@@ -902,6 +907,7 @@ created.')
        	fi
 fi
 
+#Automatically creates an optimized php.ini for PHP 7.1 and configures the suPHP_config path to the .htaccess
 if grep -qi "AddType x-httpd-php71 .php" ~/public_html/.htaccess 2>/dev/null
 then
                 echo "$(ColorGreen 'The current PHP version is 7.1')
@@ -927,7 +933,7 @@ created.')
         fi
 fi
 
-
+#Automatically creates an optimized php.ini for PHP 5.3 and configures the suPHP_config path to the .htaccess
 if grep -qi "AddType x-httpd-php53 .php" ~/public_html/.htaccess 2>/dev/null
 then
                 echo "$(ColorGreen 'The current PHP version is 5.3')
