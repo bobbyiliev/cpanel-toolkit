@@ -793,18 +793,24 @@ then
 created.')
 ";
                 mv php.ini-5-6 php.ini 2>/dev/null
-        if grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/.htaccess" ~/public_html/.htaccess 2>/dev/null
+	if grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/php.ini" ~/public_html/.htaccess 2>/dev/null
         then
             	echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
+	elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+                then
+                    	grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
+                        echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
+";
   	else
-            	echo -ne "$(ColorGreen "- Couldn't find a valid SuPHP_ConfigPath, creating a new one in public_html/.htaccess")
+            	echo -ne "$(ColorGreen "- Couldn't find a valid SuPHP_ConfigPath, creating a new one in public_html/.htaccess.")
 ";
                 echo -e "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/php.ini\n$(cat ~/public_html/.htaccess 2>/dev/null)" > ~/public_html/.htaccess 2>/dev/null
-        fi
+
+	fi
 fi
 
-#Automatically creates an optimized php.ini for PHP 5.6and configures the suPHP_config path to the .htaccess
+#Automatically creates an optimized php.ini for PHP 5.6 and configures the suPHP_config path to the .htaccess
 if grep -qi "AddType x-httpd-php56 .php" ~/public_html/.htaccess 2>/dev/null
 then
 		echo "$(ColorGreen 'The current PHP version is 5.6')
@@ -818,15 +824,21 @@ then
 created.')
 ";
 		mv php.ini-5-6 php.ini 2>/dev/null
-	if grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/.htaccess" ~/public_html/.htaccess 2>/dev/null
-	then
-		echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
+        if grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/php.ini" ~/public_html/.htaccess 2>/dev/null
+        then
+                echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-	else
-		echo -ne "$(ColorGreen "- Couldn't find a valid SuPHP_ConfigPath, creating a new one in public_html/.htaccess")
+        elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+                then
+                        grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
+                        echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
 ";
-		echo -e "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/php.ini\n$(cat ~/public_html/.htaccess 2>/dev/null)" > ~/public_html/.htaccess 2>/dev/null
-	fi
+        else
+                echo -ne "$(ColorGreen "- Couldn't find a valid SuPHP_ConfigPath, creating a new one in public_html/.htaccess.")
+";
+                echo -e "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/php.ini\n$(cat ~/public_html/.htaccess 2>/dev/null)" > ~/public_html/.htaccess 2>/dev/null
+
+        fi
 fi
 
 #Automatically creates an optimized php.ini for PHP 5.5 and configures the suPHP_config path to the .htaccess
@@ -844,14 +856,20 @@ created.')
 ";
 
                 mv php.ini-5-5 php.ini
-        if grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/.htaccess" ~/public_html/.htaccess 2>/dev/null
+        if grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/php.ini" ~/public_html/.htaccess 2>/dev/null
         then
-            	echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
+                echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-  	else
-            	echo -ne "$(ColorGreen "- Couldn't find a valid SuPHP_ConfigPath, creating a new one in public_html/.htaccess")
+        elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+                then
+                        grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
+                        echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
+";
+        else
+                echo -ne "$(ColorGreen "- Couldn't find a valid SuPHP_ConfigPath, creating a new one in public_html/.htaccess.")
 ";
                 echo -e "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/php.ini\n$(cat ~/public_html/.htaccess 2>/dev/null)" > ~/public_html/.htaccess 2>/dev/null
+
         fi
 fi
 
@@ -870,14 +888,20 @@ created.')
 ";
 
                 mv php.ini-5-4 php.ini
-        if grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/.htaccess" ~/public_html/.htaccess 2>/dev/null
+        if grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/php.ini" ~/public_html/.htaccess 2>/dev/null
         then
-            	echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
+                echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-  	else
-            	echo -ne "$(ColorGreen "- Couldn't find a valid SuPHP_ConfigPath, creating a new one in public_html/.htaccess")
+        elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+                then
+                        grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
+                        echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
+";
+        else
+                echo -ne "$(ColorGreen "- Couldn't find a valid SuPHP_ConfigPath, creating a new one in public_html/.htaccess.")
 ";
                 echo -e "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/php.ini\n$(cat ~/public_html/.htaccess 2>/dev/null)" > ~/public_html/.htaccess 2>/dev/null
+
         fi
 fi
 
@@ -896,15 +920,21 @@ created.')
 ";
 
                 mv php.ini-7 php.ini
-        if grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/.htaccess" ~/public_html/.htaccess 2>/dev/null
+        if grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/php.ini" ~/public_html/.htaccess 2>/dev/null
         then
-               	echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
+                echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
+";
+        elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+                then
+                        grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
+                        echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
 ";
         else
-                echo -ne "$(ColorGreen "- Couldn't find a valid SuPHP_ConfigPath, creating a new one in public_html/.htaccess")
+                echo -ne "$(ColorGreen "- Couldn't find a valid SuPHP_ConfigPath, creating a new one in public_html/.htaccess.")
 ";
-            	echo -e "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/php.ini\n$(cat ~/public_html/.htaccess 2>/dev/null)" > ~/public_html/.htaccess 2>/dev/null
-       	fi
+                echo -e "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/php.ini\n$(cat ~/public_html/.htaccess 2>/dev/null)" > ~/public_html/.htaccess 2>/dev/null
+
+        fi
 fi
 
 #Automatically creates an optimized php.ini for PHP 7.1 and configures the suPHP_config path to the .htaccess
@@ -922,14 +952,20 @@ created.')
 ";
 
                 mv php.ini-7 php.ini
-        if grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/.htaccess" ~/public_html/.htaccess 2>/dev/null
+        if grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/php.ini" ~/public_html/.htaccess 2>/dev/null
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
+        elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+                then
+                        grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
+                        echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
+";
         else
-                echo -ne "$(ColorGreen "- Couldn't find a valid SuPHP_ConfigPath, creating a new one in public_html/.htaccess")
+                echo -ne "$(ColorGreen "- Couldn't find a valid SuPHP_ConfigPath, creating a new one in public_html/.htaccess.")
 ";
                 echo -e "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/php.ini\n$(cat ~/public_html/.htaccess 2>/dev/null)" > ~/public_html/.htaccess 2>/dev/null
+
         fi
 fi
 
@@ -948,14 +984,20 @@ created.')
 ";
 
                 mv php.ini-5-3 php.ini
-        if grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/.htaccess" ~/public_html/.htaccess 2>/dev/null
+        if grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/php.ini" ~/public_html/.htaccess 2>/dev/null
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-	else
-               	echo -ne "$(ColorGreen "- Couldn't find a valid SuPHP_ConfigPath, creating a new one in public_html/.htaccess")
+        elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+                then
+                        grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
+                        echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
 ";
-               	echo -e "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/php.ini\n$(cat ~/public_html/.htaccess 2>/dev/null)" > ~/public_html/.htaccess 2>/dev/null
+        else
+                echo -ne "$(ColorGreen "- Couldn't find a valid SuPHP_ConfigPath, creating a new one in public_html/.htaccess.")
+";
+                echo -e "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/php.ini\n$(cat ~/public_html/.htaccess 2>/dev/null)" > ~/public_html/.htaccess 2>/dev/null
+
         fi
 fi
 
