@@ -42,6 +42,8 @@ created.')
 ";
 
                 mv php.ini-7 php.ini
+		echo "
+error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  ~/php.ini
         if grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/php.ini" ~/public_html/.htaccess 2>/dev/null
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
