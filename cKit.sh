@@ -1016,15 +1016,49 @@ Cloud Menu
 
 $(ColorRed 'Please note that you should run those only on the Cloud!!!')
 
+$(ColorGreen '1)') One click installations
+$(ColorGreen '2)') Check if a PHP extension is enabled on the server.
+$(ColorGreen '3)') Check if a PHP function is enabled on the server.
+$(ColorGreen '4)') Generate random password
+$(ColorGreen '5)') Deploy an optimized php.ini for the used PHP version.
+$(ColorGreen '6)') Change the Shell PHP version to 7
+$(ColorGreen '0)') Back to Main Menu
+
+$(ColorBlue 'Choose an option:') "
+                read a
+                case $a in
+                1) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudQuickInstallMenu\&Server=$server\&Path=$location ; CloudMenuInstallations;;
+                2) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsExtensionEnabled\&Server=$server\&Path=$location ; is_extension;;
+                3) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsFunctionnEnabled\&Server=$server\&Path=$location ; is_function;;
+		4) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=RandomPass\&Server=$server\&Path=$location ; randompass_cloud;;
+		5) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Deploy_optimized_PHP_ini\&Server=$server\&Path=$location ; DeployPHPini;;
+		6) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ChangeShellPHPVersion\&Server=$server\&Path=$location ; ChangeShellPHP;;
+		0) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; MainMenu;;
+                *) echo -e $red"Wrong command."$clear; CloudMenu;;
+        esac
+fi
+}
+
+##
+# The installation section in the Cloud Menu
+##
+CloudMenuInstallations(){
+if [[ ! $(pwd | grep '/var/sites/') ]]; then
+echo $(ColorRed 'You are not on the Cloud')
+WrongCommand
+MainMenu
+else
+ExecutionTime=`date +%Y-%m-%d:%H:%M:%S`
+                ColorGreen "        "
+echo -ne "
+Installations on the Cloud
+
+$(ColorRed 'Please note that you should run those only on the Cloud!!!')
+
 $(ColorGreen '1)') Install wp-cli on the Cloud
 $(ColorGreen '2)') Install composer on the Cloud
 $(ColorGreen '3)') Install laravel on the Cloud
-$(ColorGreen '4)') Generate random password
-$(ColorGreen '5)') Check if a PHP extension is enabled on the server.
-$(ColorGreen '6)') Check if a PHP function is enabled on the server.
-$(ColorGreen '7)') Deploy an optimized php.ini for the used PHP version.
-$(ColorGreen '8)') Change the Shell PHP version to 7
-$(ColorGreen '0)') Back to Main Menu
+$(ColorGreen '0)') Back to the Cloud Main Menu
 
 $(ColorBlue 'Choose an option:') "
                 read a
@@ -1032,16 +1066,12 @@ $(ColorBlue 'Choose an option:') "
                 1) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=InstallwpCLI\&Server=$server\&Path=$location ; wp_cli_cloud_install;;
                 2) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=InstallComposer\&Server=$server\&Path=$location ; composer_cloud_install;;
                 3) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=InstallLaravel\&Server=$server\&Path=$location ; laravel_cloud_installer;;
-		4) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=RandomPass\&Server=$server\&Path=$location ; randompass_cloud;;
-                5) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsExtensionEnabled\&Server=$server\&Path=$location ; is_extension;;
-                6) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsFunctionnEnabled\&Server=$server\&Path=$location ; is_function;;
-		7) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Deploy_optimized_PHP_ini\&Server=$server\&Path=$location ; DeployPHPini;;
-		8) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ChangeShellPHPVersion\&Server=$server\&Path=$location ; ChangeShellPHP;;
-		0) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; MainMenu;;
-                *) echo -e $red"Wrong command."$clear; CloudMenu;;
+                0) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; CloudMenu;;
+		*) echo -e $red"Wrong command."$clear; CloudMenuInstallations;;
         esac
 fi
 }
+
 
 ##
 #  Section in the Access Logs Menu that ask for a specific domain 
