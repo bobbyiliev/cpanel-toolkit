@@ -1073,22 +1073,20 @@ Cloud Menu
 $(ColorRed 'Please note that you should run those only on the Cloud!!!')
 
 $(ColorGreen '1)') One click installations
-$(ColorGreen '2)') Check if a PHP extension is enabled on the server.
-$(ColorGreen '3)') Check if a PHP function is enabled on the server.
-$(ColorGreen '4)') Generate random password
-$(ColorGreen '5)') Deploy an optimized php.ini for the used PHP version.
-$(ColorGreen '6)') Change the Shell PHP version to 7
+$(ColorGreen '2)') PHP configurations and settigs
+$(ColorGreen '3)') Check if a PHP extension is enabled on the server.
+$(ColorGreen '4)') Check if a PHP function is enabled on the server.
+$(ColorGreen '5)') Generate random password
 $(ColorGreen '0)') Back to Main Menu
 
 $(ColorBlue 'Choose an option:') "
                 read a
                 case $a in
                 1) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudQuickInstallMenu\&Server=$server\&Path=$location ; CloudQuickInstallMenu;;
-                2) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsExtensionEnabled\&Server=$server\&Path=$location ; is_extension;;
-                3) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsFunctionnEnabled\&Server=$server\&Path=$location ; is_function;;
-		4) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=RandomPass\&Server=$server\&Path=$location ; randompass_cloud;;
-		5) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Deploy_optimized_PHP_ini\&Server=$server\&Path=$location ; DeployPHPini;;
-		6) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ChangeShellPHPVersion\&Server=$server\&Path=$location ; ChangeShellPHP;;
+		1) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=PHPchangesMenu\&Server=$server\&Path=$location ; ChangePHPVersion;;
+                3) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsExtensionEnabled\&Server=$server\&Path=$location ; is_extension;;
+                4) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsFunctionnEnabled\&Server=$server\&Path=$location ; is_function;;
+		5) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=RandomPass\&Server=$server\&Path=$location ; randompass_cloud;;
 		0) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; MainMenu;;
                 *) echo -e $red"Wrong command."$clear; CloudMenu;;
         esac
@@ -1128,6 +1126,47 @@ $(ColorBlue 'Choose an option:') "
 fi
 }
 
+##
+# PHP section in the Cloud Menu
+##
+ChangePHPVersion(){
+if [[ ! $(pwd | grep '/var/sites/') ]]; then
+echo $(ColorRed 'You are not on the Cloud')
+WrongCommand
+MainMenu
+else
+ExecutionTime=`date +%Y-%m-%d:%H:%M:%S`
+                ColorGreen "        "
+echo -ne "
+
+Change PHP version
+
+$(ColorGreen '1)') Change PHP version to 5.3
+$(ColorGreen '2)') Change PHP version to 5.4
+$(ColorGreen '3)') Change PHP version to 5.5
+$(ColorGreen '4)') Change PHP version to 5.6
+$(ColorGreen '5)') Change PHP version to 7.0
+$(ColorGreen '6)') Change PHP version to 7.1
+$(ColorGreen '7)') Deploy an optimized php.ini for the used PHP version.
+$(ColorGreen '8)') Change the Shell PHP version to 7
+$(ColorGreen '0)') Back To Main Menu.
+
+$(ColorBlue 'Choose an option:') "
+                read a
+                case $a in
+                1) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ChangePHPVersionTo5.3\&Server=$server\&Path=$location ; changePHPTo5.3;;
+               	2) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ChangePHPVersionTo5.4\&Server=$server\&Path=$location ; changePHPTo5.4;;
+                3) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ChangePHPVersionTo5.5\&Server=$server\&Path=$location ; changePHPTo5.5;;
+               	4) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ChangePHPVersionTo5.6\&Server=$server\&Path=$location ; changePHPTo5.6;;
+                5) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ChangePHPVersionTo7\&Server=$server\&Path=$location ; changePHPTo7;;
+            	6) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ChangePHPVersionTo7.1\&Server=$server\&Path=$location ; changePHPTo71;;
+		7) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Deploy_optimized_PHP_ini\&Server=$server\&Path=$location ; DeployPHPini;;
+                8) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ChangeShellPHPVersion\&Server=$server\&Path=$location ; ChangeShellPHP;;
+               	0) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; MainMenu;;
+                *) echo -e $red"Wrong command."$clear; MainMenu;;
+        esac
+fi
+}
 
 ##
 #  Section in the Access Logs Menu that ask for a specific domain 
