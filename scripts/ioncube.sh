@@ -42,15 +42,23 @@ created.')
 ";
 
                 mv php.ini-7 php.ini
-        if grep -q "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/.htaccess" ~/public_html/.htaccess 2>/dev/null
-    then
-                   echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
+		echo "
+error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  ~/php.ini
+        if grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/php.ini" ~/public_html/.htaccess 2>/dev/null
+        then
+                echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-    else
-                   echo -ne "$(ColorGreen "- Couldn't find a valid SuPHP_ConfigPath, creating a new one in public_html/.htaccess")
+        elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+                then
+                        grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
+                        echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
+";
+        else
+                echo -ne "$(ColorGreen "- Couldn't find a valid SuPHP_ConfigPath, creating a new one in public_html/.htaccess.")
 ";
                 echo -e "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/php.ini\n$(cat ~/public_html/.htaccess 2>/dev/null)" > ~/public_html/.htaccess 2>/dev/null
-           fi
+
+        fi
 fi
 
 
