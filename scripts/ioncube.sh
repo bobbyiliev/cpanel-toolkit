@@ -20,7 +20,7 @@ clear
 
 # Extract the archieve
         sleep 2s
-	echo "$(ColorGreen 'Extracting archieve')";	
+	echo "$(ColorGreen 'Extracting archieve')";
 	echo ""
         tar xvf ioncube_loaders_lin_x86-64.tar.gz
 
@@ -28,7 +28,7 @@ clear
 
 if grep -q "AddType x-httpd-php7 .php" ~/public_html/.htaccess 2>/dev/null
 then
-        echo ""        
+        echo ""
 	echo "$(ColorGreen 'The current PHP version is 7')
                    ";
                    cd ~/public_html/
