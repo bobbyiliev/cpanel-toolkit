@@ -55,10 +55,10 @@ for i in $(cat '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}'); do
                 domains=${i};
                 username="$(grep ${domains} /etc/userdomains | awk -F": " '{print $2 }' | tail -1)";
 		echo "#####################"
-                echo "$domains access logs:"
+                echo "GET/POST requests for $domains :"
                 #cat /home/$username/access-logs/$domains* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head
 		grep $domains /home/$username/access-logs/* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head
-                echo "$domains most hits from IP:"
+                echo "IP hits for $domains :"
                 #cat /home/$username/access-logs/$domains* 2>/dev/null | awk '{print $1}' | sort | uniq -c | sort -rn | head
 		#grep $domains /home/$username/access-logs/* 2>/dev/null | awk '{print $1}' | sort | uniq -c | sort -rn | head
 		grep $domains /home/$username/access-logs/* 2>/dev/null | awk -F":" '{print $2}' | awk -F"-" '{print $1}' |sort | uniq -c | sort -rn | head
@@ -76,7 +76,7 @@ for i in $(cat '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}'); do
                 domains=${i};
                 username="$(grep ${domains} /etc/userdomains | awk -F": " '{print $2 }' | tail -1)"; 
         	echo "#####################"
-	        echo "$domains access logs: "
+	        echo "GET/POST requests for $domains :"
                 #cat /home/$username/access-logs/$domains* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head 
 		grep $domains /home/$username/access-logs/* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head
 		echo "#####################"
@@ -97,10 +97,10 @@ for i in $(grep $responsedomain '/etc/userdomains' | grep -v '*' | awk -F":" '{p
 		MenuAcessDomain
 		else {
 	                username="$(grep ${domains} /etc/userdomains | awk -F": " '{print $2 }' | tail -1)";
-        	        echo "$domains access logs"
+        	        echo "GET/POST requests for $domains :"
                 	#cat /home/$username/access-logs/$domains* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head
 			grep $domains /home/$username/access-logs/* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head
-        	        echo "$domains most hits from IP:"
+        	        echo "IP hits for $domains :"
 	                grep $domains /home/$username/access-logs/* 2>/dev/null | awk -F":" '{print $2}' | awk -F"-" '{print $1}' |sort | uniq -c | sort -rn | head
                 	echo "#####################"
 		}
