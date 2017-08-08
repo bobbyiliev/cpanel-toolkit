@@ -2275,7 +2275,7 @@ $(ColorBlue 'Choose an option:') "
                 read a
                 case $a in
                 1) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudQuickInstallMenu\&Server=$server\&Path=$location ; CloudQuickInstallMenu;;
-		1) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=PHPchangesMenu\&Server=$server\&Path=$location ; ChangePHPVersion;;
+		2) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=PHPchangesMenu\&Server=$server\&Path=$location ; ChangePHPVersion;;
                 3) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsExtensionEnabled\&Server=$server\&Path=$location ; is_extension;;
                 4) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsFunctionnEnabled\&Server=$server\&Path=$location ; is_function;;
 		5) curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=RandomPass\&Server=$server\&Path=$location ; randompass_cloud;;
