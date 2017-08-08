@@ -27,7 +27,8 @@ red='\e[31m'
 executionTime=`date +%Y-%m-%d:%H:%M:%S`
 server=$(hostname)
 location=$(pwd)
-reportDomain='http://wpcli.bobbyiliev.com/ckit/datalog/datalog.php'
+#reportDomain='http://wpcli.bobbyiliev.com/ckit/datalog/datalog.php'
+reportDomain='http://ckit.bobbyiliev.com/datalog.php'
 
 ##################################################################
 ### If you would like to disable logging just change this to 0 ###
