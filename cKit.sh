@@ -281,7 +281,7 @@ trap command SIGINT
         fi
 	fi
 trap - SIGINT
-MySQLMenu
+SysAdminsMenu
 }
 
 ##
@@ -339,8 +339,35 @@ function kill_mysql_sleeping_proc_user() {
    fi
   fi
 trap - SIGINT
-MySQLMenu
+SysAdminsMenu
 }
+
+##
+# Function that lists all of the sleeping MySQL processes for the Admins Menu
+# In many cases the sleeping processes could be causing high CPU load
+##
+function list_sleeping_mysql_admins() {
+    sleepingProc=$(mysqladmin proc | grep Sleep)
+    if [ -z "$sleepingProc" ]; then
+        echo ""
+        echo "No Sleeping MySQL Proccesses ATM";
+    else {
+       	mysqladmin proc | head -3
+       	mysqladmin proc | grep Sleep
+    }
+    fi
+SysAdminsMenu
+}
+
+##
+# Function that lists all MySQL proccesses for Admins Menu
+##
+function show_full_processlist_admins() {
+    check_mysql_startup_info
+    mysqladmin processlist status
+SysAdminsMenu
+}
+
 
 ##
 # Function that lists all MySQL proccesses
@@ -2431,6 +2458,52 @@ fi
 }
 
 ##
+# SysAdmins Menu
+##
+SysAdminsMenu(){
+    #unset syspass
+    while [ -z $syspass ] ; do
+    echo "Only for SysAdmins! Please enter the secret password or type exit:"
+    read syspass
+	if [ $syspass != "SysAdmins" ]; then
+	echo "Wrong Password!"
+	unset syspass
+	fi
+    done
+    if [ $syspass = "SysAdmins" ]; then
+	if [[ $(pwd | grep '/var/sites/') ]]; then
+	echo $(ColorRed 'You are not on cPanel')
+	WrongCommand
+	MainMenu
+	else
+ExecutionTime=`date +%Y-%m-%d:%H:%M:%S`
+                ColorGreen "        "
+echo -ne "
+
+Choose the information you need regarding MySQL
+
+$(ColorGreen '1)') List MySQL sleeping Processes.
+$(ColorGreen '2)') Kill all MySQL sleeping Processes that have been sleeping for more that 60 seconds.
+$(ColorGreen '3)') Show full processlist.
+$(ColorGreen '4)') Kill all MySQL sleeping Processes "for" a specific user.
+$(ColorGreen '0)') Back To Main Menu.
+
+$(ColorBlue 'Choose an option:') "
+                read a
+                case $a in
+                1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=List_sleeping_mysql_processes\&Server=$server\&Path=$location ; fi ; list_sleeping_mysql_admins;;
+                2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Kill_mysql_sleeping_processes\&Server=$server\&Path=$location ; fi ; kill_mysql_sleeping_proc;;
+                3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Show_ll_rocesses\&Server=$server\&Path=$location ; fi ; show_full_processlist_admins;;
+                4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Kill_mysql_sleeping_processes_for_specific_user\&Server=$server\&Path=$location ; fi ; kill_mysql_sleeping_proc_user;;
+                0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; MainMenu;;
+                *) echo -e $red"Wrong command."$clear; SysAdminsMenu;;
+        esac
+
+	fi
+    fi
+}
+
+##
 # The MySQL Menu
 ##
 MySQLMenu(){
@@ -2566,6 +2639,7 @@ $(ColorBlue 'Choose an option:') "
 		4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=WebTrafficMenu\&Server=$server\&Path=$location ; fi ; DDoSMenu;;
 		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=HandyToolsMenu\&Server=$server\&Path=$location ; fi ; ToolsMenu;;
 		6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; CloudMenu;;
+		admins) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=SysAdminsMenu\&Server=$server\&Path=$location ; fi ; SysAdminsMenu;;
 		0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exit\&Server=$server\&Path=$location ; fi ; Exitmenu;;
 		*) echo -e $red"Wrong command."$clear; WrongCommand;;
         esac
