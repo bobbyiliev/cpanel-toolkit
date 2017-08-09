@@ -2443,15 +2443,15 @@ $(ColorGreen '0)') Back to Main Menu.
 $(ColorBlue 'Choose an option:') "
                 read a
                 case $a in
-                1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; showexim ;;
-                2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; originate;;
-                3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; originate2;;
-                4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; whichphpscript;;
-                5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; getnetstat;;
-                6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; nobodyspam;;
-                7) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; nobodyspamafter;;
-                8) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; showeximsum;;
-                0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; MainMenu;;
+                1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim1ListofAllEmailSenders\&Server=$server\&Path=$location ; fi ; showexim ;;
+                2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim2EximSpamDirs\&Server=$server\&Path=$location ; fi ; originate;;
+                3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim3EximPHPSpam\&Server=$server\&Path=$location ; fi ; originate2;;
+                4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim4EximUsersSpam\&Server=$server\&Path=$location ; fi ; whichphpscript;;
+                5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim5IPsOnPort25\&Server=$server\&Path=$location ; fi ; getnetstat;;
+                6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim6NobodySpam\&Server=$server\&Path=$location ; fi ; nobodyspam;;
+                7) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim7SpamInProgress\&Server=$server\&Path=$location ; fi ; nobodyspamafter;;
+                8) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim8MailQueue\&Server=$server\&Path=$location ; fi ; showeximsum;;
+                0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; MainMenu;;
 		*) echo -e $red"Wrong command."$clear; EmailsMenu;;
         esac
 fi
@@ -2559,13 +2559,13 @@ $(ColorGreen '0)') Back To Main Menu.
 $(ColorBlue 'Choose an option:') "
                 read a
                 case $a in
-                1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; is_extension;;
-                2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; is_function;;
-		3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; randompass;;
-		4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; MonitorCpu;;
-		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; FindLargeFiles;;
-		6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; EAversion;;
-                0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; MainMenu;;
+                1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsExtensionEnabled\&Server=$server\&Path=$location ; fi ; is_extension;;
+                2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsFunctionEnabled\&Server=$server\&Path=$location ; fi ; is_function;;
+		3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=RandomPass\&Server=$server\&Path=$location ; fi ; randompass;;
+		4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MonitorCPU\&Server=$server\&Path=$location ; fi ; MonitorCpu;;
+		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=FindLargeFiles\&Server=$server\&Path=$location ; fi ; FindLargeFiles;;
+		6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=EAversion\&Server=$server\&Path=$location ; fi ; EAversion;;
+                0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; MainMenu;;
 		*) echo -e $red"Wrong command."$clear; ToolsMenu;;
         esac
 fi
@@ -2592,12 +2592,12 @@ $(ColorGreen '0)') Back To Main Menu
 $(ColorBlue 'Choose an option:') "
                 read a
                 case $a in
-		1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; ActiveConn;;
-                2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; TopUsers;;
-                3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; AllUsers;;
-                4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; CurrentCPUusage;;
-                5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; GetPortConn;;
-                0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; MainMenu;;
+		1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ActiveConn\&Server=$server\&Path=$location ; fi ; ActiveConn;;
+                2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=TopUsers\&Server=$server\&Path=$location ; fi ; TopUsers;;
+                3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=AllUsers\&Server=$server\&Path=$location ; fi ; AllUsers;;
+                4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CPUusage\&Server=$server\&Path=$location ; fi ; CurrentCPUusage;;
+                5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ConnectionsOnSpecPort\&Server=$server\&Path=$location ; fi ; GetPortConn;;
+                0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; MainMenu;;
                 *) echo -e $red"Wrong command."$clear; WrongCommand;;
         esac
 fi
