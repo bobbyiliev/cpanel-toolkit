@@ -2310,8 +2310,11 @@ and
             echo -e "zend_extension_ts=/var/sites/${whichletter}/${whichdomain}/ioncube/ioncube_loader_lin_${PHP_VER}_ts.so" >> ~/php.ini 2>/dev/null
             echo -e "zend_extension=/var/sites/${whichletter}/${whichdomain}/ioncube/ioncube_loader_lin_${PHP_VER}.so" >> ~/php.ini 2>/dev/null
             echo ""
+	    echo "$(ColorGreen 'Done, Ioncube has been successfully installed')";
+	    echo ""
+
+CloudMenu
 }
-install_ioncube_php70
 
 ###########################
 ###  Quick Access Menu  ###
