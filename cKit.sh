@@ -2245,8 +2245,8 @@ ChangePHPVersion
 function install_ioncube_php70() {
 
         if ! grep -q "AddType x-httpd-php7" ~/.htaccess 2>/dev/null ; then
-                echo $(ColorGreen  "This is only for PHP 7.0, and you are running a different PHP version!")
-	CloudMenu
+                echo $(ColorRed  "This is only for PHP 7.0, and you are running a different PHP version!")
+	Cloud Menu
         fi
 
         whichletter="$(pwd | awk -F/ '{print $4}')"
@@ -2260,7 +2260,7 @@ function install_ioncube_php70() {
         # Function to Download and extract 64-bit files
 
         clear
-            echo "$(ColorRed 'Downloading the ioncube archieve')";
+            echo "$(ColorGreen 'Downloading the ioncube archieve')";
                 echo ""
             wget -q https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz
 
@@ -2384,7 +2384,7 @@ $(ColorBlue 'Choose an option:') "
                 3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsExtensionEnabled\&Server=$server\&Path=$location ; fi ; is_extension;;
                 4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsFunctionnEnabled\&Server=$server\&Path=$location ; fi ; is_function;;
 		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=RandomPass\&Server=$server\&Path=$location ; fi ; randompass_cloud;;
-		6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=RandomPass\&Server=$server\&Path=$location ; fi ; install_ioncube_php70;;
+		6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IonCubeInstaller\&Server=$server\&Path=$location ; fi ; install_ioncube_php70;;
 		0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; MainMenu;;
                 *) echo -e $red"Wrong command."$clear; CloudMenu;;
         esac
