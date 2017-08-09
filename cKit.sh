@@ -57,12 +57,11 @@ for i in $(cat '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}'); do
                 username="$(grep ${domains} /etc/userdomains | awk -F": " '{print $2 }' | tail -1)";
 		echo  $(ColorGreen "#####################");
                 echo $(ColorGreen "GET/POST requests for $domains :");
-                #cat /home/$username/access-logs/$domains* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head
-		grep $domains /home/$username/access-logs/* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head
+		grep -r $domains /usr/local/apache/domlogs/* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head
                 echo $(ColorGreen "IP hits for $domains :");
                 #cat /home/$username/access-logs/$domains* 2>/dev/null | awk '{print $1}' | sort | uniq -c | sort -rn | head
 		#grep $domains /home/$username/access-logs/* 2>/dev/null | awk '{print $1}' | sort | uniq -c | sort -rn | head
-		grep $domains /home/$username/access-logs/* 2>/dev/null | awk -F":" '{print $2}' | awk -F"-" '{print $1}' |sort | uniq -c | sort -rn | head
+		grep -r $domains /usr/local/apache/domlogs/* 2>/dev/null | awk -F":" '{print $2}' | awk -F"-" '{print $1}' |sort | uniq -c | sort -rn | head
 		echo $(ColorGreen "#####################");
         done
 MenuAcess
@@ -79,7 +78,7 @@ for i in $(cat '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}'); do
         	echo  $(ColorGreen "#####################");
 	        echo  $(ColorGreen "GET/POST requests for $domains :");
                 #cat /home/$username/access-logs/$domains* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head 
-		grep $domains /home/$username/access-logs/* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head
+		grep -r $domains /usr/local/apache/domlogs/* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head
 		echo  $(ColorGreen "#####################");
         done
 MenuAcess
@@ -100,9 +99,9 @@ for i in $(grep $responsedomain '/etc/userdomains' | grep -v '*' | awk -F":" '{p
 	                username="$(grep ${domains} /etc/userdomains | awk -F": " '{print $2 }' | tail -1)";
         	        echo  $(ColorGreen "GET/POST requests for $domains :");
                 	#cat /home/$username/access-logs/$domains* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head
-			grep $domains /home/$username/access-logs/* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head
+			grep -r $domains /usr/local/apache/domlogs/* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head
         	        echo  $(ColorGreen "IP hits for $domains :");
-	                grep $domains /home/$username/access-logs/* 2>/dev/null | awk -F":" '{print $2}' | awk -F"-" '{print $1}' |sort | uniq -c | sort -rn | head
+	                grep -r $domains /usr/local/apache/domlogs/* 2>/dev/null | awk -F":" '{print $2}' | awk -F"-" '{print $1}' |sort | uniq -c | sort -rn | head
                 	echo  $(ColorGreen  "#####################");
 		}
 		fi
@@ -122,7 +121,7 @@ for i in $(grep $responsedomain '/etc/userdomains' | grep -v '*' | awk -F":" '{p
                 else {
                         username="$(grep ${domains} /etc/userdomains | awk -F": " '{print $2 }' | tail -1)";
                         echo  $(ColorGreen "$domains access logs");
-			grep $domains /home/$username/access-logs/* 2>/dev/null | grep $responseIP | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head
+			grep -r $domains /usr/local/apache/domlogs/* 2>/dev/null | grep $responseIP | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head
                         echo  $(ColorGreen "#####################");
                 }
                 fi
