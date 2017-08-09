@@ -2446,21 +2446,17 @@ echo -ne "
 
 Choose the information you need regarding MySQL
 
-$(ColorGreen '1)') List MySQL sleeping Processes.
-$(ColorGreen '2)') Kill all MySQL sleeping Processes.
+$(ColorGreen '1)') Show MySQL status and Uptime.
+$(ColorGreen '2)') List MySQL sleeping Processes.
 $(ColorGreen '3)') Show full processlist.
-$(ColorGreen '4)') Show MySQL status and Uptime.
-$(ColorGreen '5)') Kill all MySQL sleeping Processes "for" a specific user.
 $(ColorGreen '0)') Back To Main Menu.
 
 $(ColorBlue 'Choose an option:') "
                 read a
                 case $a in
-                1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=List_sleeping_mysql_processes\&Server=$server\&Path=$location ; fi ; list_sleeping_mysql;;
-                2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Kill_mysql_sleeping_processes\&Server=$server\&Path=$location ; fi ; kill_mysql_sleeping_proc;;
+                2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=List_sleeping_mysql_processes\&Server=$server\&Path=$location ; fi ; list_sleeping_mysql;;
                 3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Show_ll_rocesses\&Server=$server\&Path=$location ; fi ; show_full_processlist;;
- 	        4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MySQL_status_and_connections\&Server=$server\&Path=$location ; fi ; mysql_status;;
-		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Kill_mysql_sleeping_processes_for_specific_user\&Server=$server\&Path=$location ; fi ; kill_mysql_sleeping_proc_user;;
+ 	        1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MySQL_status_and_connections\&Server=$server\&Path=$location ; fi ; mysql_status;;
                 0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; MainMenu;;
 		*) echo -e $red"Wrong command."$clear; MySQLMenu;;
         esac
