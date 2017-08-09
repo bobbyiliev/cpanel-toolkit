@@ -1019,7 +1019,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
 
         fi
 fi
-
+ChangePHPVersion
 }
 
 ##
