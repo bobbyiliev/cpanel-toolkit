@@ -1023,13 +1023,6 @@ fi
 
 }
 
-#!/bin/bash
-ColorGreen(){
-    echo -ne $green$1$clear
-}
-green='\e[32m'
-clear='\e[0m'
-
 ##
 # Function to change the PHP version to 5.3 and create an optimized PHP.ini file
 ##
@@ -1207,6 +1200,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
 
         fi
 fi
+ChangePHPVersion
 }
 
 ##
@@ -1419,6 +1413,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
 
         fi
 fi
+ChangePHPVersion
 }
 
 ##
@@ -1632,6 +1627,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
 
         fi
 fi
+ChangePHPVersion
 }
 
 ##
@@ -1817,7 +1813,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
 
         fi
 fi
-
+ChangePHPVersion
 }
 
 
@@ -2031,7 +2027,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
 
         fi
 fi
-
+ChangePHPVersion
 }
 
 ##
@@ -2211,7 +2207,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
 
         fi
 fi
-
+ChangePHPVersion
 }
 
 
@@ -2360,8 +2356,8 @@ $(ColorBlue 'Choose an option:') "
             	6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ChangePHPVersionTo7.1\&Server=$server\&Path=$location ; fi ; changePHPTo71;;
 		7) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Deploy_optimized_PHP_ini\&Server=$server\&Path=$location ; fi ; DeployPHPini;;
                 8) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ChangeShellPHPVersion\&Server=$server\&Path=$location ; fi ; ChangeShellPHP;;
-               	0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; MainMenu;;
-                *) echo -e $red"Wrong command."$clear; MainMenu;;
+               	0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; CloudMenu;;
+                *) echo -e $red"Wrong command."$clear; ChangePHPVersion;;
         esac
 fi
 }
