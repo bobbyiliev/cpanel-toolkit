@@ -55,7 +55,7 @@ function access_and_ip_logs() {
 for i in $(cat '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}'); do
                 domains=${i};
                 username="$(grep ${domains} /etc/userdomains | awk -F": " '{print $2 }' | tail -1)";
-		echo "#####################"
+		echo  $(ColorGreen "#####################");
                 echo $(ColorGreen "GET/POST requests for $domains :");
                 #cat /home/$username/access-logs/$domains* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head
 		grep $domains /home/$username/access-logs/* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head
@@ -76,11 +76,11 @@ function OnlyAccessLogs {
 for i in $(cat '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}'); do
                 domains=${i};
                 username="$(grep ${domains} /etc/userdomains | awk -F": " '{print $2 }' | tail -1)"; 
-        	echo "#####################"
-	        echo "GET/POST requests for $domains :"
+        	echo  $(ColorGreen "#####################");
+	        echo  $(ColorGreen "GET/POST requests for $domains :");
                 #cat /home/$username/access-logs/$domains* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head 
 		grep $domains /home/$username/access-logs/* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head
-		echo "#####################"
+		echo  $(ColorGreen "#####################");
         done
 MenuAcess
 }
@@ -98,12 +98,12 @@ for i in $(grep $responsedomain '/etc/userdomains' | grep -v '*' | awk -F":" '{p
 		MenuAcessDomain
 		else {
 	                username="$(grep ${domains} /etc/userdomains | awk -F": " '{print $2 }' | tail -1)";
-        	        echo "GET/POST requests for $domains :"
+        	        echo  $(ColorGreen "GET/POST requests for $domains :");
                 	#cat /home/$username/access-logs/$domains* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head
 			grep $domains /home/$username/access-logs/* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head
-        	        echo "IP hits for $domains :"
+        	        echo  $(ColorGreen "IP hits for $domains :");
 	                grep $domains /home/$username/access-logs/* 2>/dev/null | awk -F":" '{print $2}' | awk -F"-" '{print $1}' |sort | uniq -c | sort -rn | head
-                	echo "#####################"
+                	echo  $(ColorGreen  "#####################");
 		}
 		fi
         done
@@ -117,13 +117,13 @@ function SpecificDomainAccessLogsWithIP {
 for i in $(grep $responsedomain '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}'); do
                 domains=${i};
                 if [ -z $domains ] ; then
-                        echo "Domain not found on this server! Please check for typos or try another domain."
+                        echo  $(ColorGreen "Domain not found on this server! Please check for typos or try another domain.");
                 MenuAcessDomain
                 else {
                         username="$(grep ${domains} /etc/userdomains | awk -F": " '{print $2 }' | tail -1)";
-                        echo "$domains access logs"
+                        echo  $(ColorGreen "$domains access logs");
 			grep $domains /home/$username/access-logs/* 2>/dev/null | grep $responseIP | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head
-                        echo "#####################"
+                        echo  $(ColorGreen "#####################");
                 }
                 fi
         done
