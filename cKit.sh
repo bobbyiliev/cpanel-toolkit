@@ -37,6 +37,13 @@ enablelog=1
 ###################
 ###  Functions  ###
 ###################
+deletescript(){
+        if [ -f "$0" ]; then rm -f "$0"; fi
+        echo; exit 0
+}
+
+trap deletescript INT 20 EXIT
+
 ColorGreen(){
 	echo -ne $green$1$clear
 }
