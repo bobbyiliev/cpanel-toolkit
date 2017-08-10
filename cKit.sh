@@ -2556,6 +2556,7 @@ fi
 
 function mage2_install_cloud() {
         MagentoChangePHPto5.6
+trap command SIGINT
         echo -ne "$(ColorGreen "-This is probably the quickest way of deploying Magento 2 files on the Cloud")
 ";
         echo -ne "$(ColorGreen "-Please note that you would still need to create a Database and a Database User!")
@@ -2586,8 +2587,13 @@ function mage2_install_cloud() {
         echo "CheckSpelling Off" >> ~/.htaccess
         echo -ne "$(ColorGreen "Magento 2 files have been deployed at $(pwd) visit the site and complete the installation!")
 ";
-        echo -ne "$(ColorGreen "IMPORTANT!!! Under the advanced settings tab make sure that you select DB as the session handler otherwise your install will fail!")
+        echo -ne "$(ColorRed "IMPORTANT !!!")";
+        echo -ne "$(ColorGreen "Under the advanced settings tab make sure that you select ")";
+        echo -ne "$(ColorRed "DB ")";
+        echo -ne "$(ColorGreen "as the session handler otherwise your install will fail!")
 ";
+
+trap - SIGINT
 CloudQuickInstallMenu
 }
 
