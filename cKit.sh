@@ -842,7 +842,7 @@ $(ColorGreen '-Version changed to 7. Please run source ~/.bashrc in order to com
 }
 
 ##
-C# Function that detirmines the current executed PHP version and deployes an optimized php.ini
+# Function that detirmines the current executed PHP version and deployes an optimized php.ini
 # while configuring the SuPHP_ConfigPath
 ##
 function DeployPHPini(){
@@ -2291,7 +2291,8 @@ function install_ioncube_php70() {
 
         if ! grep -q "AddType x-httpd-php7" ~/public_html/.htaccess 2>/dev/null ; then
                 echo $(ColorRed  "This is only for PHP 7.0, and you are running a different PHP version!")
-	Cloud Menu
+	WrongCommand	
+	CloudMenu
         fi
 
         whichletter="$(pwd | awk -F/ '{print $4}')"
