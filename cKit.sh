@@ -842,7 +842,7 @@ $(ColorGreen '-Version changed to 7. Please run source ~/.bashrc in order to com
 }
 
 ##
-# Function that detirmines the current executed PHP version and deployes an optimized php.ini
+C# Function that detirmines the current executed PHP version and deployes an optimized php.ini
 # while configuring the SuPHP_ConfigPath
 ##
 function DeployPHPini(){
@@ -876,7 +876,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
             	echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-	elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+	elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                     	grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -909,7 +909,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-        elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+        elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -943,7 +943,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-        elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+        elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -977,7 +977,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-        elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+        elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -1011,7 +1011,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-        elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+        elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -1045,7 +1045,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-        elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+        elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -1079,7 +1079,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-        elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+        elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -1127,7 +1127,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -1160,7 +1160,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -1193,7 +1193,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -1226,7 +1226,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -1259,7 +1259,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -1307,7 +1307,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -1340,7 +1340,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -1373,7 +1373,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -1406,7 +1406,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -1439,7 +1439,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -1472,7 +1472,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -1521,7 +1521,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -1554,7 +1554,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -1587,7 +1587,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -1620,7 +1620,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -1653,7 +1653,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -1686,7 +1686,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -1740,7 +1740,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-        elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+        elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -1773,7 +1773,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-         elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+         elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -1806,7 +1806,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -1839,7 +1839,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -1872,7 +1872,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-        elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+        elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -1921,7 +1921,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -1954,7 +1954,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -1987,7 +1987,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -2020,7 +2020,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -2053,7 +2053,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -2086,7 +2086,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -2134,7 +2134,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -2167,7 +2167,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -2200,7 +2200,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -2233,7 +2233,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
@@ -2266,7 +2266,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         then
                 echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
 ";
-    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/php.ini" ~/public_html/.htaccess 2>/dev/null
+    elif grep -qi "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/*" ~/public_html/.htaccess 2>/dev/null
                 then
                         grep -i 'suPHP'  ~/public_html/.htaccess | sed -i 's#/public_html##' ~/public_html/.htaccess 2>/dev/null
                         echo -ne "$(ColorGreen '- The suPHP_ConfigPath in public_html/.htaccess has been configured')
