@@ -412,6 +412,25 @@ ToolsMenu
 }
 
 ##
+# Function that shows if an extension is enabled  on the Cloud
+##
+function is_extensionCloud(){
+trap command SIGINT
+wget --no-check-certificate -O IsExtension.php https://raw.githubusercontent.com/bobbyiliev/cpanel-toolkit/master/dev/IsExtension.txt
+
+echo "Enter extension:"
+read a
+if [ -f "IsExtension.php" ]; then
+        sed -i "s/extensionExists/$a/g" IsExtension.php
+fi
+php IsExtension.php
+rm IsExtension.php
+trap - SIGINT
+CloudMenu
+}
+
+
+##
 # Function that shows if a function is enabled
 ##
 function is_function(){
@@ -428,6 +447,25 @@ php IsFunction.php
 rm IsFunction.php
 trap - SIGINT
 ToolsMenu
+}
+
+##
+# Function that shows if a function is enabled on the Cloud
+##
+function is_functionCloud(){
+trap command SIGINT
+wget --no-check-certificate -O IsFunction.php https://raw.githubusercontent.com/bobbyiliev/cpanel-toolkit/master/dev/IsFunction.txt
+
+
+echo "Enter function:"
+read a
+if [ -f "IsFunction.php" ]; then
+        sed -i "s/functionExists/$a/g" IsFunction.php
+fi
+php IsFunction.php
+rm IsFunction.php
+trap - SIGINT
+CloudMenu
 }
 
 ##
@@ -2391,8 +2429,8 @@ $(ColorBlue 'Choose an option:') "
                 case $a in
                 1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudQuickInstallMenu\&Server=$server\&Path=$location ; fi ; CloudQuickInstallMenu;;
 		2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=PHPchangesMenu\&Server=$server\&Path=$location ; fi ; ChangePHPVersion;;
-                3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsExtensionEnabled\&Server=$server\&Path=$location ; fi ; is_extension;;
-                4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsFunctionnEnabled\&Server=$server\&Path=$location ; fi ; is_function;;
+                3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsExtensionEnabled\&Server=$server\&Path=$location ; fi ; is_extensionCloud;;
+                4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsFunctionnEnabled\&Server=$server\&Path=$location ; fi ; is_functionCloud;;
 		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=RandomPass\&Server=$server\&Path=$location ; fi ; randompass_cloud;;
 		6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IonCubeInstaller\&Server=$server\&Path=$location ; fi ; install_ioncube_php70;;
 		0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; MainMenu;;
