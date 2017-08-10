@@ -288,7 +288,7 @@ trap command SIGINT
         fi
 	fi
 trap - SIGINT
-MySQLMenu
+SysAdminsMenu
 }
 
 ##
@@ -346,8 +346,35 @@ function kill_mysql_sleeping_proc_user() {
    fi
   fi
 trap - SIGINT
-MySQLMenu
+SysAdminsMenu
 }
+
+##
+# Function that lists all of the sleeping MySQL processes for the Admins Menu
+# In many cases the sleeping processes could be causing high CPU load
+##
+function list_sleeping_mysql_admins() {
+    sleepingProc=$(mysqladmin proc | grep Sleep)
+    if [ -z "$sleepingProc" ]; then
+        echo ""
+        echo "No Sleeping MySQL Proccesses ATM";
+    else {
+       	mysqladmin proc | head -3
+       	mysqladmin proc | grep Sleep
+    }
+    fi
+SysAdminsMenu
+}
+
+##
+# Function that lists all MySQL proccesses for Admins Menu
+##
+function show_full_processlist_admins() {
+    check_mysql_startup_info
+    mysqladmin processlist status
+SysAdminsMenu
+}
+
 
 ##
 # Function that lists all MySQL proccesses
@@ -2217,6 +2244,85 @@ ChangePHPVersion
 }
 
 
+##
+# Function that installs ioncube for PHP 7 on the Cloud Platform
+# Use it when you need the lastest version of ioncube
+##
+
+function install_ioncube_php70() {
+
+        if ! grep -q "AddType x-httpd-php7" ~/.htaccess 2>/dev/null ; then
+                echo $(ColorRed  "This is only for PHP 7.0, and you are running a different PHP version!")
+	Cloud Menu
+        fi
+
+        whichletter="$(pwd | awk -F/ '{print $4}')"
+        whichdomain="$(pwd | awk -F/ '{print $5}')"
+        PHP_VER="$(if grep -q "AddType x-httpd-php7" ~/.htaccess 2>/dev/null ; then
+           echo "7.0";
+        fi
+        )"
+
+
+        # Function to Download and extract 64-bit files
+
+        clear
+            echo "$(ColorGreen 'Downloading the ioncube archieve')";
+                echo ""
+            wget -q https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz
+
+
+        # Extract the archieve
+                sleep 2s
+            echo "$(ColorGreen 'Extracting archieve')";
+            echo ""
+                tar xvf ioncube_loaders_lin_x86-64.tar.gz
+
+        # Creating php.ini
+
+        if grep -q "AddType x-httpd-php7 .php" ~/.htaccess 2>/dev/null
+        then
+                echo ""
+            echo "$(ColorGreen 'The current PHP version is 7')
+                           ";
+                           cd ~/public_html/
+                           mv php.ini php.ini-old 2>/dev/null
+                           cd
+                        mv php.ini php.ini-old 2>/dev/null
+                        wget -q http://paragon.alexgeorgiev.net/phpini/php.ini-7
+                           echo -ne "$(ColorGreen '- Creating a new optimized php.ini file. Memory_limit has been set to 1024M, max_execution_time has been set to 900, max_input_vars has been set to 8000 
+and
+   	error_logging$
+        created.')
+        ";
+
+                        mv php.ini-7 php.ini
+                if grep -q "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/public_html/.htaccess" ~/public_html/.htaccess 2>/dev/null
+            then
+                           echo -ne "$(ColorGreen '- There is a valid suPHP_ConfigPath in public_html/.htaccess-skipping')
+        ";
+            else
+                           echo -ne "$(ColorGreen "- Couldn't find a valid SuPHP_ConfigPath, creating a new one in public_html/.htaccess")
+        ";
+                        echo -e "suPHP_ConfigPath /var/sites/${whichletter}/${whichdomain}/php.ini\n$(cat ~/public_html/.htaccess 2>/dev/null)" > ~/public_html/.htaccess 2>/dev/null
+                   fi
+        fi
+
+
+        # Add ioncube to php.ini
+
+            echo ""
+            echo "$(ColorGreen 'Adding ioncube to the php.ini')";
+            echo "" >> ~/php.ini 2>/dev/null
+            echo -e "zend_extension_ts=/var/sites/${whichletter}/${whichdomain}/ioncube/ioncube_loader_lin_${PHP_VER}_ts.so" >> ~/php.ini 2>/dev/null
+            echo -e "zend_extension=/var/sites/${whichletter}/${whichdomain}/ioncube/ioncube_loader_lin_${PHP_VER}.so" >> ~/php.ini 2>/dev/null
+            echo ""
+	    echo "$(ColorGreen 'Done, Ioncube has been successfully installed')";
+	    echo ""
+
+CloudMenu
+}
+
 ###########################
 ###  Quick Access Menu  ###
 ###########################
@@ -2277,6 +2383,7 @@ $(ColorGreen '2)') PHP configurations and settigs
 $(ColorGreen '3)') Check if a PHP extension is enabled on the server.
 $(ColorGreen '4)') Check if a PHP function is enabled on the server.
 $(ColorGreen '5)') Generate random password
+$(ColorGreen '6)') Install Ioncube for a website using PHP 7
 $(ColorGreen '0)') Back to Main Menu
 
 $(ColorBlue 'Choose an option:') "
@@ -2287,6 +2394,7 @@ $(ColorBlue 'Choose an option:') "
                 3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsExtensionEnabled\&Server=$server\&Path=$location ; fi ; is_extension;;
                 4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsFunctionnEnabled\&Server=$server\&Path=$location ; fi ; is_function;;
 		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=RandomPass\&Server=$server\&Path=$location ; fi ; randompass_cloud;;
+		6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IonCubeInstaller\&Server=$server\&Path=$location ; fi ; install_ioncube_php70;;
 		0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; MainMenu;;
                 *) echo -e $red"Wrong command."$clear; CloudMenu;;
         esac
@@ -2423,18 +2531,64 @@ $(ColorGreen '0)') Back to Main Menu.
 $(ColorBlue 'Choose an option:') "
                 read a
                 case $a in
-                1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; showexim ;;
-                2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; originate;;
-                3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; originate2;;
-                4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; whichphpscript;;
-                5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; getnetstat;;
-                6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; nobodyspam;;
-                7) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; nobodyspamafter;;
-                8) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; showeximsum;;
-                0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; MainMenu;;
+                1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim1ListofAllEmailSenders\&Server=$server\&Path=$location ; fi ; showexim ;;
+                2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim2EximSpamDirs\&Server=$server\&Path=$location ; fi ; originate;;
+                3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim3EximPHPSpam\&Server=$server\&Path=$location ; fi ; originate2;;
+                4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim4EximUsersSpam\&Server=$server\&Path=$location ; fi ; whichphpscript;;
+                5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim5IPsOnPort25\&Server=$server\&Path=$location ; fi ; getnetstat;;
+                6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim6NobodySpam\&Server=$server\&Path=$location ; fi ; nobodyspam;;
+                7) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim7SpamInProgress\&Server=$server\&Path=$location ; fi ; nobodyspamafter;;
+                8) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim8MailQueue\&Server=$server\&Path=$location ; fi ; showeximsum;;
+                0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; MainMenu;;
 		*) echo -e $red"Wrong command."$clear; EmailsMenu;;
         esac
 fi
+}
+
+##
+# SysAdmins Menu
+##
+SysAdminsMenu(){
+    #unset syspass
+    while [ -z $syspass ] ; do
+    echo "Only for SysAdmins! Please enter the secret password or type exit:"
+    read syspass
+	if [ $syspass != "SysAdmins" ]; then
+	echo "Wrong Password!"
+	unset syspass
+	fi
+    done
+    if [ $syspass = "SysAdmins" ]; then
+	if [[ $(pwd | grep '/var/sites/') ]]; then
+	echo $(ColorRed 'You are not on cPanel')
+	WrongCommand
+	MainMenu
+	else
+ExecutionTime=`date +%Y-%m-%d:%H:%M:%S`
+                ColorGreen "        "
+echo -ne "
+
+Choose the information you need regarding MySQL
+
+$(ColorGreen '1)') List MySQL sleeping Processes.
+$(ColorGreen '2)') Kill all MySQL sleeping Processes that have been sleeping for more that 60 seconds.
+$(ColorGreen '3)') Show full processlist.
+$(ColorGreen '4)') Kill all MySQL sleeping Processes "for" a specific user.
+$(ColorGreen '0)') Back To Main Menu.
+
+$(ColorBlue 'Choose an option:') "
+                read a
+                case $a in
+                1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=List_sleeping_mysql_processes\&Server=$server\&Path=$location ; fi ; list_sleeping_mysql_admins;;
+                2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Kill_mysql_sleeping_processes\&Server=$server\&Path=$location ; fi ; kill_mysql_sleeping_proc;;
+                3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Show_ll_rocesses\&Server=$server\&Path=$location ; fi ; show_full_processlist_admins;;
+                4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Kill_mysql_sleeping_processes_for_specific_user\&Server=$server\&Path=$location ; fi ; kill_mysql_sleeping_proc_user;;
+                0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; MainMenu;;
+                *) echo -e $red"Wrong command."$clear; SysAdminsMenu;;
+        esac
+
+	fi
+    fi
 }
 
 ##
@@ -2453,21 +2607,17 @@ echo -ne "
 
 Choose the information you need regarding MySQL
 
-$(ColorGreen '1)') List MySQL sleeping Processes.
-$(ColorGreen '2)') Kill all MySQL sleeping Processes.
+$(ColorGreen '1)') Show MySQL status and Uptime.
+$(ColorGreen '2)') List MySQL sleeping Processes.
 $(ColorGreen '3)') Show full processlist.
-$(ColorGreen '4)') Show MySQL status and Uptime.
-$(ColorGreen '5)') Kill all MySQL sleeping Processes "for" a specific user.
 $(ColorGreen '0)') Back To Main Menu.
 
 $(ColorBlue 'Choose an option:') "
                 read a
                 case $a in
-                1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=List_sleeping_mysql_processes\&Server=$server\&Path=$location ; fi ; list_sleeping_mysql;;
-                2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Kill_mysql_sleeping_processes\&Server=$server\&Path=$location ; fi ; kill_mysql_sleeping_proc;;
+                2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=List_sleeping_mysql_processes\&Server=$server\&Path=$location ; fi ; list_sleeping_mysql;;
                 3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Show_ll_rocesses\&Server=$server\&Path=$location ; fi ; show_full_processlist;;
- 	        4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MySQL_status_and_connections\&Server=$server\&Path=$location ; fi ; mysql_status;;
-		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Kill_mysql_sleeping_processes_for_specific_user\&Server=$server\&Path=$location ; fi ; kill_mysql_sleeping_proc_user;;
+ 	        1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MySQL_status_and_connections\&Server=$server\&Path=$location ; fi ; mysql_status;;
                 0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; MainMenu;;
 		*) echo -e $red"Wrong command."$clear; MySQLMenu;;
         esac
@@ -2497,13 +2647,13 @@ $(ColorGreen '0)') Back To Main Menu.
 $(ColorBlue 'Choose an option:') "
                 read a
                 case $a in
-                1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; is_extension;;
-                2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; is_function;;
-		3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; randompass;;
-		4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; MonitorCpu;;
-		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; FindLargeFiles;;
-		6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; EAversion;;
-                0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; MainMenu;;
+                1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsExtensionEnabled\&Server=$server\&Path=$location ; fi ; is_extension;;
+                2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsFunctionEnabled\&Server=$server\&Path=$location ; fi ; is_function;;
+		3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=RandomPass\&Server=$server\&Path=$location ; fi ; randompass;;
+		4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MonitorCPU\&Server=$server\&Path=$location ; fi ; MonitorCpu;;
+		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=FindLargeFiles\&Server=$server\&Path=$location ; fi ; FindLargeFiles;;
+		6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=EAversion\&Server=$server\&Path=$location ; fi ; EAversion;;
+                0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; MainMenu;;
 		*) echo -e $red"Wrong command."$clear; ToolsMenu;;
         esac
 fi
@@ -2530,12 +2680,12 @@ $(ColorGreen '0)') Back To Main Menu
 $(ColorBlue 'Choose an option:') "
                 read a
                 case $a in
-		1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; ActiveConn;;
-                2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; TopUsers;;
-                3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; AllUsers;;
-                4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; CurrentCPUusage;;
-                5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; GetPortConn;;
-                0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; MainMenu;;
+		1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ActiveConn\&Server=$server\&Path=$location ; fi ; ActiveConn;;
+                2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=TopUsers\&Server=$server\&Path=$location ; fi ; TopUsers;;
+                3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=AllUsers\&Server=$server\&Path=$location ; fi ; AllUsers;;
+                4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CPUusage\&Server=$server\&Path=$location ; fi ; CurrentCPUusage;;
+                5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ConnectionsOnSpecPort\&Server=$server\&Path=$location ; fi ; GetPortConn;;
+                0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; MainMenu;;
                 *) echo -e $red"Wrong command."$clear; WrongCommand;;
         esac
 fi
@@ -2577,6 +2727,7 @@ $(ColorBlue 'Choose an option:') "
 		4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=WebTrafficMenu\&Server=$server\&Path=$location ; fi ; DDoSMenu;;
 		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=HandyToolsMenu\&Server=$server\&Path=$location ; fi ; ToolsMenu;;
 		6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; CloudMenu;;
+		admins) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=SysAdminsMenu\&Server=$server\&Path=$location ; fi ; SysAdminsMenu;;
 		0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exit\&Server=$server\&Path=$location ; fi ; Exitmenu;;
 		*) echo -e $red"Wrong command."$clear; WrongCommand;;
         esac
