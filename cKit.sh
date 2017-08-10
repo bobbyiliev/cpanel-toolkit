@@ -2554,6 +2554,44 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
 fi
 }
 
+function mage2_install_cloud() {
+        MagentoChangePHPto5.6
+        echo -ne "$(ColorGreen "-This is probably the quickest way of deploying Magento 2 files on the Cloud")
+";
+        echo -ne "$(ColorGreen "-Please note that you would still need to create a Database and a Database User!")
+";
+        echo ""
+        unset empty
+        while [ -z $empty ]; do
+                echo -ne "$(ColorGreen "Is the public_html folder empty?[yes/no]")
+";
+                read empty
+                echo -ne "$(ColorGreen "Are you 100% sure that the public_html folder is empty?")
+";
+                read empty
+                if [ ! $empty == yes ]; then
+                echo -ne "$(ColorGreen "Make sure that the public_html folder is empty before installing Magento!")
+";
+                exit 0
+                fi
+        done
+    cd ~/public_html
+        wget http://wpcli.bobbyiliev.com/magento2/Magento-CE-2.1.7-2017-05-30-01-54-40.tar.gz
+        echo -ne "$(ColorGreen "Extracting magento files ... This might take a while, go make yourself a cup of coffee!")
+";
+        echo -ne "$(ColorGreen "Also go ahead and create a database, you would need it once the files have been uploaded!")
+";
+        tar -xzf Magento-CE-2.1.7-2017-05-30-01-54-40.tar.gz
+
+        echo "CheckSpelling Off" >> ~/.htaccess
+        echo -ne "$(ColorGreen "Magento 2 files have been deployed at $(pwd) visit the site and complete the installation!")
+";
+        echo -ne "$(ColorGreen "IMPORTANT!!! Under the advanced settings tab make sure that you select DB as the session handler otherwise your install will fail!")
+";
+CloudQuickInstallMenu
+}
+
+
 ###########################
 ###  Quick Access Menu  ###
 ###########################
@@ -2651,6 +2689,7 @@ $(ColorRed 'Please note that you should run those only on the Cloud!!!')
 $(ColorGreen '1)') Install wp-cli on the Cloud
 $(ColorGreen '2)') Install composer on the Cloud
 $(ColorGreen '3)') Install laravel on the Cloud
+$(ColorGreen '4)') Install Magento 2.1.7 on the Cloud
 $(ColorGreen '0)') Back to the Cloud Main Menu
 
 $(ColorBlue 'Choose an option:') "
@@ -2659,7 +2698,8 @@ $(ColorBlue 'Choose an option:') "
                 1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=InstallwpCLI\&Server=$server\&Path=$location ; fi ; wp_cli_cloud_install;;
                 2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=InstallComposer\&Server=$server\&Path=$location ; fi ; composer_cloud_install;;
                 3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=InstallLaravel\&Server=$server\&Path=$location ; fi ; laravel_cloud_installer;;
-                0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; CloudMenu;;
+                4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=InstallMagento2OnTheCloud\&Server=$server\&Path=$location ; fi ; mage2_install_cloud;;
+		0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; CloudMenu;;
 		*) echo -e $red"Wrong command."$clear; CloudQuickInstallMenu;;
         esac
 fi
