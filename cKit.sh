@@ -149,8 +149,10 @@ EmailsMenu
 # You can use it in order to see if a directory is being compromised, e.g scan the directories from the result
 ##
 function originate(){
-        if [ -z $(grep "cwd=/home" /var/log/exim_mainlog | awk '{for(i=1;i<=10;i++){print $i}}' | sort | uniq -c | grep cwd | sort -n) ] ; then
-                echo "No results found! Try another option."
+        if grep -q "cwd=/home" /var/log/exim_mainlog | awk '{for(i=1;i<=10;i++){print $i}}' | sort | uniq -c | grep cwd | sort -n ; then
+		grep "cwd=/home" /var/log/exim_mainlog | awk '{for(i=1;i<=10;i++){print $i}}' | sort | uniq -c | grep cwd | sort -n
+	else
+		echo "No results found! Try another option."
         fi
 EmailsMenu
 }
@@ -160,7 +162,9 @@ EmailsMenu
 # You can use it to locate malware PHP mail scripts
 ##
 function originate2(){
-        if [ -z $(egrep -R "X-PHP-Script"  /var/spool/exim/input/*) ] ; then
+        if -q egrep -R "X-PHP-Script"  /var/spool/exim/input/* ; then
+		egrep -R "X-PHP-Script"  /var/spool/exim/input/*
+	else
                 echo "No results found! Try another option."
         fi
 EmailsMenu
@@ -171,7 +175,9 @@ EmailsMenu
 # You can use it in order to see if a directory is being compromised, e.g scan the directories from the result
 ##
 function whichphpscript(){
-        if [ -z $(grep 'cwd=/home' /var/log/exim_mainlog | awk '{print $3}' | cut -d / -f 3 | sort -bg | uniq -c | sort -bg) ] ; then
+        if -q grep 'cwd=/home' /var/log/exim_mainlog | awk '{print $3}' | cut -d / -f 3 | sort -bg | uniq -c | sort -bg ; then
+		grep 'cwd=/home' /var/log/exim_mainlog | awk '{print $3}' | cut -d / -f 3 | sort -bg | uniq -c | sort -bg
+	else
                 echo "No results found! Try another option."
         fi
 EmailsMenu
@@ -200,7 +206,9 @@ EmailsMenu
 # This is very rare case but you can still check for such SPAM messages
 ##
 function nobodyspamafter(){
-       	if [ -z $(grep "cwd=" /var/log/exim_mainlog | awk '{for(i=1;i<=10;i++){print $i}}' | sort | uniq -c | grep cwd | sort -n) ] ; then
+       	if -q grep "cwd=" /var/log/exim_mainlog | awk '{for(i=1;i<=10;i++){print $i}}' | sort | uniq -c | grep cwd | sort -n ; then
+		grep "cwd=" /var/log/exim_mainlog | awk '{for(i=1;i<=10;i++){print $i}}' | sort | uniq -c | grep cwd | sort -n
+	else
                 echo "No results found! Try another option."
         fi
 EmailsMenu
