@@ -162,7 +162,7 @@ EmailsMenu
 # You can use it to locate malware PHP mail scripts
 ##
 function originate2(){
-        if -q egrep -R "X-PHP-Script"  /var/spool/exim/input/* ; then
+        if egrep -q -R "X-PHP-Script"  /var/spool/exim/input/* ; then
 		egrep -R "X-PHP-Script"  /var/spool/exim/input/*
 	else
                 echo "No results found! Try another option."
@@ -175,7 +175,7 @@ EmailsMenu
 # You can use it in order to see if a directory is being compromised, e.g scan the directories from the result
 ##
 function whichphpscript(){
-        if -q grep 'cwd=/home' /var/log/exim_mainlog | awk '{print $3}' | cut -d / -f 3 | sort -bg | uniq -c | sort -bg ; then
+        if grep -q 'cwd=/home' /var/log/exim_mainlog | awk '{print $3}' | cut -d / -f 3 | sort -bg | uniq -c | sort -bg ; then
 		grep 'cwd=/home' /var/log/exim_mainlog | awk '{print $3}' | cut -d / -f 3 | sort -bg | uniq -c | sort -bg
 	else
                 echo "No results found! Try another option."
@@ -206,7 +206,7 @@ EmailsMenu
 # This is very rare case but you can still check for such SPAM messages
 ##
 function nobodyspamafter(){
-       	if -q grep "cwd=" /var/log/exim_mainlog | awk '{for(i=1;i<=10;i++){print $i}}' | sort | uniq -c | grep cwd | sort -n ; then
+       	if grep -q "cwd=" /var/log/exim_mainlog | awk '{for(i=1;i<=10;i++){print $i}}' | sort | uniq -c | grep cwd | sort -n ; then
 		grep "cwd=" /var/log/exim_mainlog | awk '{for(i=1;i<=10;i++){print $i}}' | sort | uniq -c | grep cwd | sort -n
 	else
                 echo "No results found! Try another option."
