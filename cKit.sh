@@ -154,7 +154,7 @@ EmailsMenu
 # You can use it in order to see if a directory is being compromised, e.g scan the directories from the result
 ##
 function originate(){
-        count=$(grep -q "cwd=/home" /var/log/exim_mainlog | awk '{for(i=1;i<=10;i++){print $i}}' | sort | uniq -c | grep cwd | sort -n | wc -l)
+        count=$(grep "cwd=/home" /var/log/exim_mainlog | awk '{for(i=1;i<=10;i++){print $i}}' | sort | uniq -c | grep cwd | sort -n | wc -l)
         if [ $count -ne 0 ]; then
                 grep "cwd=/home" /var/log/exim_mainlog | awk '{for(i=1;i<=10;i++){print $i}}' | sort | uniq -c | grep cwd | sort -n
         else
@@ -182,7 +182,7 @@ EmailsMenu
 # You can use it in order to see if a directory is being compromised, e.g scan the directories from the result
 ##
 function whichphpscript(){
-        count=$(grep -q 'cwd=/home' /var/log/exim_mainlog | awk '{print $3}' | cut -d / -f 3 | sort -bg | uniq -c | sort -bg | wc -l)
+        count=$(grep 'cwd=/home' /var/log/exim_mainlog | awk '{print $3}' | cut -d / -f 3 | sort -bg | uniq -c | sort -bg | wc -l)
 	if [ $count -ne 0 ]; then
 		grep 'cwd=/home' /var/log/exim_mainlog | awk '{print $3}' | cut -d / -f 3 | sort -bg | uniq -c | sort -bg
 	else
@@ -214,7 +214,7 @@ EmailsMenu
 # This is very rare case but you can still check for such SPAM messages
 ##
 function nobodyspamafter(){
-	count=$(grep -q "cwd=" /var/log/exim_mainlog | awk '{for(i=1;i<=10;i++){print $i}}' | sort | uniq -c | grep cwd | sort -n | wc -l)
+	count=$(grep "cwd=" /var/log/exim_mainlog | awk '{for(i=1;i<=10;i++){print $i}}' | sort | uniq -c | grep cwd | sort -n | wc -l)
 	if [ $count -ne 0 ]; then
 		grep "cwd=" /var/log/exim_mainlog | awk '{for(i=1;i<=10;i++){print $i}}' | sort | uniq -c | grep cwd | sort -n
 	else
