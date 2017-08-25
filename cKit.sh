@@ -42,7 +42,7 @@ deletescript(){
         echo; exit 0
 }
 
-#trap deletescript INT 20 EXIT
+trap deletescript INT 20 EXIT
 
 ColorGreen(){
 	echo -ne $green$1$clear
