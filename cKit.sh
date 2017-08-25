@@ -42,7 +42,7 @@ deletescript(){
         echo; exit 0
 }
 
-trap deletescript INT 20 EXIT
+#trap deletescript INT 20 EXIT
 
 ColorGreen(){
 	echo -ne $green$1$clear
@@ -149,7 +149,9 @@ EmailsMenu
 # You can use it in order to see if a directory is being compromised, e.g scan the directories from the result
 ##
 function originate(){
-        grep "cwd=/home" /var/log/exim_mainlog | awk '{for(i=1;i<=10;i++){print $i}}' | sort | uniq -c | grep cwd | sort -n
+        if [ -z $(grep "cwd=/home" /var/log/exim_mainlog | awk '{for(i=1;i<=10;i++){print $i}}' | sort | uniq -c | grep cwd | sort -n) ] ; then
+                echo "No results found! Try another option."
+        fi
 EmailsMenu
 }
 
@@ -158,7 +160,9 @@ EmailsMenu
 # You can use it to locate malware PHP mail scripts
 ##
 function originate2(){
-	egrep -R "X-PHP-Script"  /var/spool/exim/input/*
+        if [ -z $(egrep -R "X-PHP-Script"  /var/spool/exim/input/*) ] ; then
+                echo "No results found! Try another option."
+        fi
 EmailsMenu
 }
 
@@ -167,7 +171,9 @@ EmailsMenu
 # You can use it in order to see if a directory is being compromised, e.g scan the directories from the result
 ##
 function whichphpscript(){
-        grep 'cwd=/home' /var/log/exim_mainlog | awk '{print $3}' | cut -d / -f 3 | sort -bg | uniq -c | sort -bg
+        if [ -z $(grep 'cwd=/home' /var/log/exim_mainlog | awk '{print $3}' | cut -d / -f 3 | sort -bg | uniq -c | sort -bg) ] ; then
+                echo "No results found! Try another option."
+        fi
 EmailsMenu
 }
 
@@ -194,7 +200,9 @@ EmailsMenu
 # This is very rare case but you can still check for such SPAM messages
 ##
 function nobodyspamafter(){
-       	grep "cwd=" /var/log/exim_mainlog | awk '{for(i=1;i<=10;i++){print $i}}' | sort | uniq -c | grep cwd | sort -n
+       	if [ -z $(grep "cwd=" /var/log/exim_mainlog | awk '{for(i=1;i<=10;i++){print $i}}' | sort | uniq -c | grep cwd | sort -n) ] ; then
+                echo "No results found! Try another option."
+        fi
 EmailsMenu
 }
 
