@@ -140,7 +140,12 @@ for i in $(grep $responsedomain '/etc/userdomains' | grep -v '*' | awk -F":" '{p
 # You can use it in order to see which emails accounts have authenticated
 ##
 function showexim(){
-        exigrep @ /var/log/exim_mainlog | grep _login | sed -n 's/.*_login:\(.*\)S=.*/\1/p' | sort -n | uniq -c | sort -n
+	count=$(exigrep @ /var/log/exim_mainlog | grep _login | sed -n 's/.*_login:\(.*\)S=.*/\1/p' | sort -n | uniq -c | sort -n | wc -l)
+	if [ $count -ne 0 ]; then
+		exigrep @ /var/log/exim_mainlog | grep _login | sed -n 's/.*_login:\(.*\)S=.*/\1/p' | sort -n | uniq -c | sort -n
+	else
+            	echo "No results found! Try another option."
+        fi
 EmailsMenu
 }
 
@@ -149,10 +154,11 @@ EmailsMenu
 # You can use it in order to see if a directory is being compromised, e.g scan the directories from the result
 ##
 function originate(){
-        if grep -q "cwd=/home" /var/log/exim_mainlog | awk '{for(i=1;i<=10;i++){print $i}}' | sort | uniq -c | grep cwd | sort -n ; then
-		grep "cwd=/home" /var/log/exim_mainlog | awk '{for(i=1;i<=10;i++){print $i}}' | sort | uniq -c | grep cwd | sort -n
-	else
-		echo "No results found! Try another option."
+        count=$(grep -q "cwd=/home" /var/log/exim_mainlog | awk '{for(i=1;i<=10;i++){print $i}}' | sort | uniq -c | grep cwd | sort -n | wc -l)
+        if [ $count -ne 0 ]; then
+                grep "cwd=/home" /var/log/exim_mainlog | awk '{for(i=1;i<=10;i++){print $i}}' | sort | uniq -c | grep cwd | sort -n
+        else
+            	echo "No results found! Try another option."
         fi
 EmailsMenu
 }
@@ -162,7 +168,8 @@ EmailsMenu
 # You can use it to locate malware PHP mail scripts
 ##
 function originate2(){
-        if egrep -q -R "X-PHP-Script"  /var/spool/exim/input/* ; then
+	count=$(egrep -R "X-PHP-Script"  /var/spool/exim/input/* | wc -l)
+	if [ $count -ne 0 ]; then
 		egrep -R "X-PHP-Script"  /var/spool/exim/input/*
 	else
                 echo "No results found! Try another option."
@@ -175,7 +182,8 @@ EmailsMenu
 # You can use it in order to see if a directory is being compromised, e.g scan the directories from the result
 ##
 function whichphpscript(){
-        if grep -q 'cwd=/home' /var/log/exim_mainlog | awk '{print $3}' | cut -d / -f 3 | sort -bg | uniq -c | sort -bg ; then
+        count=$(grep -q 'cwd=/home' /var/log/exim_mainlog | awk '{print $3}' | cut -d / -f 3 | sort -bg | uniq -c | sort -bg | wc -l)
+	if [ $count -ne 0 ]; then
 		grep 'cwd=/home' /var/log/exim_mainlog | awk '{print $3}' | cut -d / -f 3 | sort -bg | uniq -c | sort -bg
 	else
                 echo "No results found! Try another option."
@@ -206,7 +214,8 @@ EmailsMenu
 # This is very rare case but you can still check for such SPAM messages
 ##
 function nobodyspamafter(){
-       	if grep -q "cwd=" /var/log/exim_mainlog | awk '{for(i=1;i<=10;i++){print $i}}' | sort | uniq -c | grep cwd | sort -n ; then
+	count=$(grep -q "cwd=" /var/log/exim_mainlog | awk '{for(i=1;i<=10;i++){print $i}}' | sort | uniq -c | grep cwd | sort -n | wc -l)
+	if [ $count -ne 0 ]; then
 		grep "cwd=" /var/log/exim_mainlog | awk '{for(i=1;i<=10;i++){print $i}}' | sort | uniq -c | grep cwd | sort -n
 	else
                 echo "No results found! Try another option."
