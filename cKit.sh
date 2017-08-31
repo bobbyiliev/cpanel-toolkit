@@ -2855,9 +2855,12 @@ SysAdminsMenu(){
     while [ -z $syspass ] ; do
     echo "Only for SysAdmins! Please enter the secret password or type exit:"
     read syspass
-	if [ $syspass != "SysAdmins" ]; then
-	echo "Wrong Password!"
-	unset syspass
+	if [ $syspass = "exit" ]; then
+               	unset syspass
+                MainMenu
+	elif [ $syspass != "SysAdmins" ]; then
+		echo "Wrong Password!"
+		unset syspass
 	fi
     done
     if [ $syspass = "SysAdmins" ]; then
