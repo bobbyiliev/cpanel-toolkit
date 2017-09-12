@@ -569,6 +569,16 @@ function GetPortConn(){
 }
 
 ##
+# Funtcion contributed by Zack
+# Works on cPanel servers - Shows the top 5 users the most CPU + RAM + MySQL
+##
+
+function Zack(){
+OUT=$(/usr/local/cpanel/bin/dcpumonview | grep -v Top | sed -e 's#<[^>]*># #g' | while read i ; do NF=`echo $i | awk {'print NF'}` ; if [[ "$NF" == "5" ]] ; then USER=`echo $i | awk {'print $1'}`; OWNER=`grep -e "^OWNER=" /var/cpanel/users/$USER | cut -d= -f2` ; echo "$OWNER $i"; fi ; done) ; (echo "USER CPU" ; echo "$OUT" | sort -nrk4 | awk '{printf "%s %s%\n",$2,$4}' | head -5) | column -t ;echo;(echo -e "USER MEMORY" ; echo "$OUT" | sort -nrk5 | awk '{printf "%s %s%\n",$2,$5}' | head -5) | column -t ;echo;(echo -e "USER MYSQL" ; echo "$OUT" | sort -nrk6 | awk '{printf "%s %s%\n",$2,$6}' | head -5) | column -t ;
+DDoSMenu
+}
+
+##
 # Function that monitors the CPU usage
 ##
 function MonitorCpu(){
@@ -2980,6 +2990,7 @@ $(ColorGreen '2)') Lists the users which are running the most processes at the m
 $(ColorGreen '3)') Function that lists the total process running by the users
 $(ColorGreen '4)') Function that shows the % CPU usage at the moment
 $(ColorGreen '5)') Function that lists all the active connections for a specific port defined by the script user
+$(ColorGreen '6)') Something from Zack - Resource usage per user
 $(ColorGreen '0)') Back To Main Menu
 
 $(ColorBlue 'Choose an option:') "
@@ -2990,6 +3001,7 @@ $(ColorBlue 'Choose an option:') "
                 3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=AllUsers\&Server=$server\&Path=$location ; fi ; AllUsers;;
                 4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CPUusage\&Server=$server\&Path=$location ; fi ; CurrentCPUusage;;
                 5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ConnectionsOnSpecPort\&Server=$server\&Path=$location ; fi ; GetPortConn;;
+		6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ResourceUsagePerUser\&Server=$server\&Path=$location ; fi ; Zack;;
                 0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; MainMenu;;
                 *) echo -e $red"Wrong command."$clear; WrongCommand;;
         esac
