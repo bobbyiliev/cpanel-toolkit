@@ -2990,7 +2990,7 @@ $(ColorGreen '2)') Lists the users which are running the most processes at the m
 $(ColorGreen '3)') Function that lists the total process running by the users
 $(ColorGreen '4)') Function that shows the % CPU usage at the moment
 $(ColorGreen '5)') Function that lists all the active connections for a specific port defined by the script user
-$(ColorGreen '6)') Something from Zack - Resource usage per user
+$(ColorGreen '6)') Resource usage per user
 $(ColorGreen '0)') Back To Main Menu
 
 $(ColorBlue 'Choose an option:') "
