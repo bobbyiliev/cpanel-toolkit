@@ -423,7 +423,7 @@ MySQLMenu
 ##
 function is_extension(){
 trap command SIGINT
-wget --no-check-certificate -O IsExtension.php https://raw.githubusercontent.com/bobbyiliev/cpanel-toolkit/master/dev/IsExtension.txt
+wget --no-check-certificate -Nq -O IsExtension.php https://raw.githubusercontent.com/bobbyiliev/cpanel-toolkit/master/dev/IsExtension.txt
 
 echo "Enter extension:"
 read a
@@ -441,7 +441,7 @@ ToolsMenu
 ##
 function is_extensionCloud(){
 trap command SIGINT
-wget --no-check-certificate -O IsExtension.php https://raw.githubusercontent.com/bobbyiliev/cpanel-toolkit/master/dev/IsExtension.txt
+wget --no-check-certificate -Nq -O IsExtension.php https://raw.githubusercontent.com/bobbyiliev/cpanel-toolkit/master/dev/IsExtension.txt
 
 echo "Enter extension:"
 read a
