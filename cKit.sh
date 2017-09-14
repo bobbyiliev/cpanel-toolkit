@@ -601,7 +601,7 @@ done
 ##
 function randompass(){
         date +%s | sha256sum | base64 | head -c 14 ; echo
-        echo "Do you want to genrate stronger password[yes/no]"
+        echo "Do you want to generate longer password[yes/no]"
         read answer
         if [ ! -z $answer ] && [ $answer = "yes" ]; then
         date +%s | sha256sum | base64 | head -c 20 ; echo
@@ -618,7 +618,7 @@ ToolsMenu
 ##
 function randompass_cloud(){
         date +%s | sha256sum | base64 | head -c 14 ; echo
-        echo "Do you want to genrate stronger password[yes/no]"
+        echo "Do you want to generate longer password[yes/no]"
         read answer
         if [ ! -z $answer ] && [ $answer = "yes" ]; then
         date +%s | sha256sum | base64 | head -c 20 ; echo
