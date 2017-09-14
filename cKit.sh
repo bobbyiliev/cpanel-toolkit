@@ -600,11 +600,11 @@ done
 # You can use it whenever you need to enter new password
 ##
 function randompass(){
-        date +%s | sha256sum | base64 | head -c 14 ; echo
+        cat /dev/urandom | tr -dc 'a-zA-Z0-9-!@#$%^&*()+{}|:<>?=' | fold -w 12 | head -1
         echo "Do you want to generate longer password[yes/no]"
         read answer
         if [ ! -z $answer ] && [ $answer = "yes" ]; then
-        date +%s | sha256sum | base64 | head -c 20 ; echo
+        cat /dev/urandom | tr -dc 'a-zA-Z0-9-!@#$%^&*()+{}|:<>?=' | fold -w 20 | head -1
 else {
         echo "Exit then"
 }
@@ -617,11 +617,11 @@ ToolsMenu
 # You can use it whenever you need to enter new password
 ##
 function randompass_cloud(){
-        date +%s | sha256sum | base64 | head -c 14 ; echo
+        cat /dev/urandom | tr -dc 'a-zA-Z0-9-!@#$%^&*()+{}|:<>?=' | fold -w 12 | head -1
         echo "Do you want to generate longer password[yes/no]"
         read answer
         if [ ! -z $answer ] && [ $answer = "yes" ]; then
-        date +%s | sha256sum | base64 | head -c 20 ; echo
+        cat /dev/urandom | tr -dc 'a-zA-Z0-9-!@#$%^&*()+{}|:<>?=' | fold -w 20 | head -1
 else {
        	echo "Exit then"
 }
