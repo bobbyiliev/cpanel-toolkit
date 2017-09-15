@@ -2343,14 +2343,14 @@ function install_ioncube_php70() {
         clear
             echo "$(ColorGreen 'Downloading the ioncube archieve')";
                 echo ""
-            wget -q https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz
+            wget -q -O ~/ioncube_loaders_lin_x86-64.tar.gz https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz
 
 
         # Extract the archieve
                 sleep 2s
             echo "$(ColorGreen 'Extracting archieve')";
             echo ""
-                tar xvf ioncube_loaders_lin_x86-64.tar.gz
+                tar xvf ~/ioncube_loaders_lin_x86-64.tar.gz
 
         # Creating php.ini
 
