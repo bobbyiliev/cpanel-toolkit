@@ -2670,7 +2670,7 @@ function userhttpderrors() {
         unset usererrors
         while [ -z $usererrors ]; do
         echo -ne "
-Please type the cPanel username (exmapleuser): "
+Please type the cPanel username or type exit to return: (exmapleuser): "
 	read usererrors
         done
         if [ $usererrors = "exit" ]; then
