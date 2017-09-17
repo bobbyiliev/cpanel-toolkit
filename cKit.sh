@@ -2632,6 +2632,55 @@ trap - SIGINT
 CloudQuickInstallMenu
 }
 
+##
+# Function that checks the Apache error log for a specific domain name
+# Use it when you have a 500 erorr
+##
+
+function domainhttpderrors() {
+        unset domainerrors
+        while [ -z $domainerrors ]; do
+        echo -ne "
+Please type the domain (example.com): "
+	echo -ne ""
+	echo -ne
+        read domainerrors
+        done
+        if [ $domainerrors = "exit" ]; then
+        MenuAcess
+        else
+        grep $domainerrors /usr/local/apache/logs/error_log
+        fi
+	echo -ne ""
+	echo -ne ""
+        MenuAcess
+}
+
+##
+# Function that checks the Apache error log for a specific domain name
+# Use it when you have 500 error and debuging
+##
+
+function userhttpderrors() {
+        unset usererrors
+        while [ -z $usererrors ]; do
+        echo -ne "
+Please type the cPanel username (exmapleuser): "
+        echo -ne ""
+	echo -ne ""
+	read usererrors
+        done
+        if [ $usererrors = "exit" ]; then
+        MenuAcess
+        else
+        grep $usererrors /usr/local/apache/logs/error_log
+        fi
+	echo -ne ""
+	echo -ne ""
+        MenuAcess
+}
+
+
 
 ###########################
 ###  Quick Access Menu  ###
@@ -2656,6 +2705,8 @@ $(ColorGreen '1)') GET/POST requests for a specific website
 $(ColorGreen '2)') GET/POST requests from particualr IP for a specific website
 $(ColorGreen '3)') GET/POST requests + IP addresses for every website on the server
 $(ColorGreen '4)') GET/POST requests for every website on the server
+$(ColorGreen '5)') List all of the Apache errors for a specific domain
+$(ColorGreen '6)') List all of the Apache errors for a specific cPanel username
 $(ColorGreen '0)') Back to Main Menu
 
 $(ColorBlue 'Choose an option:') "
@@ -2665,6 +2716,8 @@ $(ColorBlue 'Choose an option:') "
 		2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=AccessLogsFromSpecificIPForDomain\&Server=$server\&Path=$location ; fi ; MenuAcessSpecificIPForDomain;;
                 3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=AccessAndIPLogs\&Server=$server\&Path=$location ; fi ; access_and_ip_logs;;
                 4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=OnlyAccessLogs\&Server=$server\&Path=$location ; fi ; OnlyAccessLogs;;
+                5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ApacheErrorsWebSite\&Server=$server\&Path=$location ; fi ; domainhttpderrors;;
+                6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ApacheErrorsUsername\&Server=$server\&Path=$location ; fi ; userhttpderrors;;
 		0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; MainMenu;;
 		*) echo -e $red"Wrong command."$clear; MenuAcess;;
         esac
