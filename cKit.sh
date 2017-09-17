@@ -2642,13 +2642,13 @@ function domainhttpderrors() {
         while [ -z $domainerrors ]; do
         echo -ne "
 Please type the domain (example.com): "
-	echo -ne ""
-	echo -ne
         read domainerrors
         done
         if [ $domainerrors = "exit" ]; then
         MenuAcess
         else
+	echo -ne ""
+	echo -ne ""
         grep $domainerrors /usr/local/apache/logs/error_log
         fi
 	echo -ne ""
@@ -2666,13 +2666,13 @@ function userhttpderrors() {
         while [ -z $usererrors ]; do
         echo -ne "
 Please type the cPanel username (exmapleuser): "
-        echo -ne ""
-	echo -ne ""
 	read usererrors
         done
         if [ $usererrors = "exit" ]; then
         MenuAcess
         else
+	echo -ne ""
+	echo -ne ""
         grep $usererrors /usr/local/apache/logs/error_log
         fi
 	echo -ne ""
