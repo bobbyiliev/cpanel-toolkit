@@ -2638,22 +2638,27 @@ CloudQuickInstallMenu
 ##
 
 function domainhttpderrors() {
-        unset domainerrors
+	unset domainerrors
         while [ -z $domainerrors ]; do
         echo -ne "
-Please type the domain (example.com): "
+Please type the domain or type exit to return: (example.com): "
         read domainerrors
         done
         if [ $domainerrors = "exit" ]; then
         MenuAcess
         else
-	echo -ne ""
-	echo -ne ""
-        grep $domainerrors /usr/local/apache/logs/error_log
+        echo -ne ""
+        echo -ne ""
         fi
-	echo -ne ""
-	echo -ne ""
-        MenuAcess
+	count=$(grep $domainerrors /usr/local/apache/logs/error_log | wc -l)
+        if [ $count -ne 0 ]; then
+                grep $domainerrors /usr/local/apache/logs/error_log
+        else
+            	echo $(ColorRed 'No results found! Try another option.')
+        fi
+        echo -ne ""
+        echo -ne ""
+       	MenuAcess
 }
 
 ##
@@ -2673,8 +2678,13 @@ Please type the cPanel username (exmapleuser): "
         else
 	echo -ne ""
 	echo -ne ""
-        grep $usererrors /usr/local/apache/logs/error_log
-        fi
+	fi
+	count=$(grep $usererrors /usr/local/apache/logs/error_log | wc -l)
+	if [ $count -ne 0 ]; then
+		grep $usererrors /usr/local/apache/logs/error_log
+	else
+		echo $(ColorRed 'No results found! Try another option.')
+	fi
 	echo -ne ""
 	echo -ne ""
         MenuAcess
