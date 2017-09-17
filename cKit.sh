@@ -2662,7 +2662,7 @@ Please type the domain or type exit to return: (example.com): "
 }
 
 ##
-# Function that checks the Apache error log for a specific domain name
+# Function that checks the Apache error log for a specific cPanel username
 # Use it when you have 500 error and debuging
 ##
 
