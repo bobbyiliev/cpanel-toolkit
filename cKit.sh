@@ -2654,7 +2654,8 @@ Please type the domain or type exit to return: (example.com): "
         if [ $count -ne 0 ]; then
                 grep $domainerrors /usr/local/apache/logs/error_log
         else
-            	echo $(ColorRed 'No results found! Try another option.')
+            	echo -ne "$(ColorRed 'No results found! Try another option.')
+";
         fi
         echo -ne ""
         echo -ne ""
