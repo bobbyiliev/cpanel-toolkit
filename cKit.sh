@@ -423,7 +423,7 @@ MySQLMenu
 ##
 function is_extension(){
 trap command SIGINT
-wget --no-check-certificate -Nq -O IsExtension.php https://raw.githubusercontent.com/bobbyiliev/cpanel-toolkit/master/dev/IsExtension.txt
+wget --no-check-certificate -O IsExtension.php https://raw.githubusercontent.com/bobbyiliev/cpanel-toolkit/master/dev/IsExtension.txt
 
 echo "Enter extension:"
 read a
@@ -460,7 +460,7 @@ CloudMenu
 ##
 function is_function(){
 trap command SIGINT
-wget --no-check-certificate -O IsFunction.php https://raw.githubusercontent.com/bobbyiliev/cpanel-toolkit/master/dev/IsFunction.txt
+wget --no-check-certificate -Nq -O IsFunction.php https://raw.githubusercontent.com/bobbyiliev/cpanel-toolkit/master/dev/IsFunction.txt
 
 
 echo "Enter function:"
@@ -600,7 +600,7 @@ done
 # You can use it whenever you need to enter new password
 ##
 function randompass(){
-        cat /dev/urandom | tr -dc 'a-zA-Z0-9-!@#$%^&*()+{}|:<>?=' | fold -w 12 | head -1
+	cat /dev/urandom | tr -dc 'a-zA-Z0-9-!@#$%^&*()+{}|:<>?=' | fold -w 12 | head -1
         echo "Do you want to generate longer password[yes/no]"
         read answer
         if [ ! -z $answer ] && [ $answer = "yes" ]; then
@@ -2343,14 +2343,14 @@ function install_ioncube_php70() {
         clear
             echo "$(ColorGreen 'Downloading the ioncube archieve')";
                 echo ""
-            wget -q -O ~/ioncube_loaders_lin_x86-64.tar.gz https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz
+            wget -q https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz
 
 
         # Extract the archieve
                 sleep 2s
             echo "$(ColorGreen 'Extracting archieve')";
             echo ""
-                tar xvf ~/ioncube_loaders_lin_x86-64.tar.gz
+                tar xvf ioncube_loaders_lin_x86-64.tar.gz
 
         # Creating php.ini
 
@@ -2638,7 +2638,7 @@ CloudQuickInstallMenu
 ##
 
 function domainhttpderrors() {
-	unset domainerrors
+        unset domainerrors
         while [ -z $domainerrors ]; do
         echo -ne "
 Please type the domain or type exit to return: (example.com): "
@@ -2650,16 +2650,16 @@ Please type the domain or type exit to return: (example.com): "
         echo -ne ""
         echo -ne ""
         fi
-	count=$(grep $domainerrors /usr/local/apache/logs/error_log | wc -l)
+        count=$(grep $domainerrors /usr/local/apache/logs/error_log | wc -l)
         if [ $count -ne 0 ]; then
                 grep $domainerrors /usr/local/apache/logs/error_log
         else
-            	echo -ne "$(ColorRed 'No results found! Try another option.')
-";
+               	echo "
+$(ColorRed 'No results found! Try another option.')";
         fi
         echo -ne ""
         echo -ne ""
-       	MenuAcess
+        MenuAcess
 }
 
 ##
@@ -2672,22 +2672,23 @@ function userhttpderrors() {
         while [ -z $usererrors ]; do
         echo -ne "
 Please type the cPanel username or type exit to return: (exmapleuser): "
-	read usererrors
+        read usererrors
         done
-        if [ $usererrors = "exit" ]; then
+	if [ $usererrors = "exit" ]; then
         MenuAcess
         else
 	echo -ne ""
-	echo -ne ""
-	fi
+        echo -ne ""
+        fi
 	count=$(grep $usererrors /usr/local/apache/logs/error_log | wc -l)
-	if [ $count -ne 0 ]; then
-		grep $usererrors /usr/local/apache/logs/error_log
-	else
-		echo $(ColorRed 'No results found! Try another option.')
-	fi
+        if [ $count -ne 0 ]; then
+                grep $usererrors /usr/local/apache/logs/error_log
+        else
+            	echo "
+$(ColorRed 'No results found! Try another option.')";
+        fi
 	echo -ne ""
-	echo -ne ""
+        echo -ne ""
         MenuAcess
 }
 
@@ -2727,8 +2728,8 @@ $(ColorBlue 'Choose an option:') "
 		2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=AccessLogsFromSpecificIPForDomain\&Server=$server\&Path=$location ; fi ; MenuAcessSpecificIPForDomain;;
                 3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=AccessAndIPLogs\&Server=$server\&Path=$location ; fi ; access_and_ip_logs;;
                 4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=OnlyAccessLogs\&Server=$server\&Path=$location ; fi ; OnlyAccessLogs;;
-                5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ApacheErrorsWebSite\&Server=$server\&Path=$location ; fi ; domainhttpderrors;;
-                6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ApacheErrorsUsername\&Server=$server\&Path=$location ; fi ; userhttpderrors;;
+		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ApacheErrorsWebSite\&Server=$server\&Path=$location ; fi ; domainhttpderrors;;
+		6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ApacheErrorsUsername\&Server=$server\&Path=$location ; fi ; userhttpderrors;;
 		0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; MainMenu;;
 		*) echo -e $red"Wrong command."$clear; MenuAcess;;
         esac
