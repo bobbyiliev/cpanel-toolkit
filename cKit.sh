@@ -58,7 +58,7 @@ ColorRed(){
 # Checks on which System you are on and opens the relevant menu.
 ##
 function CheckWhichSystem(){
-if [[ ! $(pwd | grep '/var/sites/') ]]; then
+if [[  $(pwd | grep '/var/sites/') ]]; then
 CloudMenu
 else
 MainMenu
@@ -2752,6 +2752,16 @@ fi
 # Cloud Menu
 ##
 CloudMenu(){
+while [ -z $paruser ] ; do
+        echo ""
+        echo "To start please enter your paruser:"
+    read paruser
+        if [[ ! $paruser =~ [a-z_]+$ ]] || [[ ! $paruser =~ ^par[a-z_]+$ ]]  ; then
+                unset paruser
+                echo "Don't cheat! Enter your correct paruser!"
+        fi
+done
+
 if [[ ! $(pwd | grep '/var/sites/') ]]; then
 echo $(ColorRed 'You are not on the Cloud')
 WrongCommand
@@ -2770,7 +2780,6 @@ $(ColorGreen '3)') Check if a PHP extension is enabled on the server.
 $(ColorGreen '4)') Check if a PHP function is enabled on the server.
 $(ColorGreen '5)') Generate random password
 $(ColorGreen '6)') Install Ioncube for a website using PHP 7
-#$(ColorGreen '0)') Back to Main Menu
 
 $(ColorBlue 'Choose an option:') "
                 read a
@@ -3108,7 +3117,6 @@ $(ColorGreen '2)') SPAM Scan Menu
 $(ColorGreen '3)') MySQL Menu
 $(ColorGreen '4)') Web Traffic Menu
 $(ColorGreen '5)') Handy Tools
-#$(ColorGreen '6)') Cloud Tools
 $(ColorGreen '0)') Exit
 
 $(ColorBlue 'Choose an option:') "
@@ -3126,4 +3134,4 @@ $(ColorBlue 'Choose an option:') "
         esac
 }
 tput clear
-MainMenu
+CheckWhichSystem
