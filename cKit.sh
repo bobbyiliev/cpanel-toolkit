@@ -158,7 +158,7 @@ trap command SIGINT
 echo "Enter your domain: "
 read domain
 if [ ! -z $domain ] ; then
-    exists=$(grep $domain '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}')
+    exists=$(grep $domain '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}' | tail -1 )
     if [ -z $exists ] ; then
        	echo "Domain not found on this server! Please check for typos or try another domain."
 	check_spike_date
@@ -218,7 +218,9 @@ if [ ! -z $domain ] ; then
 
 		elif [[ "$month" =~ ^[0-9]+$ ]] && [ "$month" -ge 1 -a "$month" -le 12 ]; then
 			if [ $(zgrep ${MONTHS[$month]} /home/$username/logs/* | cut -d\" -f2 | awk '{print $1 " " $2}' | cut -d? -f1 | sort | uniq -c | sort -n | sed 's/[ ]*//' | wc -l ) -gt 0 ]; then
+				echo ""
 				echo $(ColorGreen "All traffic for ${MONTHS[$month]}");
+				echo ""
 			        zgrep ${MONTHS[$month]} /home/$username/logs/* | cut -d\" -f2 | awk '{print $1 " " $2}' | cut -d? -f1 | sort | uniq -c | sort -n | sed 's/[ ]*//' | tail -${lines}
 			else
 				echo "No entries for that month, do you want to try again? [yes/no]"
