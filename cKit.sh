@@ -42,7 +42,7 @@ deletescript(){
         echo; exit 0
 }
 
-trap deletescript INT 20 EXIT
+#trap deletescript INT 20 EXIT
 
 ColorGreen(){
 	echo -ne $green$1$clear
@@ -52,6 +52,17 @@ ColorBlue(){
 }
 ColorRed(){
 	echo -ne $red$1$clear
+}
+
+##
+# Checks on which System you are on and opens the relevant menu.
+##
+function CheckWhichSystem(){
+if [[ ! $(pwd | grep '/var/sites/') ]]; then
+CloudMenu
+else
+MainMenu
+fi
 }
 
 ##
@@ -2759,7 +2770,7 @@ $(ColorGreen '3)') Check if a PHP extension is enabled on the server.
 $(ColorGreen '4)') Check if a PHP function is enabled on the server.
 $(ColorGreen '5)') Generate random password
 $(ColorGreen '6)') Install Ioncube for a website using PHP 7
-$(ColorGreen '0)') Back to Main Menu
+#$(ColorGreen '0)') Back to Main Menu
 
 $(ColorBlue 'Choose an option:') "
                 read a
@@ -2770,7 +2781,7 @@ $(ColorBlue 'Choose an option:') "
                 4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsFunctionnEnabled\&Server=$server\&Path=$location ; fi ; is_functionCloud;;
 		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=RandomPass\&Server=$server\&Path=$location ; fi ; randompass_cloud;;
 		6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IonCubeInstaller\&Server=$server\&Path=$location ; fi ; install_ioncube_php70;;
-		0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; MainMenu;;
+#		0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; MainMenu;;
                 *) echo -e $red"Wrong command."$clear; CloudMenu;;
         esac
 fi
@@ -3097,7 +3108,7 @@ $(ColorGreen '2)') SPAM Scan Menu
 $(ColorGreen '3)') MySQL Menu
 $(ColorGreen '4)') Web Traffic Menu
 $(ColorGreen '5)') Handy Tools
-$(ColorGreen '6)') Cloud Tools
+#$(ColorGreen '6)') Cloud Tools
 $(ColorGreen '0)') Exit
 
 $(ColorBlue 'Choose an option:') "
@@ -3108,7 +3119,7 @@ $(ColorBlue 'Choose an option:') "
 		3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MySQLMenu\&Server=$server\&Path=$location ; fi ; MySQLMenu;;
 		4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=WebTrafficMenu\&Server=$server\&Path=$location ; fi ; DDoSMenu;;
 		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=HandyToolsMenu\&Server=$server\&Path=$location ; fi ; ToolsMenu;;
-		6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; CloudMenu;;
+#		6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; CloudMenu;;
 		admins) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=SysAdminsMenu\&Server=$server\&Path=$location ; fi ; SysAdminsMenu;;
 		0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exit\&Server=$server\&Path=$location ; fi ; Exitmenu;;
 		*) echo -e $red"Wrong command."$clear; WrongCommand;;
