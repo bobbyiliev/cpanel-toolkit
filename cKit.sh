@@ -2745,6 +2745,48 @@ trap - SIGINT
 CloudQuickInstallMenu
 }
 
+
+##
+# Function to deply latest Wordpress v. files on the Cloud
+##
+
+function wp_install_cloud() {
+trap command SIGINT
+        echo -ne "$(ColorGreen "-Please note that you would still need to create a Database and a Database User!")
+";
+  	echo ""
+        unset empty
+        while [ -z $empty ]; do
+                echo -ne "$(ColorGreen "Is the public_html folder empty?[yes/no]")
+";
+                read empty
+                echo -ne "$(ColorGreen "Are you 100% sure that the public_html folder is empty?")
+";
+                read empty
+                if [ ! $empty == yes ]; then
+                echo -ne "$(ColorGreen "Make sure that the public_html folder is empty before installing WordPress!")
+";
+                exit 0
+                fi
+        done
+       	ChangePHPto7
+    cd ~/public_html
+
+        echo -ne "$(ColorGreen "Extracting magento files ... This might take a while, go make yourself a cup of coffee!")
+";
+  	echo -ne "$(ColorGreen "Also go ahead and create a database, you would need it once the files have been uploaded!")
+";
+	sleep 1
+  	wget --no-check-certificate http://wordpress.org/latest.zip && unzip -q latest.zip && mv wordpress/* . && rm -rf latest.zip wordpress && cp wp-config-sample.php wp-config.php
+
+        echo "CheckSpelling Off" >> ~/.htaccess
+        echo -ne "$(ColorGreen "WordPress files have been deployed at $(pwd) visit the site and complete the installation!")
+";
+
+trap - SIGINT
+CloudQuickInstallMenu
+}
+
 ##
 # Function that checks the Apache error log for a specific domain name
 # Use it when you have a 500 erorr
@@ -2920,6 +2962,7 @@ $(ColorGreen '1)') Install wp-cli on the Cloud
 $(ColorGreen '2)') Install composer on the Cloud
 $(ColorGreen '3)') Install laravel on the Cloud
 $(ColorGreen '4)') Install Magento 2.1.7 on the Cloud
+$(ColorGreen '5)') Deply WordPress installation files
 $(ColorGreen '0)') Back to the Cloud Main Menu
 
 $(ColorBlue 'Choose an option:') "
@@ -2929,6 +2972,7 @@ $(ColorBlue 'Choose an option:') "
                 2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=InstallComposer\&Server=$server\&Path=$location ; fi ; composer_cloud_install;;
                 3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=InstallLaravel\&Server=$server\&Path=$location ; fi ; laravel_cloud_installer;;
                 4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=InstallMagento2OnTheCloud\&Server=$server\&Path=$location ; fi ; mage2_install_cloud;;
+		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=InstallWordpressOnCloud\&Server=$server\&Path=$location ; fi ; wp_install_cloud;;
 		0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; CloudMenu;;
 		*) echo -e $red"Wrong command."$clear; CloudQuickInstallMenu;;
         esac
