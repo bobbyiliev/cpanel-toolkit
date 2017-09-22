@@ -158,6 +158,9 @@ trap command SIGINT
 echo "Enter your domain: "
 read domain
 if [ ! -z $domain ] ; then
+    if [ "$domain" == "exit" ]; then
+        MenuAcess
+    fi
     exists=$(grep $domain '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}' | tail -1 )
     if [ -z $exists ] ; then
        	echo "Domain not found on this server! Please check for typos or try another domain."
