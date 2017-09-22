@@ -58,11 +58,11 @@ ColorRed(){
 # Checks on which System you are on and opens the relevant menu.
 ##
 function CheckWhichSystem(){
-if [[  $(pwd | grep '/var/sites/') ]]; then
-CloudMenu
-else
-MainMenu
-fi
+	if [[  $(pwd | grep '/var/sites/') ]]; then
+		CloudMenu
+	else
+		MainMenu
+	fi
 }
 
 ##
@@ -145,6 +145,103 @@ for i in $(grep $responsedomain '/etc/userdomains' | grep -v '*' | awk -F":" '{p
                 fi
         done
 }
+
+##
+# Function that checks what caused the spike on a server
+# You can specify a domain name and a certian date
+# It works on cPanel servers and checks checks the logs back for 30 days
+##
+
+function check_spike_date() {
+
+trap command SIGINT
+echo "Enter your domain: "
+read domain
+if [ ! -z $domain ] ; then
+    exists=$(grep $domain '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}')
+    if [ -z $exists ] ; then
+       	echo "Domain not found on this server! Please check for typos or try another domain."
+	check_spike_date
+    else
+        username="$(grep ${domain} /etc/userdomains | awk -F": " '{print $2 }' | tail -1)";
+
+		MONTHS=(ZERO Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec)
+		check=0
+		while [ $check -eq 0 ] ; do
+			echo "Enter the month (from 1 to 12): "
+			read month
+			if [[ "$month" =~ ^[0-9]+$ ]] && [ "$month" -ge 1 -a "$month" -le 12 ]; then
+				check=1
+				#echo "Please enter a month! (from 1 to 12)"
+				#read month
+			else
+				echo "Not a valid month!"
+			fi
+		done
+		echo "How many of the top visited pages do you want to see [default is 30]: "
+		lines=30
+		read lines
+		if ! [[ "$lines" =~ ^[0-9]+$ ]] ; then
+			lines=30
+		fi
+		echo "Do you want to check for a certian day? Enter a number from 1 to 31:"
+		echo "Press enter if you want to see the traffic for the whole month"
+		read day
+		if [ ! -z $day ] ; then
+			if [ $day -lt 10 ]; then
+				day=0$day
+			fi
+		        if [[ "$month" =~ ^[0-9]+$ ]] && [ "$month" -ge 1 -a "$month" -le 12 ]; then
+	        	        if [ $(zgrep ${day}/${MONTHS[$month]} /home/$username/logs/* | cut -d\" -f2 | awk '{print $1 " " $2}' | cut -d? -f1 | sort | uniq -c | sort -n | sed 's/[ ]*//' | wc -l ) -gt 0 ]; then
+					echo ""
+					echo $(ColorGreen "All traffic for ${day}/${MONTHS[$month]}");
+					echo "";
+		                        zgrep ${day}/${MONTHS[$month]} /home/$username/logs/* | cut -d\" -f2 | awk '{print $1 " " $2}' | cut -d? -f1 | sort | uniq -c | sort -n | sed 's/[ ]*//' | tail -${lines}
+		                else
+					echo ""
+	                        	echo "No entries for that day, do you want to try another? [yes/no]"
+					read response
+					if [ "$response" == yes ]; then
+		                	        check_spike_date
+						unset response
+					else
+						MenuAcess
+						unset response
+					fi
+
+	                	fi
+	        	else {
+	                	echo "Please Enter the month (from 1 to 12):"
+		                check_spike_date
+	        	}
+		        fi
+
+		elif [[ "$month" =~ ^[0-9]+$ ]] && [ "$month" -ge 1 -a "$month" -le 12 ]; then
+			if [ $(zgrep ${MONTHS[$month]} /home/$username/logs/* | cut -d\" -f2 | awk '{print $1 " " $2}' | cut -d? -f1 | sort | uniq -c | sort -n | sed 's/[ ]*//' | wc -l ) -gt 0 ]; then
+				echo $(ColorGreen "All traffic for ${MONTHS[$month]}");
+			        zgrep ${MONTHS[$month]} /home/$username/logs/* | cut -d\" -f2 | awk '{print $1 " " $2}' | cut -d? -f1 | sort | uniq -c | sort -n | sed 's/[ ]*//' | tail -${lines}
+			else
+				echo "No entries for that month, do you want to try again? [yes/no]"
+                                        read response
+                                        if [ "$response" == yes ]; then
+                                                check_spike_date
+                                                unset response
+                                        else
+						MenuAcess
+                                                unset response
+                                        fi
+
+			fi
+		fi
+    fi
+else
+	echo "Please enter a domain name!"
+	check_spike_date
+fi
+trap - SIGINT
+MenuAcess
+}
+
 
 ##
 # Function that lists all the email senders in the exim mail queue
@@ -2730,6 +2827,7 @@ $(ColorGreen '3)') GET/POST requests + IP addresses for every website on the ser
 $(ColorGreen '4)') GET/POST requests for every website on the server
 $(ColorGreen '5)') List all of the Apache errors for a specific domain
 $(ColorGreen '6)') List all of the Apache errors for a specific cPanel username
+$(ColorGreen '7)') Check what caused spike for a website (30 day log!)
 $(ColorGreen '0)') Back to Main Menu
 
 $(ColorBlue 'Choose an option:') "
@@ -2741,6 +2839,7 @@ $(ColorBlue 'Choose an option:') "
                 4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=OnlyAccessLogs\&Server=$server\&Path=$location ; fi ; OnlyAccessLogs;;
 		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ApacheErrorsWebSite\&Server=$server\&Path=$location ; fi ; domainhttpderrors;;
 		6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ApacheErrorsUsername\&Server=$server\&Path=$location ; fi ; userhttpderrors;;
+                7) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CheckSpike\&Server=$server\&Path=$location ; fi ; check_spike_date;;
 		0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; MainMenu;;
 		*) echo -e $red"Wrong command."$clear; MenuAcess;;
         esac
