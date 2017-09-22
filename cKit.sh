@@ -2715,9 +2715,14 @@ trap command SIGINT
                 echo -ne "$(ColorGreen "Is the public_html folder empty?[yes/no]")
 ";
                 read empty
+	      	if [ ! $empty == yes ]; then
+                echo -ne "$(ColorGreen "Make sure that the public_html folder is empty before installing Magento!")
+";
+                exit 0
+               	fi
                 echo -ne "$(ColorGreen "Are you 100% sure that the public_html folder is empty?")
 ";
-                read empty
+	        read empty
                 if [ ! $empty == yes ]; then
                 echo -ne "$(ColorGreen "Make sure that the public_html folder is empty before installing Magento!")
 ";
@@ -2760,7 +2765,14 @@ trap command SIGINT
                 echo -ne "$(ColorGreen "Is the public_html folder empty?[yes/no]")
 ";
                 read empty
-                echo -ne "$(ColorGreen "Are you 100% sure that the public_html folder is empty?")
+                if [ ! $empty == yes ]; then
+                echo -ne "$(ColorGreen "Make sure that the public_html folder is empty before installing WordPress!")
+";
+                echo ""
+               	exit 0
+                fi
+
+                echo -ne "$(ColorGreen "Are you 100% sure that the public_html folder is empty?[yes/no]")
 ";
                 read empty
                 if [ ! $empty == yes ]; then
