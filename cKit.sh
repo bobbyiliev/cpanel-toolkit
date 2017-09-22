@@ -2766,10 +2766,10 @@ trap command SIGINT
                 if [ ! $empty == yes ]; then
                 echo -ne "$(ColorGreen "Make sure that the public_html folder is empty before installing WordPress!")
 ";
+		echo ""
                 exit 0
                 fi
         done
-       	ChangePHPto7
     cd ~/public_html
 
         echo -ne "$(ColorGreen "Extracting magento files ... This might take a while, go make yourself a cup of coffee!")
@@ -2777,7 +2777,7 @@ trap command SIGINT
   	echo -ne "$(ColorGreen "Also go ahead and create a database, you would need it once the files have been uploaded!")
 ";
 	sleep 1
-  	wget --no-check-certificate http://wordpress.org/latest.zip && unzip -q latest.zip && mv wordpress/* . && rm -rf latest.zip wordpress && cp wp-config-sample.php wp-config.php
+  	wget -NQ --no-check-certificate http://wordpress.org/latest.zip && unzip -q latest.zip && mv wordpress/* . && rm -rf latest.zip wordpress && cp wp-config-sample.php wp-config.php
 
         echo "CheckSpelling Off" >> ~/.htaccess
         echo -ne "$(ColorGreen "WordPress files have been deployed at $(pwd) visit the site and complete the installation!")
