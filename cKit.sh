@@ -2777,7 +2777,7 @@ trap command SIGINT
   	echo -ne "$(ColorGreen "Also go ahead and create a database, you would need it once the files have been uploaded!")
 ";
 	sleep 1
-  	wget -NQ --no-check-certificate http://wordpress.org/latest.zip && unzip -q latest.zip && mv wordpress/* . && rm -rf latest.zip wordpress && cp wp-config-sample.php wp-config.php
+  	wget -Nq --no-check-certificate http://wordpress.org/latest.zip && unzip -q latest.zip && mv wordpress/* . && rm -rf latest.zip wordpress && cp wp-config-sample.php wp-config.php
 
         echo "CheckSpelling Off" >> ~/.htaccess
         echo -ne "$(ColorGreen "WordPress files have been deployed at $(pwd) visit the site and complete the installation!")
