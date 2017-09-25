@@ -2938,6 +2938,7 @@ $(ColorGreen '3)') Check if a PHP extension is enabled on the server.
 $(ColorGreen '4)') Check if a PHP function is enabled on the server.
 $(ColorGreen '5)') Generate random password
 $(ColorGreen '6)') Install Ioncube for a website using PHP 7
+$(ColorGreen '0)') Exit
 
 $(ColorBlue 'Choose an option:') "
                 read a
@@ -2948,7 +2949,7 @@ $(ColorBlue 'Choose an option:') "
                 4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsFunctionnEnabled\&Server=$server\&Path=$location ; fi ; is_functionCloud;;
 		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=RandomPass\&Server=$server\&Path=$location ; fi ; randompass_cloud;;
 		6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IonCubeInstaller\&Server=$server\&Path=$location ; fi ; install_ioncube_php70;;
-#		0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; MainMenu;;
+		0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exit\&Server=$server\&Path=$location ; fi ; Exitmenu;;
                 *) echo -e $red"Wrong command."$clear; CloudMenu;;
         esac
 fi
