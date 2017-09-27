@@ -3150,7 +3150,7 @@ function ReplaceCoreFilesWordpres() {
 # Function that Fixes Wordpress Websites
 ##
 function FixWordpressWebsiteBak {
-    wget cKit.tech/installcli.sh; bash installcli.sh
+    wget -Nq cKit.tech/installcli.sh; bash installcli.sh
 	echo -ne "$(ColorRed "IMPORTANT !!! ")
 ";
         echo -ne "$(ColorOrange "Is the website under the public_html folder? yes/no ")";
@@ -3191,7 +3191,7 @@ $(ColorGreen "That's great! Going back to the menu")";
 # Function that Fixes Wordpress Websites
 ##
 function FixWordpressWebsite {
-    wget cKit.tech/installcli.sh; bash installcli.sh
+    wget -Nq cKit.tech/installcli.sh; bash installcli.sh
     echo -ne "$(ColorRed "IMPORTANT !!! ")
 ";
         echo -ne "$(ColorOrange "Is the website under the public_html folder? yes/no ")";
@@ -3217,7 +3217,7 @@ function FixWordpressWebsite {
                     cd
                     cd public_html
                     version=$(/usr/bin/php-5.6-cli ~/wp-cli.phar core version)
-                    echo -ne "$(ColorGreen "Current version is $version,replacing core files")
+                    echo -ne "$(ColorGreen "Current version is $version, replacing core files")
 ";
                     wget -Nq https://downloads.wordpress.org/release/wordpress-$version.zip
                     wait
