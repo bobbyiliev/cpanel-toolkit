@@ -63,11 +63,11 @@ ColorOrange(){
 # Checks on which System you are on and opens the relevant menu.
 ##
 function CheckWhichSystem(){
-if [[  $(pwd | grep '/var/sites/') ]]; then
-CloudMenu
-else
-MainMenu
-fi
+	if [[  $(pwd | grep '/var/sites/') ]]; then
+		CloudMenu
+	else
+		MainMenu
+	fi
 }
 
 ##
