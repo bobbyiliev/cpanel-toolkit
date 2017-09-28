@@ -3188,6 +3188,25 @@ $(ColorGreen "That's great! Going back to the menu")";
 }
 
 ##
+# Function that Fixes Fatal Erros when updating  core files
+##
+function FixWP-CLIFatarError (){
+/usr/bin/php-7.0  ~/wp-cli.phar core check &> /tmp/error_log
+
+successcheck=$(cat /tmp/error_log | grep Success)
+fatalcheck=$(cat /tmp/error_log | grep Fatal | awk '{ print $1 }')
+fatalerror=$(cat /tmp/error_log | grep Fatal | awk '{ print $1 " " $2  " " $4  " " $5 " " $7}')
+
+if [ ! -z $successcheck ]; then
+        echo Success
+elif [ ! -z $fatalcheck ]; then
+        echo $fatalerror
+        echo "Downloading the missing file .. "
+           #wget 
+fi
+}
+
+##
 # Function that Fixes Wordpress Websites
 ##
 function FixWordpressWebsite {
@@ -3216,15 +3235,18 @@ function FixWordpressWebsite {
 ";
                     cd
                     cd public_html
+		    FixWP-CLIFatarError
                     version=$(/usr/bin/php-5.6-cli ~/wp-cli.phar core version)
                     echo -ne "$(ColorGreen "Current version is $version, replacing core files")
 ";
                     wget -Nq https://downloads.wordpress.org/release/wordpress-$version.zip
                     wait
+
                     /usr/bin/php-5.6-cli ~/wp-cli.phar core update  ./wordpress-$version.zip
                     wait
                     echo -ne "$(ColorGreen "Checking Core Files!")
 ";
+
                     /usr/bin/php-5.6-cli ~/wp-cli.phar checksum core
                                     else
                     echo -ne "
