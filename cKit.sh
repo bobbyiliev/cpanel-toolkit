@@ -58,16 +58,15 @@ ColorOrange(){
         echo -ne $orange$1$clear
 }
 
-
 ##
 # Checks on which System you are on and opens the relevant menu.
 ##
 function CheckWhichSystem(){
-if [[  $(pwd | grep '/var/sites/') ]]; then
-CloudMenu
-else
-MainMenu
-fi
+	if [[  $(pwd | grep '/var/sites/') ]]; then
+		CloudMenu
+	else
+		MainMenu
+	fi
 }
 
 ##
@@ -150,6 +149,108 @@ for i in $(grep $responsedomain '/etc/userdomains' | grep -v '*' | awk -F":" '{p
                 fi
         done
 }
+
+##
+# Function that checks what caused the spike on a server
+# You can specify a domain name and a certian date
+# It works on cPanel servers and checks checks the logs back for 30 days
+##
+
+function check_spike_date() {
+
+trap command SIGINT
+echo "Enter your domain: "
+read domain
+if [ ! -z $domain ] ; then
+    if [ "$domain" == "exit" ]; then
+        MenuAcess
+    fi
+    exists=$(grep $domain '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}' | tail -1 )
+    if [ -z $exists ] ; then
+       	echo "Domain not found on this server! Please check for typos or try another domain."
+	check_spike_date
+    else
+        username="$(grep ${domain} /etc/userdomains | awk -F": " '{print $2 }' | tail -1)";
+
+		MONTHS=(ZERO Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec)
+		check=0
+		while [ $check -eq 0 ] ; do
+			echo "Enter the month (from 1 to 12): "
+			read month
+			if [[ "$month" =~ ^[0-9]+$ ]] && [ "$month" -ge 1 -a "$month" -le 12 ]; then
+				check=1
+				#echo "Please enter a month! (from 1 to 12)"
+				#read month
+			else
+				echo "Not a valid month!"
+			fi
+		done
+		echo "How many of the top visited pages do you want to see [default is 30]: "
+		lines=30
+		read lines
+		if ! [[ "$lines" =~ ^[0-9]+$ ]] ; then
+			lines=30
+		fi
+		echo "Do you want to check for a certian day? Enter a number from 1 to 31:"
+		echo "Press enter if you want to see the traffic for the whole month"
+		read day
+		if [ ! -z $day ] ; then
+			if [ $day -lt 10 ]; then
+				day=0$day
+			fi
+		        if [[ "$month" =~ ^[0-9]+$ ]] && [ "$month" -ge 1 -a "$month" -le 12 ]; then
+	        	        if [ $(zgrep ${day}/${MONTHS[$month]} /home/$username/logs/* | cut -d\" -f2 | awk '{print $1 " " $2}' | cut -d? -f1 | sort | uniq -c | sort -n | sed 's/[ ]*//' | wc -l ) -gt 0 ]; then
+					echo ""
+					echo $(ColorGreen "All traffic for ${day}/${MONTHS[$month]}");
+					echo "";
+		                        zgrep ${day}/${MONTHS[$month]} /home/$username/logs/* | cut -d\" -f2 | awk '{print $1 " " $2}' | cut -d? -f1 | sort | uniq -c | sort -n | sed 's/[ ]*//' | tail -${lines}
+		                else
+					echo ""
+	                        	echo "No entries for that day, do you want to try another? [yes/no]"
+					read response
+					if [ "$response" == yes ]; then
+		                	        check_spike_date
+						unset response
+					else
+						MenuAcess
+						unset response
+					fi
+
+	                	fi
+	        	else {
+	                	echo "Please Enter the month (from 1 to 12):"
+		                check_spike_date
+	        	}
+		        fi
+
+		elif [[ "$month" =~ ^[0-9]+$ ]] && [ "$month" -ge 1 -a "$month" -le 12 ]; then
+			if [ $(zgrep ${MONTHS[$month]} /home/$username/logs/* | cut -d\" -f2 | awk '{print $1 " " $2}' | cut -d? -f1 | sort | uniq -c | sort -n | sed 's/[ ]*//' | wc -l ) -gt 0 ]; then
+				echo ""
+				echo $(ColorGreen "All traffic for ${MONTHS[$month]}");
+				echo ""
+			        zgrep ${MONTHS[$month]} /home/$username/logs/* | cut -d\" -f2 | awk '{print $1 " " $2}' | cut -d? -f1 | sort | uniq -c | sort -n | sed 's/[ ]*//' | tail -${lines}
+			else
+				echo "No entries for that month, do you want to try again? [yes/no]"
+                                        read response
+                                        if [ "$response" == yes ]; then
+                                                check_spike_date
+                                                unset response
+                                        else
+						MenuAcess
+                                                unset response
+                                        fi
+
+			fi
+		fi
+    fi
+else
+	echo "Please enter a domain name!"
+	check_spike_date
+fi
+trap - SIGINT
+MenuAcess
+}
+
 
 ##
 # Function that lists all the email senders in the exim mail queue
@@ -1144,6 +1245,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
 fi
 ChangePHPVersion
 }
+
 ##
 # Function that detirmines the current executed PHP version and deployes an optimized php.ini
 # while configuring the SuPHP_ConfigPath
@@ -1395,6 +1497,7 @@ error_log = /var/sites/${whichletter}/${whichdomain}/public_html/error_log" >>  
         fi
 fi
 }
+
 ##
 # Function to change the PHP version to 5.3 and create an optimized PHP.ini file
 ##
@@ -2868,9 +2971,14 @@ trap command SIGINT
                 echo -ne "$(ColorGreen "Is the public_html folder empty?[yes/no]")
 ";
                 read empty
+	      	if [ ! $empty == yes ]; then
+                echo -ne "$(ColorGreen "Make sure that the public_html folder is empty before installing Magento!")
+";
+                exit 0
+               	fi
                 echo -ne "$(ColorGreen "Are you 100% sure that the public_html folder is empty?")
 ";
-                read empty
+	        read empty
                 if [ ! $empty == yes ]; then
                 echo -ne "$(ColorGreen "Make sure that the public_html folder is empty before installing Magento!")
 ";
@@ -2892,6 +3000,55 @@ trap command SIGINT
         echo -ne "$(ColorGreen "Under the advanced settings tab make sure that you select ")";
         echo -ne "$(ColorRed "DB ")";
         echo -ne "$(ColorGreen "as the session handler otherwise your install will fail!")
+";
+
+trap - SIGINT
+CloudQuickInstallMenu
+}
+
+
+##
+# Function to deply latest Wordpress v. files on the Cloud
+##
+
+function wp_install_cloud() {
+trap command SIGINT
+        echo -ne "$(ColorGreen "-Please note that you would still need to create a Database and a Database User!")
+";
+  	echo ""
+        unset empty
+        while [ -z $empty ]; do
+                echo -ne "$(ColorGreen "Is the public_html folder empty?[yes/no]")
+";
+                read empty
+                if [ ! $empty == yes ]; then
+                echo -ne "$(ColorGreen "Make sure that the public_html folder is empty before installing WordPress!")
+";
+                echo ""
+               	exit 0
+                fi
+
+                echo -ne "$(ColorGreen "Are you 100% sure that the public_html folder is empty?[yes/no]")
+";
+                read empty
+                if [ ! $empty == yes ]; then
+                echo -ne "$(ColorGreen "Make sure that the public_html folder is empty before installing WordPress!")
+";
+		echo ""
+                exit 0
+                fi
+        done
+    cd ~/public_html
+
+        echo -ne "$(ColorGreen "Extracting magento files ... This might take a while, go make yourself a cup of coffee!")
+";
+  	echo -ne "$(ColorGreen "Also go ahead and create a database, you would need it once the files have been uploaded!")
+";
+	sleep 1
+  	wget -Nq --no-check-certificate http://wordpress.org/latest.zip && unzip -q latest.zip && mv wordpress/* . && rm -rf latest.zip wordpress && cp wp-config-sample.php wp-config.php
+
+        echo "CheckSpelling Off" >> ~/.htaccess
+        echo -ne "$(ColorGreen "WordPress files have been deployed at $(pwd) visit the site and complete the installation!")
 ";
 
 trap - SIGINT
@@ -2957,6 +3114,7 @@ $(ColorRed 'No results found! Try another option.')";
         echo -ne ""
         MenuAcess
 }
+
 ##
 # Function That Replaces WordpressCoreFiles in public_html
 ##
@@ -2992,7 +3150,7 @@ function ReplaceCoreFilesWordpres() {
 # Function that Fixes Wordpress Websites
 ##
 function FixWordpressWebsiteBak {
-    wget cKit.tech/installcli.sh; bash installcli.sh
+    wget -Nq cKit.tech/installcli.sh; bash installcli.sh
 	echo -ne "$(ColorRed "IMPORTANT !!! ")
 ";
         echo -ne "$(ColorOrange "Is the website under the public_html folder? yes/no ")";
@@ -3033,7 +3191,7 @@ $(ColorGreen "That's great! Going back to the menu")";
 # Function that Fixes Wordpress Websites
 ##
 function FixWordpressWebsite {
-    wget cKit.tech/installcli.sh; bash installcli.sh
+    wget -Nq cKit.tech/installcli.sh; bash installcli.sh
     echo -ne "$(ColorRed "IMPORTANT !!! ")
 ";
         echo -ne "$(ColorOrange "Is the website under the public_html folder? yes/no ")";
@@ -3059,7 +3217,7 @@ function FixWordpressWebsite {
                     cd
                     cd public_html
                     version=$(/usr/bin/php-5.6-cli ~/wp-cli.phar core version)
-                    echo -ne "$(ColorGreen "Current version is $version,replacing core files")
+                    echo -ne "$(ColorGreen "Current version is $version, replacing core files")
 ";
                     wget -Nq https://downloads.wordpress.org/release/wordpress-$version.zip
                     wait
@@ -3078,9 +3236,7 @@ $(ColorGreen "That's great! Going back to the menu")";
           echo -ne "$(ColorGreen "Make sure the website is under the public_html folder! ")
 ";
        fi
-    
 }
-
 
 ###########################
 ###  Quick Access Menu  ###
@@ -3107,6 +3263,7 @@ $(ColorGreen '3)') GET/POST requests + IP addresses for every website on the ser
 $(ColorGreen '4)') GET/POST requests for every website on the server
 $(ColorGreen '5)') List all of the Apache errors for a specific domain
 $(ColorGreen '6)') List all of the Apache errors for a specific cPanel username
+$(ColorGreen '7)') Check what caused spike for a website (30 day log!)
 $(ColorGreen '0)') Back to Main Menu
 
 $(ColorBlue 'Choose an option:') "
@@ -3118,6 +3275,7 @@ $(ColorBlue 'Choose an option:') "
                 4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=OnlyAccessLogs\&Server=$server\&Path=$location ; fi ; OnlyAccessLogs;;
 		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ApacheErrorsWebSite\&Server=$server\&Path=$location ; fi ; domainhttpderrors;;
 		6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ApacheErrorsUsername\&Server=$server\&Path=$location ; fi ; userhttpderrors;;
+                7) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CheckSpike\&Server=$server\&Path=$location ; fi ; check_spike_date;;
 		0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; MainMenu;;
 		*) echo -e $red"Wrong command."$clear; MenuAcess;;
         esac
@@ -3158,7 +3316,7 @@ $(ColorGreen '4)') Check if a PHP function is enabled on the server.
 $(ColorGreen '5)') Generate random password
 $(ColorGreen '6)') Install Ioncube for a website using PHP 7
 $(ColorGreen '7)') Fix Wordpress Websites
-
+$(ColorGreen '0)') Exit
 
 $(ColorBlue 'Choose an option:') "
                 read a
@@ -3170,7 +3328,7 @@ $(ColorBlue 'Choose an option:') "
 		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=RandomPass\&Server=$server\&Path=$location ; fi ; randompass_cloud;;
 		6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IonCubeInstaller\&Server=$server\&Path=$location ; fi ; install_ioncube_php70;;
 		7) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=FixWordPressWebsites\&Server=$server\&Path=$location ; fi ; FixWordpressWebsite;;
-#		0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; MainMenu;;
+		0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exit\&Server=$server\&Path=$location ; fi ; Exitmenu;;
                 *) echo -e $red"Wrong command."$clear; CloudMenu;;
         esac
 fi
@@ -3196,6 +3354,7 @@ $(ColorGreen '1)') Install wp-cli on the Cloud
 $(ColorGreen '2)') Install composer on the Cloud
 $(ColorGreen '3)') Install laravel on the Cloud
 $(ColorGreen '4)') Install Magento 2.1.7 on the Cloud
+$(ColorGreen '5)') Deply WordPress installation files
 $(ColorGreen '0)') Back to the Cloud Main Menu
 
 $(ColorBlue 'Choose an option:') "
@@ -3205,6 +3364,7 @@ $(ColorBlue 'Choose an option:') "
                 2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=InstallComposer\&Server=$server\&Path=$location ; fi ; composer_cloud_install;;
                 3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=InstallLaravel\&Server=$server\&Path=$location ; fi ; laravel_cloud_installer;;
                 4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=InstallMagento2OnTheCloud\&Server=$server\&Path=$location ; fi ; mage2_install_cloud;;
+		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=InstallWordpressOnCloud\&Server=$server\&Path=$location ; fi ; wp_install_cloud;;
 		0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; CloudMenu;;
 		*) echo -e $red"Wrong command."$clear; CloudQuickInstallMenu;;
         esac
