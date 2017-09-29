@@ -3232,7 +3232,8 @@ function FixWordpressWebsite {
           read response
                 if [ $response == 'no' ]; then
                     echo -ne "$(ColorGreen "Deploying the second fix!")
-";
+";			
+		    unset response
                     cd
                     cd public_html
 		    FixWP-CLIFatarError
@@ -3248,17 +3249,79 @@ function FixWordpressWebsite {
 ";
 
                     /usr/bin/php-5.6-cli ~/wp-cli.phar checksum core
+		echo -ne "$(ColorGreen "Core Files have been replaced.")";
+
                                     else
                     echo -ne "
-$(ColorGreen "That's great! Going back to the menu")";
+$(ColorGreen "It seems the issue was with low php limits. Going back to the menu")";
                 CloudMenu
             fi
         fi
+		echo -ne "$(
+              ColorOrange "Has this fixed the issue? yes/no")
+";
+          read response
+                if [ $response == 'no' ]; then
+                    echo -ne "$(ColorGreen "Deploying third fix!")
+";
+		    echo -ne "$(ColorGreen "It's possible, the issue is with the theme. Listing the installed themes:")
+";
+		unset response
+		/usr/bin/php-5.6-cli ~/wp-cli.phar theme list
+		echo -ne "$(ColorGreen "Changing the theme to the default twentyseventeen. If you do not wish to continue press Ctrl+C otherwise press Enter")
+";
+		read
+		/usr/bin/php-5.6-cli ~/wp-cli.phar theme install twentyseventeen
+		wait
+		/usr/bin/php-5.6-cli ~/wp-cli.phar theme activate twentyseventeen
+		echo -ne "$(ColorGreen "If the website is loading now, it means the issue was with the Theme")
+";
+		echo -ne "$(ColorGreen "Do you wish to change the theme back? yes/no")
+";
+	       		read response
+			if [ $response == 'no' ]; then
+				echo -ne "$(ColorGreen "Going back to the Cloud menu")
+";
+				CloudMenu
+			else
+				echo -ne "$(ColorGreen "Showing  available themes. Please copy the one you want to activate:")
+";
+				/usr/bin/php-5.6-cli ~/wp-cli.phar theme list
+				read themeacti
+				 /usr/bin/php-5.6-cli ~/wp-cli.phar activate $themeacti
+				echo -ne "$(ColorGreen "Theme $themeacti activated")
+";
+				  echo -ne "$(ColorGreen "Going back to the Cloud menu")
+";
+                                CloudMenu
+			fi
+		else
+			echo -ne "
+$(ColorGreen "It seems the issue was with the core files. Going back to the menu")";
+                CloudMenu
+		fi
+                echo -ne "$(
+              ColorOrange "Has this fixed the issue? yes/no")
+";
+          read response
+                if [ $response == 'no' ]; then
+		 echo -ne "$(ColorGreen "Deploying fourth fix!")
+";
+		unset response
+		 echo -ne "$(ColorGreen "It's possible, the issue is with the plugins.")
+";
+		else
+		 echo -ne "
+$(ColorGreen "It seems the issue was with the theme. Going back to the menu")";
+                CloudMenu
+
+		fi
        else
           echo -ne "$(ColorGreen "Make sure the website is under the public_html folder! ")
 ";
        fi
 }
+
 
 ###########################
 ###  Quick Access Menu  ###
