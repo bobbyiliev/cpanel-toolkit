@@ -256,7 +256,39 @@ MenuAcess
 ##
 
 function check_spike_current() {
-	echo 'to do..'
+trap command SIGINT
+echo "Enter your domain: "
+read domain
+if [ ! -z $domain ] ; then
+    if [ "$domain" == "exit" ]; then
+        MenuAcess
+    fi
+    exists=$(grep $domain '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}' | tail -1 )
+    if [ -z $exists ] ; then
+        echo "Domain not found on this server! Please check for typos or try another domain."
+        check_spike_date
+    else
+	username="$(grep ${domain} /etc/userdomains | awk -F": " '{print $2 }' | tail -1)";
+	echo  $(ColorGreen "#####################");
+	count=$(grep -r $domain /usr/local/apache/domlogs/${username}/* 2>/dev/null | cut -d\" -f2 | awk '{print $1 " " $2}' | cut -d? -f1 | sort | uniq -c | sort -n | sed 's/[ ]*//' | wc -l)
+	if [[ $count -ne 0 ]] ; then
+		echo -ne $(ColorGreen "Most Accessed pages for $domains - checking current access log:");
+		echo ""
+		echo ""
+		grep -r $domain /usr/local/apache/domlogs/${username}/* 2>/dev/null | cut -d\" -f2 | awk '{print $1 " " $2}' | cut -d? -f1 | sort | uniq -c | sort -n | sed 's/[ ]*//' | head -30
+		echo -ne $(ColorGreen "Here's some more useful info... ")
+		echo ""
+               	echo -ne $(ColorGreen "IP hits for $domains :");
+		echo ""
+                grep -r $domain /usr/local/apache/domlogs/${username}/* 2>/dev/null | awk -F":" '{print $2}' | awk -F"-" '{print $1}' |sort | uniq -c | sort -rn | head -20
+	else
+		echo "No results found! Try with another domain."
+	fi
+	echo $(ColorGreen "#####################");
+    fi
+fi
+trap - SIGINT
+MenuAcess
 }
 
 ##
@@ -3356,6 +3388,7 @@ $(ColorGreen '4)') GET/POST requests for every website on the server
 $(ColorGreen '5)') List all of the Apache errors for a specific domain
 $(ColorGreen '6)') List all of the Apache errors for a specific cPanel username
 $(ColorGreen '7)') Check what caused spike for a website (30 day log!)
+$(ColorGreen '8)') Check what caused spike for a website - Current log (Today)
 $(ColorGreen '0)') Back to Main Menu
 
 $(ColorBlue 'Choose an option:') "
@@ -3368,6 +3401,7 @@ $(ColorBlue 'Choose an option:') "
 		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ApacheErrorsWebSite\&Server=$server\&Path=$location ; fi ; domainhttpderrors;;
 		6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ApacheErrorsUsername\&Server=$server\&Path=$location ; fi ; userhttpderrors;;
                 7) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CheckSpike\&Server=$server\&Path=$location ; fi ; check_spike_date;;
+		8) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CheckCurrentSpike\&Server=$server\&Path=$location ; fi ; check_spike_current;;
 		0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; MainMenu;;
 		*) echo -e $red"Wrong command."$clear; MenuAcess;;
         esac
@@ -3411,7 +3445,7 @@ $(ColorGreen '3)') Check if a PHP extension is enabled on the server.
 $(ColorGreen '4)') Check if a PHP function is enabled on the server.
 $(ColorGreen '5)') Generate random password
 $(ColorGreen '6)') Install Ioncube for a website using PHP 7
-$(ColorGreen '7)') Fix Wordpress Websites
+$(ColorGreen '7)') Fix Wordpress Websites - Still a BETA - Please use only as a last resort
 $(ColorGreen '0)') Exit
 
 $(ColorBlue 'Choose an option:') "
