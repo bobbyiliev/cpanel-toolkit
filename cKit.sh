@@ -271,13 +271,13 @@ if [ ! -z $domain ] ; then
 	echo  $(ColorGreen "#####################");
 	count=$(grep -r $domain /usr/local/apache/domlogs/${username}/* 2>/dev/null | cut -d\" -f2 | awk '{print $1 " " $2}' | cut -d? -f1 | sort | uniq -c | sort -n | sed 's/[ ]*//' | wc -l)
 	if [[ $count -ne 0 ]] ; then
-		echo -ne $(ColorGreen "Most Accessed pages for $domains - checking current access log:");
+		echo -ne $(ColorGreen "Most Accessed pages for $domain - checking current access log:");
 		echo ""
 		echo ""
 		grep -r $domain /usr/local/apache/domlogs/${username}/* 2>/dev/null | cut -d\" -f2 | awk '{print $1 " " $2}' | cut -d? -f1 | sort | uniq -c | sort -n | sed 's/[ ]*//' | tail -30
 		echo -ne $(ColorGreen "Here's some more useful info... ")
 		echo ""
-               	echo -ne $(ColorGreen "IP hits for $domains :");
+               	echo -ne $(ColorGreen "IP hits for $domain :");
 		echo ""
                 grep -r $domain /usr/local/apache/domlogs/${username}/* 2>/dev/null | awk -F":" '{print $2}' | awk -F"-" '{print $1}' |sort | uniq -c | sort -rn | head -20
 	else
