@@ -274,7 +274,7 @@ if [ ! -z $domain ] ; then
 		echo -ne $(ColorGreen "Most Accessed pages for $domains - checking current access log:");
 		echo ""
 		echo ""
-		grep -r $domain /usr/local/apache/domlogs/${username}/* 2>/dev/null | cut -d\" -f2 | awk '{print $1 " " $2}' | cut -d? -f1 | sort | uniq -c | sort -n | sed 's/[ ]*//' | head -30
+		grep -r $domain /usr/local/apache/domlogs/${username}/* 2>/dev/null | cut -d\" -f2 | awk '{print $1 " " $2}' | cut -d? -f1 | sort | uniq -c | sort -n | sed 's/[ ]*//' | tail -30
 		echo -ne $(ColorGreen "Here's some more useful info... ")
 		echo ""
                	echo -ne $(ColorGreen "IP hits for $domains :");
