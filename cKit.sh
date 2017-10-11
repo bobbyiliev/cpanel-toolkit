@@ -256,7 +256,7 @@ MenuAcess
 ##
 
 function check_spike_current() {
-	#todo!
+	echo 'to do..'
 }
 
 ##
