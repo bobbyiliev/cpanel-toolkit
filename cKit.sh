@@ -3382,6 +3382,7 @@ CloudMenu(){
 while [ -z $paruser ] ; do
         echo ""
 	echo -ne $(ColorGreen 'Simple Terminal ToolKit') - $(ColorRed 'Paragon Internet Group')
+	echo ""
 	echo -ne $(ColorGreen 'It would help you manage and troubleshoot issues with your server easily via SSH')
 	echo ""
         echo "To start please enter your paruser:"
@@ -3734,6 +3735,10 @@ fi
 MainMenu(){
 tput clear
 while [ -z $paruser ] ; do
+        echo ""
+	echo -ne $(ColorGreen 'Simple Terminal ToolKit') - $(ColorRed 'Paragon Internet Group')
+	echo ""
+        echo -ne $(ColorGreen 'It would help you manage and troubleshoot issues with your server easily via SSH')
     	echo ""
 	echo "To start please enter your paruser:"
     read paruser
