@@ -3366,8 +3366,6 @@ $(ColorGreen "It seems the issue was with the theme. Going back to the menu")";
 # You can use it in order to located outdated websites, which are vulnerable and further email the clients if you wish.
 ##
 
-#!/bin/bash
-
 function find_outdated_wp() {
         #--Activate output via email by setting "sendmail" to 1 and uncomment "email"--#
         sendmail=0
@@ -3449,8 +3447,6 @@ function find_outdated_wp() {
         echo ""
         exit 0
 }
-
-find_outdated_wp
 
 ###########################
 ###  Quick Access Menu  ###
