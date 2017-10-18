@@ -3445,8 +3445,10 @@ function find_outdated_wp() {
         echo "No outdated Wordpress installation found"
         fi
         echo ""
+	ToolsMenu
         exit 0
 }
+
 
 ###########################
 ###  Quick Access Menu  ###
