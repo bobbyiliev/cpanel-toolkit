@@ -158,7 +158,7 @@ for i in $(grep $responsedomain '/etc/userdomains' | grep -v '*' | awk -F":" '{p
 function check_spike_date() {
 
 trap command SIGINT
-echo "Enter your domain: "
+echo "Enter your domain or type exit: "
 read domain
 if [ ! -z $domain ] ; then
     if [ "$domain" == "exit" ]; then
@@ -256,7 +256,7 @@ MenuAcess
 
 function check_spike_current() {
 trap command SIGINT
-echo "Enter your domain: "
+echo "Enter your domain or type exit "
 read domain
 if [ ! -z $domain ] ; then
     if [ "$domain" == "exit" ]; then
