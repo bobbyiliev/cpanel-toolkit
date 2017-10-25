@@ -3509,7 +3509,7 @@ while [ -z $paruser ] ; do
 	echo ""
         echo "To start please enter your paruser:"
     read paruser
-        if [[ ! $paruser =~ [a-z_]+$ ]] || [[ ! $paruser =~ ^par[a-z_]+$ ]]  ; then
+    if ([[ ! $paruser =~ [a-z_]+$ ]] || [[ ! $paruser =~ ^par[a-z_]+$ ]]) || [[ ${#paruser} -lt 6 ]] ; then
                 unset paruser
                 echo "Don't cheat! Enter your correct paruser!"
         fi
@@ -3866,12 +3866,11 @@ while [ -z $paruser ] ; do
     	echo ""
 	echo "To start please enter your paruser:"
     read paruser
-	if [[ ! $paruser =~ [a-z_]+$ ]] || [[ ! $paruser =~ ^par[a-z_]+$ ]]  ; then
+        if ([[ ! $paruser =~ [a-z_]+$ ]] || [[ ! $paruser =~ ^par[a-z_]+$ ]]) || [[ ${#paruser} -lt 6 ]] ; then
 		unset paruser
 		echo "Don't cheat! Enter your correct paruser!"
 	fi
 done
-
                 ColorGreen "        "
 echo -ne "
 Main Menu
