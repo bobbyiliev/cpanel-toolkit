@@ -3546,7 +3546,7 @@ $(ColorBlue 'Choose an option:') "
 		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=RandomPass\&Server=$server\&Path=$location ; fi ; randompass_cloud;;
 		6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IonCubeInstaller\&Server=$server\&Path=$location ; fi ; install_ioncube_php70;;
 		7) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=FixWordPressWebsites\&Server=$server\&Path=$location ; fi ; FixWordpressWebsite;;
-		0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exit\&Server=$server\&Path=$location ; fi ; Exitmenu;;
+		0) Exitmenu;;
                 *) echo -e $red"Wrong command."$clear; CloudMenu;;
         esac
 fi
@@ -3892,7 +3892,7 @@ $(ColorBlue 'Choose an option:') "
 		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=HandyToolsMenu\&Server=$server\&Path=$location ; fi ; ToolsMenu;;
 #		6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; CloudMenu;;
 		admins) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=SysAdminsMenu\&Server=$server\&Path=$location ; fi ; SysAdminsMenu;;
-		0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exit\&Server=$server\&Path=$location ; fi ; Exitmenu;;
+		0) Exitmenu;;
 		*) echo -e $red"Wrong command."$clear; WrongCommand;;
         esac
 }
