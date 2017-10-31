@@ -51,9 +51,9 @@ if [[ $autodelete == 1 ]] ; then
         trap deletescript INT 20 EXIT
 fi
 
-###################
-###  Functions  ###
-###################
+#########################
+###  Color Functions  ###
+#########################
 
 ColorGreen(){
 	echo -ne $green$1$clear
@@ -101,7 +101,7 @@ MenuAcess
 
 ##
 # Function that lists access logs for every website separately
-# including only POST/GET requests. 
+# including only POST/GET requests.
 ##
 function OnlyAccessLogs {
 for i in $(cat '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}'); do
@@ -117,8 +117,8 @@ MenuAcess
 }
 
 ##
-# Function that lists access logs for a specific website 
-# including only POST/GET requests. 
+# Function that lists access logs for a specific website
+# including only POST/GET requests.
 ##
 
 function SpecificDomainAccessLogs {
