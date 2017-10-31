@@ -34,15 +34,26 @@ reportDomain='http://ckit.bobbyiliev.com/datalog.php'
 ### If you would like to disable logging just change this to 0 ###
 ##################################################################
 enablelog=1
-###################
-###  Functions  ###
-###################
+
+###########################################################
+### Enable Auto-Delete                                  ###
+### If this option is enabled the cKit.sh file will be  ###
+###  auto-deleted whenever you exit the script          ###
+###########################################################
+autodelete=0
+
 deletescript(){
         if [ -f "$0" ]; then rm -f "$0"; fi
         echo; exit 0
 }
 
-#trap deletescript INT 20 EXIT
+if [[ $autodelete == 1 ]] ; then
+        trap deletescript INT 20 EXIT
+fi
+
+###################
+###  Functions  ###
+###################
 
 ColorGreen(){
 	echo -ne $green$1$clear
