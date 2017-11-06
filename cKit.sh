@@ -33,6 +33,8 @@ reportDomain='http://ckit.bobbyiliev.com/datalog.php'
 #######
 ## GeoIP domain
 #######
+enablegeoipcheck=1
+
 geoipdomain="http://ckit.tech/ip.php"
 
 ##################################################################
@@ -300,10 +302,15 @@ if [ ! -z $domain ] ; then
                 ipaccessed=$(cat $tmpfile | awk '{ print $2 }')
                 numberofhits=$(cat $tmpfile | awk '{ print $1 }')
                 for spike in ${ipaccessed}; do
-                        country=$(curl ${geoipdomain}?ip=${spike} 2>/dev/null)
-                           finalresult=$(grep $spike $tmpfile)
-                        echo "$finalresult - $country"
+			if [[ $enablegeoipcheck == 1 ]] ; then
+	                        country=$(curl ${geoipdomain}?ip=${spike} 2>/dev/null)
+        	                finalresult=$(grep $spike $tmpfile)
+                	        echo "$finalresult - $country"
+			fi
                 done
+                       	if ! [[ $enablegeoipcheck == 1 ]] ; then
+                               	cat $tmpfile
+                       	fi
                 rm -f $tmpfile
         else
                 echo "No results found! Try with another domain."
