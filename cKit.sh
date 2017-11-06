@@ -30,6 +30,11 @@ server=$(hostname)
 location=$(pwd)
 reportDomain='http://ckit.bobbyiliev.com/datalog.php'
 
+#######
+## GeoIP domain
+#######
+geoipdomain="http://ckit.tech/ip.php"
+
 ##################################################################
 ### If you would like to disable logging just change this to 0 ###
 ##################################################################
@@ -295,7 +300,7 @@ if [ ! -z $domain ] ; then
                 ipaccessed=$(cat $tmpfile | awk '{ print $2 }')
                 numberofhits=$(cat $tmpfile | awk '{ print $1 }')
                 for spike in ${ipaccessed}; do
-                        country=$(curl http://ckit.tech/ip.php?ip=${spike} 2>/dev/null)
+                        country=$(curl ${geoipdomain}?ip=${spike} 2>/dev/null)
                            finalresult=$(grep $spike $tmpfile)
                         echo "$finalresult - $country"
                 done
