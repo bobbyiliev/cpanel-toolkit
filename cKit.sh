@@ -276,25 +276,34 @@ if [ ! -z $domain ] ; then
     exists=$(grep $domain '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}' | tail -1 )
     if [ -z $exists ] ; then
         echo "Domain not found on this server! Please check for typos or try another domain."
-        check_spike_date
+           check_spike_current
     else
-	username="$(grep ${domain} /etc/userdomains | awk -F": " '{print $2 }' | tail -1)";
-	echo  $(ColorGreen "#####################");
-	count=$(grep -r $domain /usr/local/apache/domlogs/${username}/* 2>/dev/null | cut -d\" -f2 | awk '{print $1 " " $2}' | cut -d? -f1 | sort | uniq -c | sort -n | sed 's/[ ]*//' | wc -l)
-	if [[ $count -ne 0 ]] ; then
-		echo -ne $(ColorGreen "Most Accessed pages for $domain - checking current access log:");
-		echo ""
-		echo ""
-		grep -r $domain /usr/local/apache/domlogs/${username}/* 2>/dev/null | cut -d\" -f2 | awk '{print $1 " " $2}' | cut -d? -f1 | sort | uniq -c | sort -n | sed 's/[ ]*//' | tail -30
-		echo -ne $(ColorGreen "Here's some more useful info... ")
-		echo ""
-               	echo -ne $(ColorGreen "IP hits for $domain :");
-		echo ""
-                grep -r $domain /usr/local/apache/domlogs/${username}/* 2>/dev/null | awk -F":" '{print $2}' | awk -F"-" '{print $1}' |sort | uniq -c | sort -rn | head -20
-	else
-		echo "No results found! Try with another domain."
-	fi
-	echo $(ColorGreen "#####################");
+        username="$(grep ${domain} /etc/userdomains | awk -F": " '{print $2 }' | tail -1)";
+        echo  $(ColorGreen "#####################");
+        count=$(grep -r $domain /usr/local/apache/domlogs/${username}* 2>/dev/null | cut -d\" -f2 | awk '{print $1 " " $2}' | cut -d? -f1 | sort | uniq -c | sort -n | sed 's/[ ]*//' | wc -l)
+        if [[ $count -ne 0 ]] ; then
+                echo -ne $(ColorGreen "Most Accessed pages for $domain - checking current access log:");
+                echo ""
+                echo ""
+                grep -r $domain /usr/local/apache/domlogs/${username}* 2>/dev/null | cut -d\" -f2 | awk '{print $1 " " $2}' | cut -d? -f1 | sort | uniq -c | sort -n | sed 's/[ ]*//' | tail -30
+                echo -ne $(ColorGreen "Here's some more useful info... ")
+                echo ""
+                echo -ne $(ColorGreen "IP hits for $domain :");
+                echo ""
+                tmpfile="/tmp/ckit-${RANDOM}.tmp"
+                grep -r $domain /usr/local/apache/domlogs/${username}* 2>/dev/null | awk -F":" '{print $2}' | awk -F"-" '{print $1}' |sort | uniq -c | sort -rn | head -20 > $tmpfile
+                ipaccessed=$(cat $tmpfile | awk '{ print $2 }')
+                numberofhits=$(cat $tmpfile | awk '{ print $1 }')
+                for spike in ${ipaccessed}; do
+                        country=$(curl http://ckit.tech/ip.php?ip=${spike} 2>/dev/null)
+                           finalresult=$(grep $spike $tmpfile)
+                        echo "$finalresult - $country"
+                done
+                rm -f $tmpfile
+        else
+                echo "No results found! Try with another domain."
+        fi
+        echo $(ColorGreen "#####################");
     fi
 fi
 trap - SIGINT
