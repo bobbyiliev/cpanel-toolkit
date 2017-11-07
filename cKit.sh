@@ -89,20 +89,32 @@ function CheckWhichSystem(){
 
 ##
 # Function that lists access logs for every website separately
-# including POST/GET requests and IP logs. 
+# including POST/GET requests and IP logs.
 ##
 function access_and_ip_logs() {
 for i in $(cat '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}'); do
                 domains=${i};
-                username="$(grep ${domains} /etc/userdomains | awk -F": " '{print $2 }' | tail -1)";
-		echo  $(ColorGreen "#####################");
-                echo $(ColorGreen "GET/POST requests for $domains :");
-		grep -r $domains /usr/local/apache/domlogs/* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head -20
-                echo $(ColorGreen "IP hits for $domains :");
-                #cat /home/$username/access-logs/$domains* 2>/dev/null | awk '{print $1}' | sort | uniq -c | sort -rn | head
-		#grep $domains /home/$username/access-logs/* 2>/dev/null | awk '{print $1}' | sort | uniq -c | sort -rn | head
-		grep -r $domains /usr/local/apache/domlogs/* 2>/dev/null | awk -F":" '{print $2}' | awk -F"-" '{print $1}' |sort | uniq -c | sort -rn | head -20
-		echo $(ColorGreen "#####################");
+                   username="$(grep ${domains} /etc/userdomains | awk -F": " '{print $2 }' | tail -1)";
+                   echo  $(ColorGreen "#####################");
+                   echo $(ColorGreen "GET/POST requests for $domains :");
+                   grep -r $domains /usr/local/apache/domlogs/* 2>/dev/null | awk '{print $6 " " $7}' | sort | uniq -c | sort -rn | head -20
+                   echo $(ColorGreen "IP hits for $domains :");
+                if [[ $enablegeoipcheck == 1 ]] ; then
+                        oIFS="$IFS"
+                        IFS=$'\n'
+                        for ips in $(grep -r $domains /usr/local/apache/domlogs/* 2>/dev/null | awk -F":" '{print $2}' | awk -F"-" '{print $1}' |sort | uniq -c | sort -rn | head -20); do
+                                   IFS=' '
+                                   array=($ips)
+                                   hits="${array[0]}"
+                                   ip="${array[1]}"
+                                location=$(curl ${geoipdomain}?ip=$ip 2>/dev/null)
+                                echo $hits - $ip - $location
+                        done
+                        IFS="$oIFS"
+                else
+                        grep -r $domains /usr/local/apache/domlogs/* 2>/dev/null | awk -F":" '{print $2}' | awk -F"-" '{print $1}' |sort | uniq -c | sort -rn | head -20
+                   fi
+                echo $(ColorGreen "#####################");
         done
 MenuAcess
 }
@@ -3500,15 +3512,15 @@ executionTime=`date +%Y-%m-%d:%H:%M:%S`
 
             	ColorGreen "        "
 echo -ne "
-Choose the information you need regardin Access Logs
+Choose the information you need regarding Access Logs
 
 $(ColorGreen '1)') GET/POST requests for a specific website
 $(ColorGreen '2)') GET/POST requests from particualr IP for a specific website
-$(ColorGreen '3)') GET/POST requests + IP addresses for every website on the server
+$(ColorGreen '3)') GET/POST requests + IP addresses + IP location for every website on the server (Do not use on shared!)
 $(ColorGreen '4)') GET/POST requests for every website on the server
 $(ColorGreen '5)') List all of the Apache errors for a specific domain
 $(ColorGreen '6)') List all of the Apache errors for a specific cPanel username
-$(ColorGreen '7)') Check what caused spike for a website (30 day log!)
+$(ColorGreen '7)') Check what caused spike for a website (30 day log! - might not work if log archive is not enabled)
 $(ColorGreen '8)') Check what caused spike for a website - Current log (Today)
 $(ColorGreen '0)') Back to Main Menu
 
