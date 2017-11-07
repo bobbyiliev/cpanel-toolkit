@@ -28,14 +28,15 @@ red='\e[31m'
 executionTime=`date +%Y-%m-%d:%H:%M:%S`
 server=$(hostname)
 location=$(pwd)
-reportDomain='http://ckit.bobbyiliev.com/datalog.php'
+#reportDomain='http://ckit.bobbyiliev.com/datalog.php'
+reportDomain='https://ckit.tech/datalog.php'
 
 #######
 ## GeoIP domain
 #######
 enablegeoipcheck=1
 
-geoipdomain="http://ckit.tech/ip.php"
+geoipdomain="https://ckit.tech/ip.php"
 
 ##################################################################
 ### If you would like to disable logging just change this to 0 ###
@@ -3571,13 +3572,13 @@ $(ColorGreen '0)') Exit
 $(ColorBlue 'Choose an option:') "
                 read a
                 case $a in
-                1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudQuickInstallMenu\&Server=$server\&Path=$location ; fi ; CloudQuickInstallMenu;;
-		2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=PHPchangesMenu\&Server=$server\&Path=$location ; fi ; ChangePHPVersion;;
-                3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsExtensionEnabled\&Server=$server\&Path=$location ; fi ; is_extensionCloud;;
-                4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsFunctionnEnabled\&Server=$server\&Path=$location ; fi ; is_functionCloud;;
-		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=RandomPass\&Server=$server\&Path=$location ; fi ; randompass_cloud;;
-		6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IonCubeInstaller\&Server=$server\&Path=$location ; fi ; install_ioncube_php70;;
-		7) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=FixWordPressWebsites\&Server=$server\&Path=$location ; fi ; FixWordpressWebsite;;
+                1) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudQuickInstallMenu\&Server=$server\&Path=$location ; fi ; CloudQuickInstallMenu;;
+		2) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=PHPchangesMenu\&Server=$server\&Path=$location ; fi ; ChangePHPVersion;;
+                3) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsExtensionEnabled\&Server=$server\&Path=$location ; fi ; is_extensionCloud;;
+                4) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsFunctionnEnabled\&Server=$server\&Path=$location ; fi ; is_functionCloud;;
+		5) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=RandomPass\&Server=$server\&Path=$location ; fi ; randompass_cloud;;
+		6) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IonCubeInstaller\&Server=$server\&Path=$location ; fi ; install_ioncube_php70;;
+		7) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=FixWordPressWebsites\&Server=$server\&Path=$location ; fi ; FixWordpressWebsite;;
 		0) Exitmenu;;
                 *) echo -e $red"Wrong command."$clear; CloudMenu;;
         esac
@@ -3610,12 +3611,12 @@ $(ColorGreen '0)') Back to the Cloud Main Menu
 $(ColorBlue 'Choose an option:') "
                 read a
                 case $a in
-                1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=InstallwpCLI\&Server=$server\&Path=$location ; fi ; wp_cli_cloud_install;;
-                2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=InstallComposer\&Server=$server\&Path=$location ; fi ; composer_cloud_install;;
-                3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=InstallLaravel\&Server=$server\&Path=$location ; fi ; laravel_cloud_installer;;
-                4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=InstallMagento2OnTheCloud\&Server=$server\&Path=$location ; fi ; mage2_install_cloud;;
-		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=InstallWordpressOnCloud\&Server=$server\&Path=$location ; fi ; wp_install_cloud;;
-		0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; CloudMenu;;
+                1) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=InstallwpCLI\&Server=$server\&Path=$location ; fi ; wp_cli_cloud_install;;
+                2) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=InstallComposer\&Server=$server\&Path=$location ; fi ; composer_cloud_install;;
+                3) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=InstallLaravel\&Server=$server\&Path=$location ; fi ; laravel_cloud_installer;;
+                4) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=InstallMagento2OnTheCloud\&Server=$server\&Path=$location ; fi ; mage2_install_cloud;;
+		5) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=InstallWordpressOnCloud\&Server=$server\&Path=$location ; fi ; wp_install_cloud;;
+		0) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; CloudMenu;;
 		*) echo -e $red"Wrong command."$clear; CloudQuickInstallMenu;;
         esac
 fi
@@ -3649,15 +3650,15 @@ $(ColorGreen '0)') Back To Main Menu.
 $(ColorBlue 'Choose an option:') "
                 read a
                 case $a in
-                1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ChangePHPVersionTo5.3\&Server=$server\&Path=$location ; fi ; changePHPTo5.3;;
-               	2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ChangePHPVersionTo5.4\&Server=$server\&Path=$location ; fi ; changePHPTo5.4;;
-                3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ChangePHPVersionTo5.5\&Server=$server\&Path=$location ; fi ; changePHPTo5.5;;
-               	4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ChangePHPVersionTo5.6\&Server=$server\&Path=$location ; fi ; changePHPTo5.6;;
-                5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ChangePHPVersionTo7\&Server=$server\&Path=$location ; fi ; changePHPTo7;;
-            	6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ChangePHPVersionTo7.1\&Server=$server\&Path=$location ; fi ; changePHPTo71;;
-		7) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Deploy_optimized_PHP_ini\&Server=$server\&Path=$location ; fi ; DeployPHPini;;
-                8) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ChangeShellPHPVersion\&Server=$server\&Path=$location ; fi ; ChangeShellPHP;;
-               	0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; CloudMenu;;
+                1) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ChangePHPVersionTo5.3\&Server=$server\&Path=$location ; fi ; changePHPTo5.3;;
+               	2) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ChangePHPVersionTo5.4\&Server=$server\&Path=$location ; fi ; changePHPTo5.4;;
+                3) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ChangePHPVersionTo5.5\&Server=$server\&Path=$location ; fi ; changePHPTo5.5;;
+               	4) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ChangePHPVersionTo5.6\&Server=$server\&Path=$location ; fi ; changePHPTo5.6;;
+                5) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ChangePHPVersionTo7\&Server=$server\&Path=$location ; fi ; changePHPTo7;;
+            	6) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ChangePHPVersionTo7.1\&Server=$server\&Path=$location ; fi ; changePHPTo71;;
+		7) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Deploy_optimized_PHP_ini\&Server=$server\&Path=$location ; fi ; DeployPHPini;;
+                8) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ChangeShellPHPVersion\&Server=$server\&Path=$location ; fi ; ChangeShellPHP;;
+               	0) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; CloudMenu;;
                 *) echo -e $red"Wrong command."$clear; ChangePHPVersion;;
         esac
 fi
