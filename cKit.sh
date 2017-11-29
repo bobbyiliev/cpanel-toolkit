@@ -109,6 +109,7 @@ for i in $(cat '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}'); do
                                    ip="${array[1]}"
                                 location=$(curl ${geoipdomain}?ip=$ip 2>/dev/null)
                                 echo $hits - $ip - $location
+				unset location
                         done
                         IFS="$oIFS"
                 else
