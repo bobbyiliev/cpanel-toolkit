@@ -3626,7 +3626,7 @@ $(ColorGreen '3)') Check if a PHP extension is enabled on the server.
 $(ColorGreen '4)') Check if a PHP function is enabled on the server.
 $(ColorGreen '5)') Generate random password
 $(ColorGreen '6)') Install Ioncube for a website using PHP 7
-$(ColorGreen '7)') Fix Wordpress Websites - Still a BETA - Please use only as a last resort
+#$(ColorGreen '7)') Fix Wordpress Websites - Still a BETA - Please use only as a last resort
 $(ColorGreen '0)') Exit
 
 $(ColorBlue 'Choose an option:') "
@@ -3638,7 +3638,7 @@ $(ColorBlue 'Choose an option:') "
                 4) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsFunctionnEnabled\&Server=$server\&Path=$location ; fi ; is_functionCloud;;
 		5) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=RandomPass\&Server=$server\&Path=$location ; fi ; randompass_cloud;;
 		6) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IonCubeInstaller\&Server=$server\&Path=$location ; fi ; install_ioncube_php70;;
-		7) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=FixWordPressWebsites\&Server=$server\&Path=$location ; fi ; FixWordpressWebsite;;
+		#7) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=FixWordPressWebsites\&Server=$server\&Path=$location ; fi ; FixWordpressWebsite;;
 		0) Exitmenu;;
                 *) echo -e $red"Wrong command."$clear; CloudMenu;;
         esac
