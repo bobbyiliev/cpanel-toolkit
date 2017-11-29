@@ -451,11 +451,11 @@ function summarize_exim_log() {
 
 	echo ""
 	echo "Here's the top 10 senders via direct SMTP AUTH since 12AM this morning:"
-	/usr/local/bin/perl -lsne '/$today.* \[([0-9.]+)\]:.+dovecot_(?:login|plain):([^\s]+).* for (.*)/ and $sender{$2}{r}+=scalar (split / /,$3) and $sender{$2}{i}{$1}=1; END {foreach $sender(keys %sender){printf"%05d Hosts=%03d Auth=%s\n",$sender{$sender}{r},scalar (keys %{$sender{$sender}{i}}),$sender;}}' -- -today=$(date +%F) /var/log/exim_mainlog | sort | tail -n 10
+	/usr/bin/perl -lsne '/$today.* \[([0-9.]+)\]:.+dovecot_(?:login|plain):([^\s]+).* for (.*)/ and $sender{$2}{r}+=scalar (split / /,$3) and $sender{$2}{i}{$1}=1; END {foreach $sender(keys %sender){printf"%05d Hosts=%03d Auth=%s\n",$sender{$sender}{r},scalar (keys %{$sender{$sender}{i}}),$sender;}}' -- -today=$(date +%F) /var/log/exim_mainlog | sort | tail -n 10
 
 	echo ""
 	echo "And the top 10 SMTP AUTH senders yesterday:"
-	/usr/local/bin/perl -lsne '/$today.* \[([0-9.]+)\]:.+dovecot_(?:login|plain):([^\s]+).* for (.*)/ and $sender{$2}{r}+=scalar (split / /,$3) and $sender{$2}{i}{$1}=1; END {foreach $sender(keys %sender){printf"%05d Hosts=%03d Auth=%s\n",$sender{$sender}{r},scalar (keys %{$sender{$sender}{i}}),$sender;}}' -- -today=$(date +%F --date="1 day ago") /var/log/exim_mainlog | sort | tail -n 10
+	/usr/bin/perl -lsne '/$today.* \[([0-9.]+)\]:.+dovecot_(?:login|plain):([^\s]+).* for (.*)/ and $sender{$2}{r}+=scalar (split / /,$3) and $sender{$2}{i}{$1}=1; END {foreach $sender(keys %sender){printf"%05d Hosts=%03d Auth=%s\n",$sender{$sender}{r},scalar (keys %{$sender{$sender}{i}}),$sender;}}' -- -today=$(date +%F --date="1 day ago") /var/log/exim_mainlog | sort | tail -n 10
 
 
 	echo ""
