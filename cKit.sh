@@ -3542,6 +3542,27 @@ function find_outdated_wp() {
         exit 0
 }
 
+##
+# Get a list of all joomla installations + outdated installations in /home/*
+##
+
+function joomla_installations() {
+
+	# Lastest versions
+	# https://downloads.joomla.org/api/v1/latest/cms
+	echo "Here is a list of all Joomla branch verisons and their latest versions: "
+	echo ""
+	curl -s https://downloads.joomla.org/api/v1/latest/cms | sed 's/"\},/\n/g'  | awk -F'branch\"' '{ print $2 }' | sed 's/:\"//g' | sed 's/","/ - /g' | sed 's/version"/latest version is: /g' | sed 's/"}]}//g'
+	echo ""
+	echo "Here is a list of all Joomla installations on the server:"
+	sleep 0.2
+	echo "Please be patient this might take a while depending on the size of the server.."
+	echo "If you get an empty output this means that there are no Joomla installations on the server!"
+	echo ""
+	# This function is provided by the Joomla Official Website
+	ionice -n 3 -c 3 2>/dev/null find /home ! -path "/home/virtfs/*" -type f \( -iwholename '*/libraries/joomla/version.php' -o -iwholename '*/libraries/cms/version.php' -o -iwholename '*/libraries/cms/version/version.php' \) -print -exec perl -e 'while (<>) { $release = $1 if m/RELEASE\s+= .([\d.]+).;/; $dev = $1 if m/DEV_LEVEL\s+= .(\d+).;/; } print qq(Version: $release.$dev\n --- \n);' {} \; && echo "-"
+
+}
 
 ###########################
 ###  Quick Access Menu  ###
@@ -3896,6 +3917,7 @@ $(ColorGreen '4)') Live Monitor of the CPU.
 $(ColorGreen '5)') Find files larger than 100MB in /home/
 $(ColorGreen '6)') Check the EasyApache Version
 $(ColorGreen '7)') Find Outdated WordPress installations
+$(ColorGreen '8)') Find All + Outdated Joomla installations
 $(ColorGreen '0)') Back To Main Menu.
 
 $(ColorBlue 'Choose an option:') "
@@ -3908,6 +3930,7 @@ $(ColorBlue 'Choose an option:') "
 		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=FindLargeFiles\&Server=$server\&Path=$location ; fi ; FindLargeFiles;;
 		6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=EAversion\&Server=$server\&Path=$location ; fi ; EAversion;;
                 7) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CheckOutdatedWP\&Server=$server\&Path=$location ; fi ; find_outdated_wp;;
+                8) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CheckOutdatedJoomla\&Server=$server\&Path=$location ; fi ; joomla_installations;;
 		0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; MainMenu;;
 		*) echo -e $red"Wrong command."$clear; ToolsMenu;;
         esac
