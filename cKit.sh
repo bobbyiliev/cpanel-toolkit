@@ -3557,11 +3557,16 @@ function joomla_installations() {
 	echo "Here is a list of all Joomla installations on the server:"
 	sleep 0.2
 	echo "Please be patient this might take a while depending on the size of the server.."
-	echo "If you get an empty output this means that there are no Joomla installations on the server!"
 	echo ""
 	# This function is provided by the Joomla Official Website
 	ionice -n 3 -c 3 2>/dev/null find /home ! -path "/home/virtfs/*" -type f \( -iwholename '*/libraries/joomla/version.php' -o -iwholename '*/libraries/cms/version.php' -o -iwholename '*/libraries/cms/version/version.php' \) -print -exec perl -e 'while (<>) { $release = $1 if m/RELEASE\s+= .([\d.]+).;/; $dev = $1 if m/DEV_LEVEL\s+= .(\d+).;/; } print qq(Version: $release.$dev\n --- \n);' {} \; && echo "-"
 
+	sleep 1
+	wait
+	echo "Search completed"
+        echo "If you've got an empty output this means that there are no Joomla installations on the server!"
+	wait
+	ToolsMenu
 }
 
 ###########################
