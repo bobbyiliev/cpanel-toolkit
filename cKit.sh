@@ -3652,7 +3652,6 @@ $(ColorGreen '3)') Check if a PHP extension is enabled on the server.
 $(ColorGreen '4)') Check if a PHP function is enabled on the server.
 $(ColorGreen '5)') Generate random password
 $(ColorGreen '6)') Install Ioncube for a website using PHP 7
-#$(ColorGreen '7)') Fix Wordpress Websites - Still a BETA - Please use only as a last resort
 $(ColorGreen '0)') Exit
 
 $(ColorBlue 'Choose an option:') "
