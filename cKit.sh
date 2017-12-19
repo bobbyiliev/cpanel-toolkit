@@ -43,6 +43,26 @@ geoipdomain="https://ckit.tech/ip.php"
 ##################################################################
 enablelog=1
 
+#################################################################
+### Enable Local Log                                            #
+### You would also need to add something like this to logrotate #
+### /var/log/ckit.log {                                         #
+###        weekly                                               #
+###        rotate 4                                             #
+###        compress                                             #
+### }                                                           #
+#################################################################
+locallog=0
+
+function local_log() {
+	log_location='/var/log/ckit.log'
+       	echo "Date: $executionTime - User: $paruser - Server: $server - Path: $location - Executed: $local_command" >> ${log_location}
+}
+
+# Example of locallog usage
+# First we check if locallog is enablbed - then we set the loca_command to the current command - then we call the local_log function and then we unset the local_command var.
+# 1) if [[ $locallog == 1 ]] ; then $local_command='MenuAcess'; local_log ; unset local_command ; fi ; MenuAcess;;
+
 ###########################################################
 ### Enable Auto-Delete                                  ###
 ### If this option is enabled the cKit.sh file will be  ###
