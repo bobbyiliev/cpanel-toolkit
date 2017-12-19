@@ -52,16 +52,16 @@ enablelog=1
 ###        compress                                             #
 ### }                                                           #
 #################################################################
-locallog=0
+locallog=1
 
 function local_log() {
 	log_location='/var/log/ckit.log'
-       	echo "Date: $executionTime - User: $paruser - Server: $server - Path: $location - Executed: $local_command" >> ${log_location}
+       	echo "$executionTime - User: $paruser - Server: $server - Path: $location - Executed: $local_command" >> ${log_location}
 }
 
 # Example of locallog usage
 # First we check if locallog is enablbed - then we set the loca_command to the current command - then we call the local_log function and then we unset the local_command var.
-# 1) if [[ $locallog == 1 ]] ; then $local_command='MenuAcess'; local_log ; unset local_command ; fi ; MenuAcess;;
+# 1) if [[ $locallog == 1 ]] ; then local_command='MenuAcess'; local_log ; unset local_command ; fi ; MenuAcess;;
 
 ###########################################################
 ### Enable Auto-Delete                                  ###
@@ -4030,6 +4030,8 @@ $(ColorBlue 'Choose an option:') "
                 1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MenuAccess\&Server=$server\&Path=$location ; fi ; MenuAcess;;
 		2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=EmailsMenu\&Server=$server\&Path=$location ; fi ; EmailsMenu;;
 		3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MySQLMenu\&Server=$server\&Path=$location ; fi ; MySQLMenu;;
+		# local log dev
+		#3) if [[ $locallog == 1 ]] ; then local_command='MySQLMenu'; local_log ; unset local_command ; fi ; MySQLMenu;;
 		4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=WebTrafficMenu\&Server=$server\&Path=$location ; fi ; DDoSMenu;;
 		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=HandyToolsMenu\&Server=$server\&Path=$location ; fi ; ToolsMenu;;
 #		6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; CloudMenu;;
