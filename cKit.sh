@@ -3611,11 +3611,11 @@ Choose the information you need regarding Access Logs
 $(ColorGreen '1)') GET/POST requests for a specific website
 $(ColorGreen '2)') GET/POST requests from particualr IP for a specific website
 $(ColorGreen '3)') GET/POST requests + IP addresses + IP location for every website on the server (Do not use on shared!)
-$(ColorGreen '4)') GET/POST requests for every website on the server
-$(ColorGreen '5)') List all of the Apache errors for a specific domain
-$(ColorGreen '6)') List all of the Apache errors for a specific cPanel username
-$(ColorGreen '7)') Check what caused spike for a website (30 day log! - might not work if log archive is not enabled)
-$(ColorGreen '8)') Check what caused spike for a website - Current log (Today)
+#$(ColorGreen '4)') GET/POST requests for every website on the server
+#$(ColorGreen '5)') List all of the Apache errors for a specific domain
+#$(ColorGreen '6)') List all of the Apache errors for a specific cPanel username
+$(ColorGreen '4)') Check what caused spike for a website (30 day log! - might not work if log archive is not enabled)
+$(ColorGreen '5)') Check what caused spike for a website - Current log (Today)
 $(ColorGreen '0)') Back to Main Menu
 
 $(ColorBlue 'Choose an option:') "
@@ -3624,11 +3624,11 @@ $(ColorBlue 'Choose an option:') "
 		1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=AccessLogsForDomain\&Server=$server\&Path=$location ; fi ; MenuAcessDomain;;
 		2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=AccessLogsFromSpecificIPForDomain\&Server=$server\&Path=$location ; fi ; MenuAcessSpecificIPForDomain;;
                 3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=AccessAndIPLogs\&Server=$server\&Path=$location ; fi ; access_and_ip_logs;;
-                4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=OnlyAccessLogs\&Server=$server\&Path=$location ; fi ; OnlyAccessLogs;;
-		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ApacheErrorsWebSite\&Server=$server\&Path=$location ; fi ; domainhttpderrors;;
-		6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ApacheErrorsUsername\&Server=$server\&Path=$location ; fi ; userhttpderrors;;
-                7) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CheckSpike\&Server=$server\&Path=$location ; fi ; check_spike_date;;
-		8) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CheckCurrentSpike\&Server=$server\&Path=$location ; fi ; check_spike_current;;
+                #4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=OnlyAccessLogs\&Server=$server\&Path=$location ; fi ; OnlyAccessLogs;;
+		#5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ApacheErrorsWebSite\&Server=$server\&Path=$location ; fi ; domainhttpderrors;;
+		#6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ApacheErrorsUsername\&Server=$server\&Path=$location ; fi ; userhttpderrors;;
+                4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CheckSpike\&Server=$server\&Path=$location ; fi ; check_spike_date;;
+		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CheckCurrentSpike\&Server=$server\&Path=$location ; fi ; check_spike_current;;
 		0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; MainMenu;;
 		*) echo -e $red"Wrong command."$clear; MenuAcess;;
         esac
@@ -3814,12 +3814,12 @@ Choose the information you need regarding Email Logs
 $(ColorGreen '1)') Receive a sorted list of all the email senders in the exim mail queue.
 $(ColorGreen '2)') Display the directories from which the emails are being sent.
 $(ColorGreen '3)') Check for emails sent via php script.
-$(ColorGreen '4)') Display the users which were sending out emails within their directories.
-$(ColorGreen '5)') List the IPs which were sending emails via port 25.
-$(ColorGreen '6)') List users spamming as "nobody".
-$(ColorGreen '7)') The above option is valid only if the spamming is currently in progress If not use this otpion..
-$(ColorGreen '8)') Summary of the mails in the mail queue.
-$(ColorGreen '9)') Summary of the whole exim log - Very Useful!!!
+#$(ColorGreen '4)') Display the users which were sending out emails within their directories.
+#$(ColorGreen '5)') List the IPs which were sending emails via port 25.
+#$(ColorGreen '6)') List users spamming as "nobody".
+#$(ColorGreen '7)') The above option is valid only if the spamming is currently in progress If not use this otpion..
+$(ColorGreen '4)') Summary of the mails in the mail queue.
+$(ColorGreen '5)') Summary of the whole exim log - Very Useful!!!
 $(ColorGreen '0)') Back to Main Menu.
 
 $(ColorBlue 'Choose an option:') "
@@ -3828,12 +3828,12 @@ $(ColorBlue 'Choose an option:') "
                 1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim1ListofAllEmailSenders\&Server=$server\&Path=$location ; fi ; showexim ;;
                 2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim2EximSpamDirs\&Server=$server\&Path=$location ; fi ; originate;;
                 3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim3EximPHPSpam\&Server=$server\&Path=$location ; fi ; originate2;;
-                4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim4EximUsersSpam\&Server=$server\&Path=$location ; fi ; whichphpscript;;
-                5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim5IPsOnPort25\&Server=$server\&Path=$location ; fi ; getnetstat;;
-                6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim6NobodySpam\&Server=$server\&Path=$location ; fi ; nobodyspam;;
-                7) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim7SpamInProgress\&Server=$server\&Path=$location ; fi ; nobodyspamafter;;
-                8) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim8MailQueue\&Server=$server\&Path=$location ; fi ; showeximsum;;
-                9) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=SummaryEximLog\&Server=$server\&Path=$location ; fi ; summarize_exim_log;;
+                #4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim4EximUsersSpam\&Server=$server\&Path=$location ; fi ; whichphpscript;;
+                #5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim5IPsOnPort25\&Server=$server\&Path=$location ; fi ; getnetstat;;
+                #6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim6NobodySpam\&Server=$server\&Path=$location ; fi ; nobodyspam;;
+                #7) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim7SpamInProgress\&Server=$server\&Path=$location ; fi ; nobodyspamafter;;
+                4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim8MailQueue\&Server=$server\&Path=$location ; fi ; showeximsum;;
+                5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=SummaryEximLog\&Server=$server\&Path=$location ; fi ; summarize_exim_log;;
                 0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; MainMenu;;
 		*) echo -e $red"Wrong command."$clear; EmailsMenu;;
         esac
