@@ -31,26 +31,33 @@ location=$(pwd)
 #reportDomain='http://ckit.bobbyiliev.com/datalog.php'
 reportDomain='https://ckit.tech/datalog.php'
 
-#######
-## GeoIP domain
-#######
+##########################################################################
+## GeoIP domain                                                          ##
+## Uses our own GEO location API script to get the country code of an IP ##
+## The connection goes though HTTPS                                      ##
+## To disable the GEO location check set the value to 0                  ##
+###########################################################################
 enablegeoipcheck=1
 
 geoipdomain="https://ckit.tech/ip.php"
 
 ##################################################################
 ### If you would like to disable logging just change this to 0 ###
+### This is part of our custom logging system                  ###
+### The System provides us with a lot of useful statistics     ###
 ##################################################################
 enablelog=1
 
 #################################################################
-### Enable Local Log                                            #
+### This enables local log on the server itself                 #
 ### You would also need to add something like this to logrotate #
 ### /var/log/ckit.log {                                         #
 ###        weekly                                               #
 ###        rotate 4                                             #
 ###        compress                                             #
 ### }                                                           #
+###                                                             #
+### To disable the local log set the value to 0                 #
 #################################################################
 locallog=0
 
@@ -98,6 +105,7 @@ ColorOrange(){
 
 ##
 # Checks on which System you are on and opens the relevant menu.
+# The script is mainly designed to work on the Cloud and on cPanel systems
 ##
 function CheckWhichSystem(){
 	if [[  $(pwd | grep '/var/sites/') ]]; then
@@ -109,7 +117,11 @@ function CheckWhichSystem(){
 
 ##
 # Function that lists access logs for every cPanel user separately
-# including POST/GET requests and IP logs.
+# This includes:
+# - POST requests
+# - GET requests
+# - IP logs and their geo location
+# First the function loops through all cPanel users and then summarizes their access logs
 ##
 function access_logs_per_account() {
         for cpanel_account in $(ls -lhSr /usr/local/apache/domlogs/ | grep ^d | awk '{ print $9 }'); do 
@@ -175,7 +187,6 @@ tail -n 1000 /usr/local/apache/domlogs/${cpanel_account}/* 2>/dev/null | grep -v
 		else
 			echo ""
 	                echo $(ColorGreen "No entires for $cpanel_account");
-			
 			sleep 1
 		fi
                 echo $(ColorRed "########## END log for $cpanel_account  ###########");
