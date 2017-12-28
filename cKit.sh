@@ -180,7 +180,7 @@ tail -n 1000 /usr/local/apache/domlogs/${cpanel_account}/* 2>/dev/null | grep -v
 		fi
                 echo $(ColorRed "########## END log for $cpanel_account  ###########");
         done
-	MenuAccess
+	MenuAcess
 }
 
 ##
