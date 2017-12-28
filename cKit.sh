@@ -108,6 +108,82 @@ function CheckWhichSystem(){
 }
 
 ##
+# Function that lists access logs for every cPanel user separately
+# including POST/GET requests and IP logs.
+##
+function access_logs_per_account() {
+        for cpanel_account in $(ls -lhSr /usr/local/apache/domlogs/ | grep ^d | awk '{ print $9 }'); do 
+                echo $(ColorOrange "Current log for $cpanel_account cPanel account:")
+                echo ""
+		if [[ $(cat /usr/local/apache/domlogs/${cpanel_account}/* 2>/dev/null | grep -v 'ftp.' | grep GET | cut -d\" -f2 | awk '{print $1 " " $2}' | wc -l) -gt 0 ]]; then
+	                echo $(ColorGreen "Top 20 GET requests for $cpanel_account: ")
+			sleep 1
+cat /usr/local/apache/domlogs/${cpanel_account}/* 2>/dev/null | grep -v 'ftp.' | grep GET | cut -d\" -f2 | awk '{print $1 " " $2}' | cut -d? -f1 | sort | uniq -c | sort -n | sed 's/[ ]*//' | tail -20
+			sleep 1
+			echo ""
+			echo $(ColorGreen "Most Recent top 20 GET requests for $cpanel_account: ")
+			sleep 1
+tail -n 1000 /usr/local/apache/domlogs/${cpanel_account}/* 2>/dev/null | grep -v 'ftp.' | grep GET | cut -d\" -f2 | awk '{print $1 " " $2}' | cut -d? -f1 | sort | uniq -c | sort -n | sed 's/[ ]*//' | tail -20
+			sleep 1
+                	echo ""
+	                echo $(ColorGreen "Top 20 POST requests for $cpanel_account: ")
+			sleep 1
+cat /usr/local/apache/domlogs/${cpanel_account}/* 2>/dev/null | grep -v 'ftp.' | grep POST | cut -d\" -f2 | awk '{print $1 " " $2}' | cut -d? -f1 | sort | uniq -c | sort -n | sed 's/[ ]*//' | tail -20
+			sleep 1
+	                echo ""
+        		echo $(ColorGreen "Most Recent top 20 POST requests for $cpanel_account: ")
+			sleep 1
+tail -n 1000 /usr/local/apache/domlogs/${cpanel_account}/* 2>/dev/null | grep -v 'ftp.' | grep POST | cut -d\" -f2 | awk '{print $1 " " $2}' | cut -d? -f1 | sort | uniq -c | sort -n | sed 's/[ ]*//' | tail -20
+			sleep 1
+			echo ""
+		        echo $(ColorGreen "Top 20 IP addresses: ")
+			sleep 1
+        	        if [[ $enablegeoipcheck == 1 ]] ; then
+                	        oIFS="$IFS"
+                        	IFS=$'\n'
+	                        for ips in $(cat /usr/local/apache/domlogs/${cpanel_account}/* 2>/dev/null | awk  '{print $1}' |sort | uniq -c | sort -rn | head -20); do
+        	                           IFS=' '
+                	                   array=($ips)
+                        	           hits="${array[0]}"
+                                	   ip="${array[1]}"
+	                                location=$(curl ${geoipdomain}?ip=$ip 2>/dev/null)
+        	                        echo $hits - $ip - $location
+                	                unset location
+                        	done
+	                        IFS="$oIFS"
+        	        else
+                	        cat /usr/local/apache/domlogs/${cpanel_account}/* 2>/dev/null | awk '{print $1}' |sort | uniq -c | sort -rn | head -20
+	                fi
+			echo ""
+		        echo $(ColorGreen "Most Recent top 20 IP addresses: ")
+			if [[ $enablegeoipcheck == 1 ]] ; then
+        	                oIFS="$IFS"
+	                        IFS=$'\n'
+        	                for ips in $(tail -n 1000 /usr/local/apache/domlogs/${cpanel_account}/* 2>/dev/null | awk  '{print $1}' |sort | uniq -c | sort -rn | head -20); do
+                	                   IFS=' '
+                        	           array=($ips)
+                                	   hits="${array[0]}"
+	                                   ip="${array[1]}"
+        	                        location=$(curl ${geoipdomain}?ip=$ip 2>/dev/null)
+                	                echo $hits - $ip - $location
+                        	        unset location
+	                        done
+        	                IFS="$oIFS"
+                	else
+	                       	tail -n 1000 /usr/local/apache/domlogs/${cpanel_account}/* 2>/dev/null | awk '{print $1}' |sort | uniq -c | sort -rn | head -20
+        	        fi
+		else
+			echo ""
+	                echo $(ColorGreen "No entires for $cpanel_account");
+			
+			sleep 1
+		fi
+                echo $(ColorRed "########## END log for $cpanel_account  ###########");
+        done
+	MenuAccess
+}
+
+##
 # Function that lists access logs for every website separately
 # including POST/GET requests and IP logs.
 ##
@@ -3611,7 +3687,7 @@ executionTime=`date +%Y-%m-%d:%H:%M:%S`
 echo -ne "
 Choose the information you need regarding Access Logs
 
-$(ColorGreen '1)') GET/POST requests for a specific website
+$(ColorGreen '1)') GET/POST + IP addresses requests for all cPanel users
 $(ColorGreen '2)') GET/POST requests from particualr IP for a specific website
 $(ColorGreen '3)') GET/POST requests + IP addresses + IP location for every website on the server (Do not use on shared!)
 $(ColorGreen '4)') Check what caused spike for a website (30 day log! - might not work if log archive is not enabled)
@@ -3621,7 +3697,7 @@ $(ColorGreen '0)') Back to Main Menu
 $(ColorBlue 'Choose an option:') "
                 read a
                 case $a in
-		1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=AccessLogsForDomain\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='AccessLogsForDomain'; local_log ; unset local_command ; fi ; MenuAcessDomain;;
+		1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=LogsForAllcPanelUsers\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='access_logs_per_account'; local_log ; unset local_command ; fi ; access_logs_per_account;;
 		2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=AccessLogsFromSpecificIPForDomain\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='AccessLogsFromSpecificIPForDomain'; local_log ; unset local_command ; fi ; MenuAcessSpecificIPForDomain;;
                 3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=AccessAndIPLogs\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='AccessAndIPLogs'; local_log ; unset local_command ; fi ; access_and_ip_logs;;
                 #4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=OnlyAccessLogs\&Server=$server\&Path=$location ; fi ; OnlyAccessLogs;;
