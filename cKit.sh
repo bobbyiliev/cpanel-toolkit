@@ -158,8 +158,10 @@ tail -n 1000 /usr/local/apache/domlogs/${cpanel_account}/* 2>/dev/null | grep -v
                 	                   array=($ips)
                         	           hits="${array[0]}"
                                 	   ip="${array[1]}"
-	                                location=$(curl ${geoipdomain}?ip=$ip 2>/dev/null)
-        	                        echo $hits - $ip - $location
+					if [[ $ip =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
+		                                location=$(curl ${geoipdomain}?ip=$ip 2>/dev/null)
+	        	                        echo $hits - $ip - $location
+					fi
                 	                unset location
                         	done
 	                        IFS="$oIFS"
@@ -176,8 +178,10 @@ tail -n 1000 /usr/local/apache/domlogs/${cpanel_account}/* 2>/dev/null | grep -v
                         	           array=($ips)
                                 	   hits="${array[0]}"
 	                                   ip="${array[1]}"
-        	                        location=$(curl ${geoipdomain}?ip=$ip 2>/dev/null)
-                	                echo $hits - $ip - $location
+					if [[ $ip =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
+        		                        location=$(curl ${geoipdomain}?ip=$ip 2>/dev/null)
+	                	                echo $hits - $ip - $location
+					fi
                         	        unset location
 	                        done
         	                IFS="$oIFS"
@@ -217,8 +221,10 @@ for i in $(cat '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}'); do
                                    array=($ips)
                                    hits="${array[0]}"
                                    ip="${array[1]}"
-                                location=$(curl ${geoipdomain}?ip=$ip 2>/dev/null)
-                                echo $hits - $ip - $location
+				if [[ $ip =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
+	                                location=$(curl ${geoipdomain}?ip=$ip 2>/dev/null)
+        	                        echo $hits - $ip - $location
+				fi
 				unset location
                         done
                         IFS="$oIFS"
@@ -428,8 +434,8 @@ if [ ! -z $domain ] ; then
                 for spike in ${ipaccessed}; do
 			if [[ $enablegeoipcheck == 1 ]] ; then
 	                        country=$(curl ${geoipdomain}?ip=${spike} 2>/dev/null)
-        	                finalresult=$(grep $spike $tmpfile)
-                	        echo "$finalresult - $country"
+       		                finalresult=$(grep $spike $tmpfile)
+				echo "$finalresult - $country"
 			fi
                 done
                        	if ! [[ $enablegeoipcheck == 1 ]] ; then
