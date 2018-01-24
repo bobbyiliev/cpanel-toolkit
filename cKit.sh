@@ -1,7 +1,5 @@
 #!/bin/bash
 
-## STILL IN DEVELOPMENT !!! ###
-
 ######################################################################
 # Date: July 25th 2017                                               #
 # Authors:                                                           #
@@ -12,7 +10,7 @@
 # <bobby@paragon.net.uk>                                             #
 # <alex@paragon.net.uk>                                              #
 # <kalin.dimitrov@paragon.net.uk>                                    #
-# __revision='1.0'                                                   #
+# __revision='2.0'                                                   #
 # Simple cPanel Terminal ToolKit that would help you manage and      #
 # troubleshoot issues with your server easily via SSH                #
 ######################################################################
