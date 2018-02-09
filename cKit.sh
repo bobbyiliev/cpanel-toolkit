@@ -881,7 +881,21 @@ Exitmenu(){
 # You can easy it in case of severe traffic going to the server
 ##
 function ActiveConn(){
-	netstat -anp |grep 'tcp\|udp' | awk '{print $5}' | cut -d: -f1 | sort | uniq -c | sort -n
+	#netstat -anp |grep 'tcp\|udp' | awk '{print $5}' | cut -d: -f1 | sort | uniq -c | sort -n
+    oIFS="$IFS"
+    IFS=$'\n'
+    for ips in $(netstat -anp |grep 'tcp\|udp' | awk '{print $5}' | cut -d: -f1 | sort | uniq -c | sort -n | tail -50); do
+               IFS=' '
+               array=($ips)
+               hits="${array[0]}"
+               ip="${array[1]}"
+            if [[ $ip =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
+                    location=$(curl ${geoipdomain}?ip=$ip 2>/dev/null)
+                    echo $hits - $ip - $location
+            fi
+            unset location
+    done
+    IFS="$oIFS"
 DDoSMenu
 }
 
