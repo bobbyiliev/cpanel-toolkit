@@ -879,6 +879,7 @@ Exitmenu(){
 ##
 # Function that lists the Ips which are connected to server and how many connections exist from each IP
 # You can easy it in case of severe traffic going to the server
+# Updated - now you get the geo location of each IP
 ##
 function ActiveConn(){
 	#netstat -anp |grep 'tcp\|udp' | awk '{print $5}' | cut -d: -f1 | sort | uniq -c | sort -n
