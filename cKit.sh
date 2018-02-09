@@ -1024,12 +1024,62 @@ function EAversion(){
 
 ea_version=$(/usr/local/cpanel/bin/rebuild_phpconf --current | grep ea | head -1 | awk '{ print $1}')
 if [ -z $ea_version ]; then
-        echo "You are runnning EasyApache 3"
+        echo "You are NOT runnning EasyApache 4"
 else
         echo "You are running EasyApache 4"
 fi
 ToolsMenu
 }
+
+###
+# Function that checks some basic server info and provides a nice summary
+###
+function ServerStatus() {
+	#Getting some values
+	total_conn=$(netstat -plant | grep ':80\|:443' | wc -l)
+        equeue=$(exim -bpc)
+	#Get MySQL connections value
+	allowed=$(mysql -e 'show variables like "max_connections"' | grep 'max_conn' | awk '{print $2}')
+	current=$(mysqladmin proc | grep -v Id | grep -v '\-\-\-' | wc | awk '{ print $1}')
+	percent=$(awk "BEGIN { pc=100*${current}/${allowed}; i=int(pc); print (pc-i<0.5)?i:i+1 }")
+	alright=65;
+        ea_version=$(/usr/local/cpanel/bin/rebuild_phpconf --current | grep ea | head -1 | awk '{ print $1}')
+
+	echo '------------------------------------------------------------------------------------'
+	echo '| '$(ColorGreen '### Some Useful Information ###' )
+	echo '| '
+	echo '| '"The server is using about $(ColorGreen "$(grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage "%"}')" ) of its CPU  Power"
+	echo '| '
+	echo '| '"Total of $(ColorGreen "$(free -mh | grep Mem | awk '{ print $2 }') ") RAM installed"
+	echo '| '
+	echo '| '"Total of $(ColorGreen "$(lscpu | grep -v 'node' | grep 'CPU(s):' | awk '{ print $2 }')") CPU(s)"
+	echo '| '
+	echo '| '"OS: $(cat /etc/redhat-release)"
+	echo '| '
+	echo '| '"If CentOS is under version 6, EasyApache 4 and Let's Encrypt can NOT be installed"
+	echo '| '
+        if [ -z $ea_version ]; then
+                echo '| 'You are NOT runnning EasyApache $(ColorGreen "4" )
+        else
+            	echo '| 'You are running EasyApache $(ColorGreen "4" )
+        fi
+	echo '| '
+	echo '| 'Messages in Exim queue: $(ColorGreen ${equeue} )
+        echo '| '
+        echo '| 'Total connections on port 80 and 443: $(ColorGreen ${total_conn} )
+        echo '| '
+	echo '| 'You are using $(ColorGreen ${current} ) of the allowed $allowed MySQL connections
+        echo '| '
+        if [ "$percent" -lt "$alright" ]; then
+                echo '| '"It is OK, you are using only ${percent}% of the allowed MySQL connections";
+        elif [[ ${percent} -gt 65 ]] && [[ ${percent} -lt 85 ]] ; then
+                echo '| '"Be careful! You are using ${percent} of the allowed MySQL connections";
+        elif [[ $percent -gt 90 ]]; then
+                echo '| '"Attention! Check with your friendly SysOps! The server is using more than ${percent} of the allowed MySQL connections";
+        fi
+	echo '------------------------------------------------------------------------------------'
+}
+
 #############################
 ### Cloud Functoions Only ###
 #############################
@@ -4032,6 +4082,7 @@ MainMenu
 else
 ExecutionTime=`date +%Y-%m-%d:%H:%M:%S`
                 ColorGreen "        "
+ServerStatus 2>/dev/null
 echo -ne "
 
 Cool Tools
@@ -4116,6 +4167,8 @@ while [ -z $paruser ] ; do
 	fi
 done
                 ColorGreen "        "
+
+ServerStatus 2>/dev/null
 echo -ne "
 Main Menu
 
@@ -4136,8 +4189,8 @@ $(ColorBlue 'Choose an option:') "
 		#3) if [[ $locallog == 1 ]] ; then local_command='MySQLMenu'; local_log ; unset local_command ; fi ; MySQLMenu;;
 		4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=WebTrafficMenu\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='WebTrafficMenu'; local_log ; unset local_command ; fi ; DDoSMenu;;
 		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=HandyToolsMenu\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='ToolsMenu'; local_log ; unset local_command ; fi ; ToolsMenu;;
-#		6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='CloudMenu'; local_log ; unset local_command ; fi ; CloudMenu;;
-		admins) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=SysAdminsMenu\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='SysAdminsMenu'; local_log ; unset local_command ; fi ; SysAdminsMenu;;
+		#9) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ServerStatus\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='ServerStatus'; local_log ; unset local_command ; fi ; ServerStatus 2>/dev/null;;
+		admins) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=SysAdminsMenu\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='SysAdminsMenu'; local_log ; unset local_command ; fi ; SysAdminsMenu ;;
 		0) Exitmenu;;
 		*) echo -e $red"Wrong command."$clear; WrongCommand;;
         esac
