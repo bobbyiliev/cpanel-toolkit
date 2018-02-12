@@ -882,10 +882,9 @@ Exitmenu(){
 # Updated - now you get the geo location of each IP
 ##
 function ActiveConn(){
-	#netstat -anp |grep 'tcp\|udp' | awk '{print $5}' | cut -d: -f1 | sort | uniq -c | sort -n
     oIFS="$IFS"
     IFS=$'\n'
-    for ips in $(netstat -anp |grep 'tcp\|udp' | awk '{print $5}' | cut -d: -f1 | sort | uniq -c | sort -n | tail -50); do
+    for ips in $(netstat -anp |grep 'tcp\|udp' | grep ':443\|:80' | grep -v 0.0.0.0 | awk '{print $5}' | cut -d: -f1 | sort | uniq -c | sort -n | tail -50); do
                IFS=' '
                array=($ips)
                hits="${array[0]}"
@@ -4125,12 +4124,12 @@ ExecutionTime=`date +%Y-%m-%d:%H:%M:%S`
 echo -ne "
 Web Traffic Menu
 
-$(ColorGreen '1)') Lists the Ips which are connected to server and how many connections exist from each IP
-$(ColorGreen '2)') Lists the users which are running the most processes at the moment - the top 5 users
-$(ColorGreen '3)') Function that lists the total process running by the users
-$(ColorGreen '4)') Function that shows the % CPU usage at the moment
-$(ColorGreen '5)') Function that lists all the active connections for a specific port defined by the script user
-$(ColorGreen '6)') Resource usage per user
+$(ColorGreen '1)') Top IPs connected on port 80 and 443
+$(ColorGreen '2)') Users running the most processes at the moment - the top 5 users
+$(ColorGreen '3)') Total process running by the users
+$(ColorGreen '4)') CPU % usage at the moment
+$(ColorGreen '5)') Active connections for a specific port
+$(ColorGreen '6)') Resource usage per user - cPanel only
 $(ColorGreen '0)') Back To Main Menu
 
 $(ColorBlue 'Choose an option:') "
