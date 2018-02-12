@@ -122,6 +122,10 @@ function CheckWhichSystem(){
 # First the function loops through all cPanel users and then summarizes their access logs
 ##
 function access_logs_per_account() {
+	total_cpanel_accounts=$(cat /etc/userdomains | awk -F': ' '{ print $2 }' | sort | uniq  | wc -l)
+	echo ""
+	echo Total accounts on the server: $(ColorGreen "${total_cpanel_accounts}")
+	echo ""
         for cpanel_account in $(ls -lhSr /usr/local/apache/domlogs/ | grep ^d | awk '{ print $9 }'); do 
                 echo $(ColorOrange "Current log for $cpanel_account cPanel account:")
                 echo ""
