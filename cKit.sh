@@ -3369,6 +3369,76 @@ CloudQuickInstallMenu
 }
 
 ##
+# Function that installs Drupal 8.4.4 on the Cloud Platform
+# Use it to deploy the core files and then manually create the database and finish the installation in your browser
+##
+
+function Drupalcore() {
+		echo ""
+        echo -ne "$(ColorBlue "- Deploy Drupal 8.4.4 on the Cloud")
+";
+        echo -ne "$(ColorGreen "- Please note that you would still need to create a Database and a Database User!")
+";
+        echo ""
+        unset empty
+        while [ -z $empty ]; do
+                echo -ne "$(ColorGreen "Is the public_html folder empty? [yes/no]")
+";
+                read empty
+                if [ ! $empty == yes ]; then
+                echo -ne "$(ColorGreen "Make sure that the public_html folder is empty before installing Drupal!")
+";
+                exit 0
+                fi
+                echo -ne "$(ColorGreen "Are you 100% sure that the public_html folder is empty? [yes/no]")
+";
+                read empty
+                if [ ! $empty == yes ]; then
+                echo -ne "$(ColorGreen "Make sure that the public_html folder is empty before installing Drupal!")
+";
+		echo ""
+                exit 0
+                fi
+        done
+
+
+        cd ~/public_html
+        wget -Nq http://paragon.alexgeorgiev.net/drupal/drupal-8.4.4.tar.gz
+       	echo -ne "$(ColorGreen "Downloading and extracting the core installation files, go ahead and create a database, you would need it once the files have been uploaded!")
+";
+        tar -xzf drupal-8.4.4.tar.gz
+        echo "CheckSpelling Off" >> ~/.htaccess
+       	scp -r ~/public_html/drupal-8.4.4/* ~/public_html && rm -rf ~/public_html/drupal-8.4.4 && rm -f drupal-8.4.4.tar.gz
+        wait
+
+	echo ""
+        echo -ne "$(ColorGreen "Drupal 8.4.4 files have been deployed, access the site and complete the installation!")
+";
+
+	echo ""
+	echo -ne "$(ColorOrange "Choose language --> English")
+";
+	echo -ne "$(ColorOrange "Choose profile --> Standard")
+";
+	echo -ne "$(ColorOrange "Verify requirements --> If everything is fine you can click continue anyway as you might get a warning message regaridng Apache's vesion and OPcache. If you get any errors for the PHP values and flags use the cKit.sh to change the PHP version to 7 and deploy an optimized php.ini !")
+";
+	echo -ne "$(ColorOrange "Set up database --> Enter your DB details, click the advanced options tick as you need to enter the database host, port stays 3306 and there is no need to enter specific prefix")
+";
+	echo -ne "$(ColorOrange "Instal site --> If you get any errors you can use the cKit to change the php version to PHP7 which will deploy a php.ini as well and you can try again")
+";
+	echo -ne "$(ColorOrange "Configure site --> Once the installation is completed enter the desired username and password")
+";
+	echo -ne "$(ColorOrange "Drupal should be installed once you enter the details and wait for the installer to complete the process")
+";
+	echo ""
+
+
+trap - SIGINT
+CloudQuickInstallMenu
+}
+
+
+##
 # Function that checks the Apache error log for a specific domain name
 # Use it when you have a 500 erorr
 ##
@@ -3869,7 +3939,8 @@ $(ColorGreen '1)') Install wp-cli on the Cloud
 $(ColorGreen '2)') Install composer on the Cloud
 $(ColorGreen '3)') Install laravel on the Cloud
 $(ColorGreen '4)') Install Magento 2.1.7 on the Cloud
-$(ColorGreen '5)') Deply WordPress installation files
+$(ColorGreen '5)') Deploy WordPress installation files
+$(ColorGreen '6)') Install Drupal 8.4.4 on the Cloud
 $(ColorGreen '0)') Back to the Cloud Main Menu
 
 $(ColorBlue 'Choose an option:') "
@@ -3880,6 +3951,7 @@ $(ColorBlue 'Choose an option:') "
                 3) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=InstallLaravel\&Server=$server\&Path=$location ; fi ; laravel_cloud_installer;;
                 4) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=InstallMagento2OnTheCloud\&Server=$server\&Path=$location ; fi ; mage2_install_cloud;;
 		5) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=InstallWordpressOnCloud\&Server=$server\&Path=$location ; fi ; wp_install_cloud;;
+		6) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=DrupalDeploy\&Server=$server\&Path=$location ; fi ; Drupalcore;;
 		0) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CloudMenu\&Server=$server\&Path=$location ; fi ; CloudMenu;;
 		*) echo -e $red"Wrong command."$clear; CloudQuickInstallMenu;;
         esac
