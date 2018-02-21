@@ -599,6 +599,16 @@ EmailsMenu
 
 
 ##
+# Function that lists the subjects of all emails in the exim queue and sorts them by number
+##
+
+function get_mail_subject() {
+	for file in $(find /var/spool/exim/input/ -name "*-H"); do echo $(grep "Subject: " ${file} | cut -d' ' -f3-); done | sort | uniq -c | sort -n
+wait
+EmailsMenu
+}
+
+##
 # Startup MySQL Info
 ##
 function check_mysql_startup_info() {
@@ -4103,6 +4113,7 @@ $(ColorGreen '1)') List MySQL sleeping Processes.
 $(ColorGreen '2)') Kill all MySQL sleeping Processes that have been sleeping for more that 60 seconds.
 $(ColorGreen '3)') Show full processlist.
 $(ColorGreen '4)') Kill all MySQL sleeping Processes "for" a specific user.
+$(ColorGreen '5)') Get the subjects of all emails in the exim queue
 $(ColorGreen '0)') Back To Main Menu.
 
 $(ColorBlue 'Choose an option:') "
@@ -4112,6 +4123,7 @@ $(ColorBlue 'Choose an option:') "
                 2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Kill_mysql_sleeping_processes\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='Kill_mysql_sleeping_processes'; local_log ; unset local_command ; fi ; kill_mysql_sleeping_proc;;
                 3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Show_full_processes\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='Show_full_processes'; local_log ; unset local_command ; fi ; show_full_processlist_admins;;
                 4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Kill_mysql_sleeping_processes_for_specific_user\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='Kill_mysql_sleeping_processes_for_specific_user'; local_log ; unset local_command ; fi ; kill_mysql_sleeping_proc_user;;
+		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=get_mail_subject\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='get_mail_subject'; local_log ; unset local_command ; fi ; get_mail_subject;;
                 0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='MainMenu'; local_log ; unset local_command ; fi ; MainMenu;;
                 *) echo -e $red"Wrong command."$clear; SysAdminsMenu;;
         esac
