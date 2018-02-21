@@ -4123,7 +4123,7 @@ ExecutionTime=`date +%Y-%m-%d:%H:%M:%S`
                 ColorGreen "        "
 echo -ne "
 
-Choose the information you need regarding MySQL
+Choose one of the following:
 
 $(ColorGreen '1)') List MySQL sleeping Processes.
 $(ColorGreen '2)') Kill all MySQL sleeping Processes that have been sleeping for more that 60 seconds.
