@@ -658,8 +658,9 @@ trap command SIGINT
     while [ -z $password ] ; do
     echo -n "Only for SysAdmins! Please enter the secret password or type exit: "
     read -s password
+    password=$(echo ${password} | base64)
     done
-    if [ $password = "SysAdmins" ]; then
+    if [ $password = "U3lzQWRtaW5zCg==" ]; then
     unset password
         if [ -z "$sleepingProc" ]; then
 	echo ""
@@ -705,11 +706,14 @@ function kill_mysql_sleeping_proc_user() {
     while [ -z $password ] ; do
         echo -n "Only for SysAdmins! Please enter the secret password or type exit: "
         read -s password
+	password=$(echo ${password} | base64)
     done
-    if [ $password = "SysAdmins" ]; then
+    if [ $password = "U3lzQWRtaW5zCg==" ]; then
     unset password
       unset sqluser	
       while [ -z $sqluser ]; do
+      echo ""
+      echo "Correct password!"
       echo "Please Enter MySQL user or type exit:"
       read sqluser
       done
@@ -720,7 +724,7 @@ function kill_mysql_sleeping_proc_user() {
       sleepingProc=$(mysqladmin proc | grep Sleep | grep $sqluser)
       allowedsleep=10
         if [ -z "$sleepingProc" ]; then
-        echo "No Sleeping MySQL Proccesses ATM";
+        echo "No Sleeping MySQL Proccesses for this user ATM";
         else
             	for i in $(mysql -e 'show processlist' | grep 'Sleep' | awk '{print $1}'); do
                         #declare -i prockilled=0
@@ -4089,15 +4093,16 @@ SysAdminsMenu(){
     while [ -z $syspass ] ; do
     echo -n "Only for SysAdmins! Please enter the secret password or type exit: "
     read -s syspass
-	if [ $syspass = "exit" ]; then
+    syspass=$(echo $syspass | base64)
+	if [ $syspass = "ZXhpdAo=" ]; then
                	unset syspass
                 MainMenu
-	elif [ $syspass != "SysAdmins" ]; then
+	elif [ $syspass != "U3lzQWRtaW5zCg==" ]; then
 		echo "Wrong Password!"
 		unset syspass
 	fi
     done
-    if [ $syspass = "SysAdmins" ]; then
+    if [ $syspass = "U3lzQWRtaW5zCg==" ]; then
 	if [[ $(pwd | grep '/var/sites/') ]]; then
 	echo $(ColorRed 'You are not on cPanel')
 	WrongCommand
