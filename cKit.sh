@@ -605,7 +605,7 @@ EmailsMenu
 function get_mail_subject() {
 	for file in $(find /var/spool/exim/input/ -name "*-H"); do echo $(grep "Subject: " ${file} | cut -d' ' -f3-); done | sort | uniq -c | sort -n
 wait
-EmailsMenu
+SysAdminsMenu
 }
 
 ##
