@@ -637,6 +637,7 @@ function list_sleeping_mysql() {
     sleepingProc=$(mysqladmin proc | grep Sleep)
     if [ -z "$sleepingProc" ]; then
 	echo ""
+        echo ""
         echo "No Sleeping MySQL Proccesses ATM";
     else {
         mysqladmin proc | head -3
@@ -664,6 +665,7 @@ trap command SIGINT
     unset password
         if [ -z "$sleepingProc" ]; then
 	echo ""
+        echo ""
         echo "No Sleeping MySQL Proccesses ATM";
         else
             	for i in $(mysql -e 'show processlist' | grep 'Sleep' | awk '{print $1}'); do
@@ -678,12 +680,16 @@ trap command SIGINT
                         fi
                 done
                 if [ ! -z $prockilled ] && [ $prockilled -lt 1 ]; then
+                        echo ""
                         echo "No quries have been running for more than $allowedsleep seconds"
                 elif [ ! -z $prockilled ] && [ $prockilled -eq 1 ]; then
+                        echo ""
                         echo "Killed only 1 MySQL query that was sleeping for more than $allowedsleep seconds"
                 elif [ ! -z $prockilled ] && [ $prockilled -gt 1 ]; then
+                        echo ""
                         echo "Killed $prockilled MySQL query that was sleeping for more than $allowedsleep seconds"
                 else {
+                        echo ""
                       	echo "No quries have been sleeping for more than $allowedsleep seconds"
                 }
                 fi
@@ -738,12 +744,16 @@ function kill_mysql_sleeping_proc_user() {
                         fi
                 done
                 if [ ! -z $prockilled ] && [ $prockilled -lt 1 ]; then
+                        echo ""
                         echo "No quries associated with $sqluser have been running for more than $allowedsleep seconds"
                 elif [ ! -z $prockilled ] && [ $prockilled -eq 1 ]; then
+                        echo ""
                         echo "User: $sqluser .. killed only 1 MySQL query that was sleeping for more than $allowedsleep seconds"
                 elif [ ! -z $prockilled ] && [ $prockilled -gt 1 ]; then
+                        echo ""
                         echo "User: $sqluser .. killed $prockilled MySQL query that was sleeping for more than $allowedsleep seconds"
                 else {
+                        echo ""
                       	echo "User: $sqluser .. No quries have been sleeping for more than $allowedsleep seconds"
                 }
                 fi
@@ -761,6 +771,7 @@ SysAdminsMenu
 function list_sleeping_mysql_admins() {
     sleepingProc=$(mysqladmin proc | grep Sleep)
     if [ -z "$sleepingProc" ]; then
+        echo ""
         echo ""
         echo "No Sleeping MySQL Proccesses ATM";
     else {
