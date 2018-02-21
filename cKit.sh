@@ -1081,6 +1081,10 @@ function ServerStatus() {
                 echo '| '"Attention! Check with your friendly SysOps! The server is using more than ${percent} of the allowed MySQL connections";
         fi
 	echo '------------------------------------------------------------------------------------'
+
+	echo 'Press any key to continue'
+	read -n 1 -s -r -p " "
+	MainMenu
 }
 
 #############################
@@ -4157,7 +4161,7 @@ MainMenu
 else
 ExecutionTime=`date +%Y-%m-%d:%H:%M:%S`
                 ColorGreen "        "
-ServerStatus 2>/dev/null
+#ServerStatus 2>/dev/null
 echo -ne "
 
 Cool Tools
@@ -4243,7 +4247,7 @@ while [ -z $paruser ] ; do
 done
                 ColorGreen "        "
 
-ServerStatus 2>/dev/null
+#ServerStatus 2>/dev/null
 echo -ne "
 Main Menu
 
@@ -4252,6 +4256,7 @@ $(ColorGreen '2)') SPAM Scan Menu
 $(ColorGreen '3)') MySQL Menu
 $(ColorGreen '4)') Web Traffic Menu
 $(ColorGreen '5)') Handy Tools
+$(ColorGreen '9)') Server Status
 $(ColorGreen '0)') Exit
 
 $(ColorBlue 'Choose an option:') "
@@ -4264,7 +4269,7 @@ $(ColorBlue 'Choose an option:') "
 		#3) if [[ $locallog == 1 ]] ; then local_command='MySQLMenu'; local_log ; unset local_command ; fi ; MySQLMenu;;
 		4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=WebTrafficMenu\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='WebTrafficMenu'; local_log ; unset local_command ; fi ; DDoSMenu;;
 		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=HandyToolsMenu\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='ToolsMenu'; local_log ; unset local_command ; fi ; ToolsMenu;;
-		#9) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ServerStatus\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='ServerStatus'; local_log ; unset local_command ; fi ; ServerStatus 2>/dev/null;;
+		9) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ServerStatus\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='ServerStatus'; local_log ; unset local_command ; fi ; ServerStatus 2>/dev/null;;
 		admins) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=SysAdminsMenu\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='SysAdminsMenu'; local_log ; unset local_command ; fi ; SysAdminsMenu ;;
 		0) Exitmenu;;
 		*) echo -e $red"Wrong command."$clear; WrongCommand;;
