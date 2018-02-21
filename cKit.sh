@@ -724,7 +724,7 @@ function kill_mysql_sleeping_proc_user() {
       read sqluser
       done
       if [ $sqluser = "exit" ]; then
-      MySQLMenu
+      SysAdminsMenu
       #exit 0;
       else
       sleepingProc=$(mysqladmin proc | grep Sleep | grep $sqluser)
