@@ -161,7 +161,7 @@ tail -n 1000 /usr/local/apache/domlogs/${cpanel_account}/* 2>/dev/null | grep -v
                         	           hits="${array[0]}"
                                 	   ip="${array[1]}"
 					if [[ $ip =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
-		                                location=$(curl ${geoipdomain}?ip=$ip 2>/dev/null)
+		                                location=$(curl -k ${geoipdomain}?ip=$ip 2>/dev/null)
 	        	                        echo $hits - $ip - $location
 					fi
                 	                unset location
@@ -181,7 +181,7 @@ tail -n 1000 /usr/local/apache/domlogs/${cpanel_account}/* 2>/dev/null | grep -v
                                 	   hits="${array[0]}"
 	                                   ip="${array[1]}"
 					if [[ $ip =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
-        		                        location=$(curl ${geoipdomain}?ip=$ip 2>/dev/null)
+        		                        location=$(curl -k ${geoipdomain}?ip=$ip 2>/dev/null)
 	                	                echo $hits - $ip - $location
 					fi
                         	        unset location
@@ -224,7 +224,7 @@ for i in $(cat '/etc/userdomains' | grep -v '*' | awk -F":" '{print $1}'); do
                                    hits="${array[0]}"
                                    ip="${array[1]}"
 				if [[ $ip =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
-	                                location=$(curl ${geoipdomain}?ip=$ip 2>/dev/null)
+	                                location=$(curl -k ${geoipdomain}?ip=$ip 2>/dev/null)
         	                        echo $hits - $ip - $location
 				fi
 				unset location
@@ -435,7 +435,7 @@ if [ ! -z $domain ] ; then
                 numberofhits=$(cat $tmpfile | awk '{ print $1 }')
                 for spike in ${ipaccessed}; do
 			if [[ $enablegeoipcheck == 1 ]] ; then
-	                        country=$(curl ${geoipdomain}?ip=${spike} 2>/dev/null)
+	                        country=$(curl -k ${geoipdomain}?ip=${spike} 2>/dev/null)
        		                finalresult=$(grep $spike $tmpfile)
 				echo "$finalresult - $country"
 			fi
@@ -919,7 +919,7 @@ function ActiveConn(){
                hits="${array[0]}"
                ip="${array[1]}"
             if [[ $ip =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
-                    location=$(curl ${geoipdomain}?ip=$ip 2>/dev/null)
+                    location=$(curl -k ${geoipdomain}?ip=$ip 2>/dev/null)
                     echo $hits - $ip - $location
             fi
             unset location
@@ -3879,15 +3879,15 @@ $(ColorGreen '0)') Back to Main Menu
 $(ColorBlue 'Choose an option:') "
                 read a
                 case $a in
-		1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=LogsForAllcPanelUsers\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='access_logs_per_account'; local_log ; unset local_command ; fi ; access_logs_per_account;;
-		2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=AccessLogsFromSpecificIPForDomain\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='AccessLogsFromSpecificIPForDomain'; local_log ; unset local_command ; fi ; MenuAcessSpecificIPForDomain;;
-                3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=AccessAndIPLogs\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='AccessAndIPLogs'; local_log ; unset local_command ; fi ; access_and_ip_logs;;
+		1) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=LogsForAllcPanelUsers\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='access_logs_per_account'; local_log ; unset local_command ; fi ; access_logs_per_account;;
+		2) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=AccessLogsFromSpecificIPForDomain\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='AccessLogsFromSpecificIPForDomain'; local_log ; unset local_command ; fi ; MenuAcessSpecificIPForDomain;;
+                3) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=AccessAndIPLogs\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='AccessAndIPLogs'; local_log ; unset local_command ; fi ; access_and_ip_logs;;
                 #4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=OnlyAccessLogs\&Server=$server\&Path=$location ; fi ; OnlyAccessLogs;;
 		#5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ApacheErrorsWebSite\&Server=$server\&Path=$location ; fi ; domainhttpderrors;;
 		#6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ApacheErrorsUsername\&Server=$server\&Path=$location ; fi ; userhttpderrors;;
-                4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CheckSpike\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='CheckSpike'; local_log ; unset local_command ; fi ; check_spike_date;;
-		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CheckCurrentSpike\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='CheckCurrentSpike'; local_log ; unset local_command ; fi ; check_spike_current;;
-		0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='MainMenu'; local_log ; unset local_command ; fi ; MainMenu;;
+                4) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CheckSpike\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='CheckSpike'; local_log ; unset local_command ; fi ; check_spike_date;;
+		5) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CheckCurrentSpike\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='CheckCurrentSpike'; local_log ; unset local_command ; fi ; check_spike_current;;
+		0) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='MainMenu'; local_log ; unset local_command ; fi ; MainMenu;;
 		*) echo -e $red"Wrong command."$clear; MenuAcess;;
         esac
 fi
@@ -4081,16 +4081,16 @@ $(ColorGreen '0)') Back to Main Menu.
 $(ColorBlue 'Choose an option:') "
                 read a
                 case $a in
-                1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim1ListofAllEmailSenders\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='Exim1ListofAllEmailSenders'; local_log ; unset local_command ; fi ; showexim ;;
-                2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim2EximSpamDirs\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='Exim2EximSpamDirs'; local_log ; unset local_command ; fi ; originate;;
-                3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim3EximPHPSpam\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='Exim3EximPHPSpam'; local_log ; unset local_command ; fi ; originate2;;
+                1) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim1ListofAllEmailSenders\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='Exim1ListofAllEmailSenders'; local_log ; unset local_command ; fi ; showexim ;;
+                2) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim2EximSpamDirs\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='Exim2EximSpamDirs'; local_log ; unset local_command ; fi ; originate;;
+                3) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim3EximPHPSpam\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='Exim3EximPHPSpam'; local_log ; unset local_command ; fi ; originate2;;
                 #4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim4EximUsersSpam\&Server=$server\&Path=$location ; fi ; whichphpscript;;
                 #5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim5IPsOnPort25\&Server=$server\&Path=$location ; fi ; getnetstat;;
                 #6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim6NobodySpam\&Server=$server\&Path=$location ; fi ; nobodyspam;;
                 #7) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim7SpamInProgress\&Server=$server\&Path=$location ; fi ; nobodyspamafter;;
-                4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim8MailQueue\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='Exim8MailQueue'; local_log ; unset local_command ; fi ; showeximsum;;
-                5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=SummaryEximLog\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='SummaryEximLog'; local_log ; unset local_command ; fi; summarize_exim_log;;
-                0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='MainMenu'; local_log ; unset local_command ; fi ; MainMenu;;
+                4) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Exim8MailQueue\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='Exim8MailQueue'; local_log ; unset local_command ; fi ; showeximsum;;
+                5) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=SummaryEximLog\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='SummaryEximLog'; local_log ; unset local_command ; fi; summarize_exim_log;;
+                0) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='MainMenu'; local_log ; unset local_command ; fi ; MainMenu;;
 		*) echo -e $red"Wrong command."$clear; EmailsMenu;;
         esac
 fi
@@ -4135,12 +4135,12 @@ $(ColorGreen '0)') Back To Main Menu.
 $(ColorBlue 'Choose an option:') "
                 read a
                 case $a in
-                1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=List_sleeping_mysql_processes\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='List_sleeping_mysql_processes'; local_log ; unset local_command ; fi ; list_sleeping_mysql_admins;;
-                2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Kill_mysql_sleeping_processes\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='Kill_mysql_sleeping_processes'; local_log ; unset local_command ; fi ; kill_mysql_sleeping_proc;;
-                3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Show_full_processes\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='Show_full_processes'; local_log ; unset local_command ; fi ; show_full_processlist_admins;;
-                4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Kill_mysql_sleeping_processes_for_specific_user\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='Kill_mysql_sleeping_processes_for_specific_user'; local_log ; unset local_command ; fi ; kill_mysql_sleeping_proc_user;;
-		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=get_mail_subject\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='get_mail_subject'; local_log ; unset local_command ; fi ; get_mail_subject;;
-                0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='MainMenu'; local_log ; unset local_command ; fi ; MainMenu;;
+                1) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=List_sleeping_mysql_processes\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='List_sleeping_mysql_processes'; local_log ; unset local_command ; fi ; list_sleeping_mysql_admins;;
+                2) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Kill_mysql_sleeping_processes\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='Kill_mysql_sleeping_processes'; local_log ; unset local_command ; fi ; kill_mysql_sleeping_proc;;
+                3) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Show_full_processes\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='Show_full_processes'; local_log ; unset local_command ; fi ; show_full_processlist_admins;;
+                4) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Kill_mysql_sleeping_processes_for_specific_user\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='Kill_mysql_sleeping_processes_for_specific_user'; local_log ; unset local_command ; fi ; kill_mysql_sleeping_proc_user;;
+		5) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=get_mail_subject\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='get_mail_subject'; local_log ; unset local_command ; fi ; get_mail_subject;;
+                0) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='MainMenu'; local_log ; unset local_command ; fi ; MainMenu;;
                 *) echo -e $red"Wrong command."$clear; SysAdminsMenu;;
         esac
 
@@ -4172,10 +4172,10 @@ $(ColorGreen '0)') Back To Main Menu.
 $(ColorBlue 'Choose an option:') "
                 read a
                 case $a in
-                2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=List_sleeping_mysql_processes\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='List_sleeping_mysql_processes'; local_log ; unset local_command ; fi ; list_sleeping_mysql;;
-                3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Show_ll_rocesses\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='Show_ll_rocesses'; local_log ; unset local_command ; fi ; show_full_processlist;;
- 	        1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MySQL_status_and_connections\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='MySQL_status_and_connections'; local_log ; unset local_command ; fi ; mysql_status;;
-                0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='MainMenu'; local_log ; unset local_command ; fi ; MainMenu;;
+                2) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=List_sleeping_mysql_processes\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='List_sleeping_mysql_processes'; local_log ; unset local_command ; fi ; list_sleeping_mysql;;
+                3) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=Show_ll_rocesses\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='Show_ll_rocesses'; local_log ; unset local_command ; fi ; show_full_processlist;;
+ 	        1) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MySQL_status_and_connections\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='MySQL_status_and_connections'; local_log ; unset local_command ; fi ; mysql_status;;
+                0) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='MainMenu'; local_log ; unset local_command ; fi ; MainMenu;;
 		*) echo -e $red"Wrong command."$clear; MySQLMenu;;
         esac
 fi
@@ -4207,15 +4207,15 @@ $(ColorGreen '0)') Back To Main Menu.
 $(ColorBlue 'Choose an option:') "
                 read a
                 case $a in
-                1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsExtensionEnabled\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='IsExtensionEnabled'; local_log ; unset local_command ; fi ; is_extension;;
-                2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsFunctionEnabled\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='IsFunctionEnabled'; local_log ; unset local_command ; fi ; is_function;;
-		3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=RandomPass\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='RandomPass'; local_log ; unset local_command ; fi ; randompass;;
-		4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MonitorCPU\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='MonitorCPU'; local_log ; unset local_command ; fi ; MonitorCpu;;
-		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=FindLargeFiles\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='FindLargeFiles'; local_log ; unset local_command ; fi ; FindLargeFiles;;
-		6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=EAversion\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='EAversion'; local_log ; unset local_command ; fi ; EAversion;;
-                7) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CheckOutdatedWP\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='CheckOutdatedWP'; local_log ; unset local_command ; fi ; find_outdated_wp;;
-                8) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CheckOutdatedJoomla\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='CheckOutdatedJoomla'; local_log ; unset local_command ; fi ; joomla_installations;;
-		0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='MainMenu'; local_log ; unset local_command ; fi ; MainMenu;;
+                1) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsExtensionEnabled\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='IsExtensionEnabled'; local_log ; unset local_command ; fi ; is_extension;;
+                2) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=IsFunctionEnabled\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='IsFunctionEnabled'; local_log ; unset local_command ; fi ; is_function;;
+		3) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=RandomPass\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='RandomPass'; local_log ; unset local_command ; fi ; randompass;;
+		4) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MonitorCPU\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='MonitorCPU'; local_log ; unset local_command ; fi ; MonitorCpu;;
+		5) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=FindLargeFiles\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='FindLargeFiles'; local_log ; unset local_command ; fi ; FindLargeFiles;;
+		6) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=EAversion\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='EAversion'; local_log ; unset local_command ; fi ; EAversion;;
+                7) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CheckOutdatedWP\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='CheckOutdatedWP'; local_log ; unset local_command ; fi ; find_outdated_wp;;
+                8) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CheckOutdatedJoomla\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='CheckOutdatedJoomla'; local_log ; unset local_command ; fi ; joomla_installations;;
+		0) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='MainMenu'; local_log ; unset local_command ; fi ; MainMenu;;
 		*) echo -e $red"Wrong command."$clear; ToolsMenu;;
         esac
 fi
@@ -4243,13 +4243,13 @@ $(ColorGreen '0)') Back To Main Menu
 $(ColorBlue 'Choose an option:') "
                 read a
                 case $a in
-		1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ActiveConn\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='ActiveConn'; local_log ; unset local_command ; fi ; ActiveConn;;
-                2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=TopUsers\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='TopUsers'; local_log ; unset local_command ; fi ; TopUsers;;
-                3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=AllUsers\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='AllUsers'; local_log ; unset local_command ; fi ; AllUsers;;
-                4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CPUusage\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='CPUusage'; local_log ; unset local_command ; fi ; CurrentCPUusage;;
-                5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ConnectionsOnSpecPort\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='ConnectionsOnSpecPort'; local_log ; unset local_command ; fi ; GetPortConn;;
-		6) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ResourceUsagePerUser\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='ResourceUsagePerUser'; local_log ; unset local_command ; fi ; Zack;;
-                0) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='MainMenu'; local_log ; unset local_command ; fi ; MainMenu;;
+		1) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ActiveConn\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='ActiveConn'; local_log ; unset local_command ; fi ; ActiveConn;;
+                2) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=TopUsers\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='TopUsers'; local_log ; unset local_command ; fi ; TopUsers;;
+                3) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=AllUsers\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='AllUsers'; local_log ; unset local_command ; fi ; AllUsers;;
+                4) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=CPUusage\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='CPUusage'; local_log ; unset local_command ; fi ; CurrentCPUusage;;
+                5) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ConnectionsOnSpecPort\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='ConnectionsOnSpecPort'; local_log ; unset local_command ; fi ; GetPortConn;;
+		6) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ResourceUsagePerUser\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='ResourceUsagePerUser'; local_log ; unset local_command ; fi ; Zack;;
+                0) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MainMenu\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='MainMenu'; local_log ; unset local_command ; fi ; MainMenu;;
                 *) echo -e $red"Wrong command."$clear; WrongCommand;;
         esac
 fi
@@ -4290,15 +4290,15 @@ $(ColorGreen '0)') Exit
 $(ColorBlue 'Choose an option:') "
                 read a
                 case $a in
-                1) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MenuAccess\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='MenuAcess'; local_log ; unset local_command ; fi ; MenuAcess;;
-		2) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=EmailsMenu\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='EmailsMenu'; local_log ; unset local_command ; fi ; EmailsMenu;;
-		3) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MySQLMenu\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='MySQLMenu'; local_log ; unset local_command ; fi ; MySQLMenu;;
+                1) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MenuAccess\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='MenuAcess'; local_log ; unset local_command ; fi ; MenuAcess;;
+		2) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=EmailsMenu\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='EmailsMenu'; local_log ; unset local_command ; fi ; EmailsMenu;;
+		3) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=MySQLMenu\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='MySQLMenu'; local_log ; unset local_command ; fi ; MySQLMenu;;
 		# local log dev
 		#3) if [[ $locallog == 1 ]] ; then local_command='MySQLMenu'; local_log ; unset local_command ; fi ; MySQLMenu;;
-		4) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=WebTrafficMenu\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='WebTrafficMenu'; local_log ; unset local_command ; fi ; DDoSMenu;;
-		5) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=HandyToolsMenu\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='ToolsMenu'; local_log ; unset local_command ; fi ; ToolsMenu;;
-		9) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ServerStatus\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='ServerStatus'; local_log ; unset local_command ; fi ; ServerStatus 2>/dev/null;;
-		admins) if [[ $enablelog == 1 ]] ; then curl ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=SysAdminsMenu\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='SysAdminsMenu'; local_log ; unset local_command ; fi ; SysAdminsMenu ;;
+		4) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=WebTrafficMenu\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='WebTrafficMenu'; local_log ; unset local_command ; fi ; DDoSMenu;;
+		5) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=HandyToolsMenu\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='ToolsMenu'; local_log ; unset local_command ; fi ; ToolsMenu;;
+		9) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=ServerStatus\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='ServerStatus'; local_log ; unset local_command ; fi ; ServerStatus 2>/dev/null;;
+		admins) if [[ $enablelog == 1 ]] ; then curl -k ${reportDomain}?user=$paruser\&Date=$executionTime\&Executed=SysAdminsMenu\&Server=$server\&Path=$location ; fi ; if [[ $locallog == 1 ]] ; then local_command='SysAdminsMenu'; local_log ; unset local_command ; fi ; SysAdminsMenu ;;
 		0) Exitmenu;;
 		*) echo -e $red"Wrong command."$clear; WrongCommand;;
         esac
