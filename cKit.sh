@@ -1134,8 +1134,8 @@ function wp_cli_cloud_install() {
 		curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 		chmod +x wp-cli.phar
 		echo '' >> ~/.bashrc
-		CLI_ALIAS="alias wp='/usr/bin/php-7.2-cli ~/wp-cli.phar'"
-		if grep -q "alias wp='/usr/bin/php-7.2-cli ~/wp-cli.phar'" ".bashrc"
+		CLI_ALIAS="alias wp='/usr/bin/php-7.2 ~/wp-cli.phar'"
+		if grep -q "alias wp='/usr/bin/php-7.2 ~/wp-cli.phar'" ".bashrc"
 		then
 			echo ""
 			echo -e "\e[92mwpcli has already been installed, no need of running the command again"	
